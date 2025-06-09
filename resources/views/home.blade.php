@@ -26,7 +26,7 @@
             <img src="img/search.png" alt="Search" class="search-icon" />
             <span>Search</span>
           </a>
-          <a href="#" class="login-button">Masuk</a>
+          <a href="/signin" class="login-button">Masuk</a>
         </div>
       </nav>
     </header>
