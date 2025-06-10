@@ -25,3 +25,11 @@ Route::get('/donate', function () {
 Route::get('/donatemenu', function () {
     return view('donatemenu');
 });
+
+Route::get('/formdonasi', function () {
+    return view('formdonasi');
+});
+
+Route::get('/contactus', function () {
+    return view('contactus');
+});
