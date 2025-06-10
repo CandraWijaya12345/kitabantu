@@ -21,3 +21,7 @@ Route::get('/detail', function () {
 Route::get('/donate', function () {
     return view('donate');
 });
+
+Route::get('/donatemenu', function () {
+    return view('donatemenu');
+});
