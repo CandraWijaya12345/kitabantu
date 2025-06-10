@@ -92,8 +92,11 @@
             </div>
 
             <div class="form-section-card">
-                <h3>Sertakan doa dan Dukungan (Opsional)</h3>
-                <textarea placeholder="Tulis doa dan dukungan untuk penggalangan dana"></textarea>
+                <div class="form-group">
+                    <label for="supportMessage">Sertakan doa dan Dukungan (Opsional)</label>
+                    <textarea id="supportMessage" placeholder="Tulis doa dan dukungan untuk penggalangan dana" maxlength="500"></textarea>
+                    <div id="charCounter" class="char-counter">500 karakter tersisa</div>
+                </div>
             </div>
             
             <div class="form-section-card payment-method">
@@ -143,6 +146,17 @@
             <button class="chat-button"><img src="./img/chat-icon.png" alt="chat icon"><span>1 Message Arrived</span></button>
         </div>
     </footer>
+
+    <script>
+        const messageInput = document.getElementById('supportMessage');
+        const charCounter = document.getElementById('charCounter');
+        const maxLength = messageInput.getAttribute('maxlength');
+
+        messageInput.addEventListener('input', () => {
+            const remaining = maxLength - messageInput.value.length;
+            charCounter.textContent = `${remaining} karakter tersisa`;
+        });
+    </script>
 
 </body>
 </html>
