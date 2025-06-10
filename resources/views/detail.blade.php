@@ -22,7 +22,7 @@
             <div class="nav-section nav-right">
                 <a href="#" class="nav-link">Tentang Kami</a>
                 <a href="#" class="search-link">
-                    <img src="./img/search-icon.png" alt="Search Icon" class="search-icon">
+                    <img src="./img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
                 <a href="#" class="login-button">Masuk</a>

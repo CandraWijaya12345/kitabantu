@@ -17,3 +17,7 @@ Route::get('/signup', function () {
 Route::get('/detail', function () {
     return view('detail');
 });
+
+Route::get('/donate', function () {
+    return view('donate');
+});
