@@ -33,3 +33,7 @@ Route::get('/formdonasi', function () {
 Route::get('/contactus', function () {
     return view('contactus');
 });
+
+Route::get('/formkitatolong', function () {
+    return view('formkitatolong');
+});
