@@ -11,12 +11,12 @@
     <header class="header">
         <nav class="nav">
             <div class="nav-section nav-left">
-                <a href="#" class="nav-link">Galang Dana</a>
-                <a href="#" class="nav-link">Donasi</a>
-                <a href="#" class="nav-link">KitaTolong</a>
+                <a href="/formdonasi" class="nav-link">Galang Dana</a>
+                <a href="/donate" class="nav-link">Donasi</a>
+                <a href="/formkitatolong" class="nav-link">KitaTolong</a>
             </div>
             <div class="nav-section">
-                <a href="#" class="logo">KitaBantu</a>
+                <a href="/home" class="logo">KitaBantu</a>
             </div>
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
@@ -34,7 +34,7 @@
             <div class="hero-content">
                 <h1 class="hero-title">Bantu Sesama Mencapai Kebahagiaan Utama</h1>
                 <p class="hero-description">Donasi ke pihak membutuhkan, kini mudah, aman, dan transparan melalui KitaBantu.</p>
-                <a href="#" class="cta-button">Mari Memberi</a>
+                <a href="/donate" class="cta-button">Mari Memberi</a>
             </div>
             <div class="hero-image">
                 <img src="./img/donasi.jpg" alt="Orang-orang berbagi dalam kegiatan sosial">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#" class="view-more-button">Lihat Selengkapnya</a>
+            <a href="/donate" class="view-more-button">Lihat Selengkapnya</a>
         </section>
 
         <section class="about">
@@ -163,7 +163,7 @@
                             <span class="checkmark"></span> 100% Aman dan Terjaga
                         </li>
                     </ul>
-                    <a href="#" class="cta-button">Coba KitaTolong Sekarang</a>
+                    <a href="/formkitatolong" class="cta-button">Coba KitaTolong Sekarang</a>
                 </div>
             </div>
         </section>
@@ -180,10 +180,10 @@
                 <h4 class="footer-title">Menu</h4>
                 <ul class="footer-links">
                     <li><a href="/detail">Tentang Kami</a></li>
-                    <li><a href="#">Donasi</a></li>
-                    <li><a href="#">Galang Dana</a></li>
+                    <li><a href="/donate">Donasi</a></li>
+                    <li><a href="/formdonate">Galang Dana</a></li>
                     <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Kontak Kami</a></li>
+                    <li><a href="/contactus">Kontak Kami</a></li>
                 </ul>
             </div>
             <div class="footer-section">

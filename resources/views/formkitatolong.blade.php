@@ -21,7 +21,7 @@
             <div class="nav-section nav-right">
                 <a href="#" class="nav-link">Tentang Kami</a>
                 <a href="#" class="search-link">
-                    <img src="./img/search-icon.png" alt="Search Icon" class="search-icon">
+                    <img src="./img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
                 <a href="#" class="login-button">Masuk</a>
@@ -36,7 +36,7 @@
                 <p>Kami siap membantu Anda terkait masalah yang Anda hadapi, kapanpun dan dimanapun</p>
             </div>
             <div class="hero-image">
-                <img src="./img/kitatolong-hero-person.png" alt="Pria memberikan gestur OK">
+                <img src="./img/kitatolong.png" alt="Pria memberikan gestur OK">
             </div>
         </section>
 
@@ -127,8 +127,8 @@
             <div class="footer-section">
                  <h4 class="footer-title">Kontak</h4>
                  <ul class="footer-contact">
-                    <li><img src="./img/email-icon.png" alt="Email"> kitabantu@gmail.com</li>
-                    <li><img src="./img/phone-icon.png" alt="Phone"> 082 222 222 222</li>
+                    <li><img src="./img/message.png" alt="Email"> kitabantu@gmail.com</li>
+                    <li><img src="./img/call.png" alt="Phone"> 082 222 222 222</li>
                  </ul>
             </div>
             <div class="footer-section">
@@ -142,7 +142,7 @@
         </div>
         <div class="footer-bottom">
             <p class="copyright">Copyright © 2025 Kitabantu</p>
-            <button class="chat-button"><img src="./img/chat-icon.png" alt="chat icon"><span>1 Message Arrived</span></button>
+            <button class="chat-button"><img src="./img/message.png" alt="chat icon"><span>1 Message Arrived</span></button>
         </div>
     </footer>
 

@@ -12,23 +12,23 @@
         <header class="header">
             <nav class="nav">
                 <div class="nav-section nav-left">
-                    <a href="#" class="nav-link">Galang Dana</a>
-                    <a href="#" class="nav-link">Donasi</a>
-                    <a href="#" class="nav-link">KitaTolong</a>
+                    <a href="/formdonasi" class="nav-link">Galang Dana</a>
+                    <a href="/donate" class="nav-link">Donasi</a>
+                    <a href="/formkitatolong" class="nav-link">KitaTolong</a>
                 </div>
                 <div class="nav-section">
-                    <a href="#" class="logo">KitaBantu</a>
+                    <a href="/home" class="logo">KitaBantu</a>
                 </div>
                 <div class="nav-section nav-right">
-                    <a href="#" class="nav-link">Tentang Kami</a>
+                    <a href="/detail" class="nav-link">Tentang Kami</a>
                     <a href="#" class="search-link">
                         <img src="./img/search.png" alt="Search Icon" class="search-icon">
                         Search
                     </a>
-                    <a href="#" class="login-button">Masuk</a>
+                    <a href="/signin" class="login-button">Masuk</a>
                 </div>
             </nav>
-        </header>
+        </header>   
     
         <main class="profile-main">
             <div class="profile-container">
