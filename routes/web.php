@@ -37,3 +37,27 @@ Route::get('/contactus', function () {
 Route::get('/formkitatolong', function () {
     return view('formkitatolong');
 });
+
+Route::get('/onprocess', function () {
+    return view('onprocess');
+});
+
+Route::get('/accepted', function () {
+    return view('status_accepted');
+});
+
+Route::get('/rejected', function () {
+    return view('status_rejected');
+});
+
+Route::get('/list_kitatolong', function () {
+    return view('list_kitatolong');
+});
+
+Route::get('/user', function () {
+    return view('user');
+});
+
+Route::get('/ganti_password', function () {
+    return view('ganti_password');
+});

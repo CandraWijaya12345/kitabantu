@@ -1,0 +1,189 @@
+/* =================================================================
+   STATUS.CSS - STYLESHEET LENGKAP UNTUK SEMUA HALAMAN STATUS
+   (On Process, Accepted, Rejected, dll.)
+   ================================================================= */
+
+/* --- FONT IMPORT --- */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
+/* --- GLOBAL RESET & BASE STYLES --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #304e7a;
+  line-height: 1.6;
+  background-color: #f7faff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --- PAGE CONTAINER (untuk mendorong footer ke bawah) --- */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- HEADER & NAVIGATION --- */
+.header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  z-index: 1000;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem;
+  max-width: 1536px;
+  margin: 0 auto;
+  height: 80px;
+}
+
+.nav-section { flex: 1; display: flex; align-items: center; justify-content: center; }
+.nav-left { justify-content: flex-start; gap: 2rem; }
+.nav-right { justify-content: flex-end; gap: 1.5rem; }
+.logo { font-size: 2.5rem; font-weight: 800; color: #304e7b; }
+.nav-link { font-size: 1.1rem; font-weight: 400; color: #304e7b; }
+.search-link { display: flex; align-items: center; font-weight: 400; font-size: 1.1rem; }
+.search-icon { width: 20px; height: 20px; margin-right: 8px; }
+.login-button { padding: 0.5rem 1.5rem; background-color: #5893ea; color: #ffffff; border-radius: 6px; font-weight: 600; }
+
+/* --- STATUS PAGE MAIN CONTENT --- */
+.status-main {
+    flex-grow: 1; /* Membuat main content mengisi ruang tersedia */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.status-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 600px;
+}
+
+.status-icon {
+    width: 200px; /* Ukuran ini berlaku untuk semua ikon status */
+    height: auto;
+    margin-bottom: 3rem;
+}
+
+.status-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.status-subtitle {
+    font-size: 1.25rem;
+    color: #5a78a5;
+}
+
+/* ===== STYLE BARU UNTUK HALAMAN REJECTED ===== */
+.rejected-text {
+    color: #d9534f; /* Warna merah untuk teks ditolak */
+}
+
+.rejection-reasons {
+    list-style-position: inside; /* Membuat nomor urut di dalam box */
+    text-align: left;
+    margin-top: 2rem;
+    padding-left: 1rem; /* Sedikit indentasi */
+    color: #5a78a5;
+    font-size: 1rem;
+    max-width: 100%;
+}
+
+.rejection-reasons li {
+    margin-bottom: 0.5rem;
+}
+/* ===== AKHIR STYLE BARU ===== */
+
+
+/* --- FOOTER (SUDAH DIRAPIKAN) --- */
+.footer {
+  background: linear-gradient(180deg, #bee6ff 0%, #6aa7ce 100%);
+  padding: 2.5rem 5rem 1.5rem; 
+  width: 100%;
+}
+.footer-content {
+  display: flex; justify-content: space-between; flex-wrap: wrap;
+  gap: 2rem; 
+  margin-bottom: 1.5rem; 
+  max-width: 1200px; margin-left: auto; margin-right: auto;
+}
+.footer-section { flex: 1; min-width: 220px; }
+.footer-logo { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
+.footer-description { font-size: 0.9rem; }
+.footer-title { 
+    font-size: 1.25rem;
+    font-weight: 600; 
+    margin-bottom: 1rem; 
+}
+.footer-links, .footer-contact, .faq-list { list-style: none; }
+.footer-links li, .footer-contact li { 
+    margin-bottom: 0.5rem;
+}
+.footer-contact li { display: flex; align-items: center; font-size: 0.9rem;}
+.footer-contact img { width: 18px; height: 18px; margin-right: 0.75rem; }
+.faq-item { margin-bottom: 0.5rem; }
+.faq-question {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; background-color: #ddf2ff; border: none; padding: 0.6rem 0.75rem;
+  font-size: 0.9rem; text-align: left; cursor: pointer;
+  box-shadow: inset -1px 1px 8px 1px rgba(0,0,0,0.15); border-radius: 5px; color: #304e7a;
+}
+.faq-icon { width: 12px; height: 12px; }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1.5rem; 
+  border-top: 1px solid rgba(48, 78, 122, 0.2);
+  max-width: 1200px; margin-left: auto; margin-right: auto;
+}
+.copyright { font-size: 0.875rem; font-weight: 300; }
+.chat-button {
+  display: flex; align-items: center; background-color: #aecfea;
+  border: none; border-radius: 15px 15px 0 0; padding: 0.4rem 1rem;
+  cursor: pointer;
+}
+.chat-button img { width: 18px; height: 18px; margin-right: 0.5rem; }
+
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 1024px) {
+  .nav { padding: 1rem 2rem; }
+  .footer { padding: 2rem; }
+}
+
+@media (max-width: 768px) {
+  .status-icon { width: 150px; }
+  .status-title { font-size: 2rem; }
+  .status-subtitle { font-size: 1.1rem; }
+  .footer-content { flex-direction: column; gap: 1.5rem; }
+  .footer-section { min-width: 100%; }
+}
