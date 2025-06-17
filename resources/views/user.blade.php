@@ -86,24 +86,24 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3 class="footer-logo">KitaBantu</h3>
-                    <p class="footer-description">Kitabantu adalah website crowdfunding sebagai penyalur bantuan kepada yang membutuhkan, kapanpun dan dimanapun.</p>
+                    <p class="footer-description">Kitabantu adalah website crowdfunding untuk berdonasi dan menggalang dana untuk orang yang membutuhkan, kapanpun dan dimanapun.</p>
                 </div>
                 <div class="footer-section">
                     <h4 class="footer-title">Menu</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Tentang Kami</a></li>
-                        <li><a href="#">Donasi</a></li>
-                        <li><a href="#">Galang Dana</a></li>
+                        <li><a href="/detail">Tentang Kami</a></li>
+                        <li><a href="/donate">Donasi</a></li>
+                        <li><a href="/formdonate">Galang Dana</a></li>
                         <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Kontak Kami</a></li>
+                        <li><a href="/contactus">Kontak Kami</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                     <h4 class="footer-title">Kontak</h4>
-                     <ul class="footer-contact">
+                    <h4 class="footer-title">Kontak</h4>
+                    <ul class="footer-contact">
                         <li><img src="./img/message.png" alt="Email"> kitabantu@gmail.com</li>
                         <li><img src="./img/call.png" alt="Phone"> 082 222 222 222</li>
-                     </ul>
+                    </ul>
                 </div>
                 <div class="footer-section">
                     <h4 class="footer-title">FAQ</h4>

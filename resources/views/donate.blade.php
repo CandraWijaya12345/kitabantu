@@ -218,18 +218,18 @@
             <div class="footer-section">
                 <h4 class="footer-title">Menu</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Tentang Kami</a></li>
-                    <li><a href="#">Donasi</a></li>
-                    <li><a href="#">Galang Dana</a></li>
+                    <li><a href="/detail">Tentang Kami</a></li>
+                    <li><a href="/donate">Donasi</a></li>
+                    <li><a href="/formdonate">Galang Dana</a></li>
                     <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Kontak Kami</a></li>
+                    <li><a href="/contactus">Kontak Kami</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                  <h4 class="footer-title">Kontak</h4>
                  <ul class="footer-contact">
-                    <li><img src="./img/email-icon.png" alt="Email"> kitabantu@gmail.com</li>
-                    <li><img src="./img/phone-icon.png" alt="Phone"> 082 222 222 222</li>
+                    <li><img src="./img/message.png" alt="Email"> kitabantu@gmail.com</li>
+                    <li><img src="./img/call.png" alt="Phone"> 082 222 222 222</li>
                  </ul>
             </div>
             <div class="footer-section">
@@ -243,7 +243,7 @@
         </div>
         <div class="footer-bottom">
             <p class="copyright">Copyright © 2025 Kitabantu</p>
-            <button class="chat-button"><img src="./img/chat-icon.png" alt="chat icon"><span>1 Message Arrived</span></button>
+            <button class="chat-button"><img src="./img/message.png" alt="chat icon"><span>1 Message Arrived</span></button>
         </div>
     </footer>
 
