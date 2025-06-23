@@ -1,11 +1,5 @@
-/* =================================================================
-   USER-PROFILE.CSS - STYLESHEET LENGKAP UNTUK HALAMAN PROFIL USER
-   ================================================================= */
-
-/* --- FONT IMPORT --- */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
 
-/* --- GLOBAL RESET & BASE STYLES --- */
 * {
   box-sizing: border-box;
   margin: 0;

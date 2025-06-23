@@ -1,7 +1,3 @@
-/* =================================================================
-   SEARCH-CAMPAIGN.CSS - STYLE TAMBAHAN UNTUK HALAMAN PENCARIAN
-   ================================================================= */
-
 .search-header {
     text-align: center;
     max-width: 600px;
@@ -17,14 +13,12 @@
 .search-header .section-description {
     font-size: 1.1rem;
     color: #5a78a5;
-    margin-top: 1rem; /* Tambahkan margin-top jika perlu */
+    margin-top: 1rem; 
     margin-bottom: 2rem;
     text-align: center;
-    /* Tambahkan ini untuk memastikan margin kiri dan kanan otomatis */
     margin-left: auto;
     margin-right: auto;
-    /* Pastikan tidak ada lebar maksimum yang terlalu ketat */
-    max-width: 600px; /* Anda bisa mencoba menghilangkan atau memperbesar nilai ini */
+    max-width: 600px;
 }
 
 .search-form {
@@ -36,7 +30,7 @@
 .search-form input {
     width: 100%;
     padding: 1rem 1.5rem;
-    padding-right: 4rem; /* Ruang untuk tombol search */
+    padding-right: 4rem;
     border: 1px solid #ced4da;
     border-radius: 12px;
     font-size: 1rem;

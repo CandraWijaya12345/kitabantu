@@ -1,7 +1,3 @@
-/* =================================================================
-   KITATOLONG.CSS - STYLESHEET LENGKAP UNTUK FORM KITA TOLONG
-   ================================================================= */
-
 /* --- FONT IMPORT --- */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
 
@@ -31,7 +27,7 @@ img {
 }
 
 main {
-    padding-top: 80px; /* Jarak dari navbar fixed */
+    padding-top: 80px; 
 }
 
 /* --- HEADER & NAVIGATION --- */
@@ -163,7 +159,7 @@ main {
     font-size: 1rem;
 }
 
-/* ===== SELECTOR DIPERBARUI untuk mencakup type date dan time ===== */
+/* ===== SELECTOR untuk mencakup type date dan time ===== */
 .form-group input[type="text"],
 .form-group input[type="date"],
 .form-group input[type="time"] {

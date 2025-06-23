@@ -1,6 +1,3 @@
-/* =================================================================
-   KODE CSS YANG ANDA BERIKAN (JANGAN DIUBAH)
-   ================================================================= */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 
@@ -30,7 +27,7 @@ img {
 }
 
 main {
-    padding-top: 80px; /* Jarak agar konten tidak tertutup navbar fixed */
+    padding-top: 80px; 
 }
 
  /* Header wrapper (optional, if you want sticky) */
@@ -56,7 +53,6 @@ main {
   height: 80px;
 }
 
-/* Set semua section agar fleksibel */
 .nav-section {
   flex: 1;
   display: flex;
@@ -64,7 +60,6 @@ main {
   justify-content: center;
 }
 
-/* Khusus kiri dan kanan: justify content sesuai arah */
 .nav-left {
   justify-content: flex-start;
   gap: 2rem;
@@ -75,7 +70,6 @@ main {
   gap: 1.5rem;
 }
 
-/* Logo di tengah */
 .logo {
   font-size: 2.5rem;
   font-weight: 800;
@@ -84,7 +78,6 @@ main {
   text-align: center;
 }
 
-/* Link style */
 .nav-link {
   font-size: 1.1rem;
   font-weight: 400;
@@ -92,7 +85,6 @@ main {
   text-decoration: none;
 }
 
-/* Search */
 .search-link {
   display: flex;
   align-items: center;
@@ -109,7 +101,6 @@ main {
   object-fit: contain;
 }
 
-/* Button masuk */
 .login-button {
   padding: 0.5rem 1.5rem;
   background-color: #5893ea;
@@ -135,7 +126,6 @@ main {
   background-color: #4a7fd6;
 }
 
-/* Campaigns section styles */
 .campaigns {
   padding: 4rem 5rem;
   text-align: center;

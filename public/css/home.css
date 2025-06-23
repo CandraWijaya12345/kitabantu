@@ -1,8 +1,3 @@
-/* =================================================================
-   HOME.CSS - STYLESHEET LENGKAP UNTUK HALAMAN BERANDA
-   (Dengan perbaikan pada Hero Section)
-   ================================================================= */
-
 /* --- FONT IMPORT --- */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
 
@@ -32,10 +27,10 @@ img {
 }
 
 main {
-    padding-top: 80px; /* Jarak dari navbar fixed */
+    padding-top: 80px;
 }
 
- /* --- HEADER & NAVIGATION (TETAP SAMA) --- */
+ /* --- HEADER & NAVIGATION --- */
 .header {
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -79,18 +74,17 @@ main {
   background-color: #4a7fd6;
 }
 
-/* ===== BAGIAN INI DIPERBAIKI SESUAI GAMBAR ===== */
 .home-hero {
   display: flex;
   align-items: center;
-  justify-content: center; /* Menggunakan center untuk keseimbangan */
+  justify-content: center; 
   gap: 3rem;
-  padding: 6rem 5rem; /* Menambah padding atas dan bawah */
+  padding: 6rem 5rem; 
   background: linear-gradient(to right, #ffffff 50%, #eaf6ff 100%);
 }
 
 .home-hero .hero-content {
-  flex-basis: 45%; /* Memberi lebar tetap pada konten kiri */
+  flex-basis: 45%; 
   max-width: 500px;
 }
 
@@ -109,7 +103,7 @@ main {
 }
 
 .home-hero .hero-image {
-  flex-basis: 55%; /* Memberi lebar tetap pada gambar kanan */
+  flex-basis: 55%; 
   max-width: 600px;
 }
 .home-hero .hero-image img {
@@ -117,8 +111,6 @@ main {
   border-radius: 20px;
   box-shadow: -10px 10px 30px rgba(0,0,0,0.1);
 }
-/* ===== AKHIR PERBAIKAN ===== */
-
 
 /* Campaigns section styles */
 .campaigns {
