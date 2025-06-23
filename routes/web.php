@@ -61,3 +61,11 @@ Route::get('/user', function () {
 Route::get('/ganti_password', function () {
     return view('ganti_password');
 });
+
+Route::get('/search_campaign', function () {
+    return view('search_campaign');
+});
+
+Route::get('/home', function () {
+    return view('home');
+});

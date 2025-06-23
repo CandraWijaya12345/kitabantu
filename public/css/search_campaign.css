@@ -1,0 +1,71 @@
+/* =================================================================
+   SEARCH-CAMPAIGN.CSS - STYLE TAMBAHAN UNTUK HALAMAN PENCARIAN
+   ================================================================= */
+
+.search-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+}
+
+.search-header .page-title {
+    font-size: 2.75rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.search-header .section-description {
+    font-size: 1.1rem;
+    color: #5a78a5;
+    margin-top: 1rem; /* Tambahkan margin-top jika perlu */
+    margin-bottom: 2rem;
+    text-align: center;
+    /* Tambahkan ini untuk memastikan margin kiri dan kanan otomatis */
+    margin-left: auto;
+    margin-right: auto;
+    /* Pastikan tidak ada lebar maksimum yang terlalu ketat */
+    max-width: 600px; /* Anda bisa mencoba menghilangkan atau memperbesar nilai ini */
+}
+
+.search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-form input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    padding-right: 4rem; /* Ruang untuk tombol search */
+    border: 1px solid #ced4da;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: "Open Sans", sans-serif;
+    color: #304e7a;
+}
+
+.search-form input:focus {
+    outline: none;
+    border-color: #5893ea;
+    box-shadow: 0 0 0 3px rgba(88, 147, 234, 0.2);
+}
+
+.search-form button {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    bottom: 6px;
+    width: 48px;
+    border: none;
+    background-color: #5893ea;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-form button img {
+    width: 24px;
+    height: 24px;
+}
