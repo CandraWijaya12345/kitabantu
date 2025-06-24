@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganti Password - KitaBantu</title>
-    <link rel="stylesheet" href="css/ganti_password.css"> 
+    <link rel="stylesheet" href="/css/ganti_password.css"> 
 </head>
 <body>
 
@@ -20,7 +20,7 @@
             </div>
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
-                <a href="#" class="search-link">
+                <a href="/search_campaign" class="search-link">
                     <img src="./img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
@@ -33,10 +33,10 @@
             <div class="profile-container">
                 <aside class="profile-sidebar">
                     <nav class="profile-nav">
-                        <a href="#" class="profile-nav-link">Informasi Pengguna</a>
-                        <a href="#" class="profile-nav-link active">Ganti Password</a>
+                        <a href="/user" class="profile-nav-link">Informasi Pengguna</a>
+                        <a href="/user/ganti_password" class="profile-nav-link active">Ganti Password</a>
                         <a href="#" class="profile-nav-link">Campaign Saya</a>
-                        <a href="#" class="profile-nav-link">Permintaan KamiTolong</a>
+                        <a href="/list_kitatolong" class="profile-nav-link">Permintaan KitaTolong</a>
                     </nav>
                 </aside>
 

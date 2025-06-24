@@ -58,7 +58,7 @@ Route::get('/user', function () {
     return view('user');
 });
 
-Route::get('/ganti_password', function () {
+Route::get('/user/ganti_password', function () {
     return view('ganti_password');
 });
 
@@ -68,4 +68,8 @@ Route::get('/search_campaign', function () {
 
 Route::get('/home', function () {
     return view('home');
+});
+
+Route::get('/tarikdana', function () {
+    return view('tarikdana');
 });

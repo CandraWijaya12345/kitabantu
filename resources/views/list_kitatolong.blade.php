@@ -9,30 +9,30 @@
 <body>
 
     <div class="page-container">
-        <header class="header">
-            <nav class="nav">
-                <div class="nav-section nav-left">
-                    <a href="/formdonasi" class="nav-link">Galang Dana</a>
-                    <a href="/donate" class="nav-link">Donasi</a>
-                    <a href="/formkitatolong" class="nav-link">KitaTolong</a>
-                </div>
-                <div class="nav-section">
-                    <a href="/home" class="logo">KitaBantu</a>
-                </div>
-                <div class="nav-section nav-right">
-                    <a href="/detail" class="nav-link">Tentang Kami</a>
-                    <a href="#" class="search-link">
-                        <img src="./img/search.png" alt="Search Icon" class="search-icon">
-                        Search
-                    </a>
-                    <a href="/signin" class="login-button">Masuk</a>
-                </div>
-            </nav>
-        </header>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-section nav-left">
+                <a href="/formdonasi" class="nav-link">Galang Dana</a>
+                <a href="/donate" class="nav-link">Donasi</a>
+                <a href="/formkitatolong" class="nav-link">KitaTolong</a>
+            </div>
+            <div class="nav-section">
+                <a href="/home" class="logo">KitaBantu</a>
+            </div>
+            <div class="nav-section nav-right">
+                <a href="/detail" class="nav-link">Tentang Kami</a>
+                <a href="/search_campaign" class="search-link">
+                    <img src="./img/search.png" alt="Search Icon" class="search-icon">
+                    Search
+                </a>
+                <a href="/signin" class="login-button">Masuk</a>
+            </div>
+        </nav>
+    </header>
     
         <main class="list-main">
             <div class="list-container">
-                <h1 class="list-title">Berikut merupakan daftar permintaan KamiTolong Anda</h1>
+                <h1 class="list-title">Berikut merupakan daftar permintaan KitaTolong Anda</h1>
     
                 <div class="request-card">
                     <div class="card-header">
