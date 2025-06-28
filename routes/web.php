@@ -105,3 +105,7 @@ Route::get('/admin/settings', function () {
 Route::get('/admin/kitatolong', function () {
     return view('adminkitatolong');
 });
+
+Route::get('/admin/adminverifkitatolong', function () {
+    return view('adminverifkitatolong');
+});

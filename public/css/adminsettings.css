@@ -1,0 +1,176 @@
+/* =================================================================
+   ADMINSETTINGS.CSS - STYLESHEET LENGKAP
+   ================================================================= */
+
+/* --- FONT IMPORT & ROOT VARIABLES --- */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
+
+:root {
+    --sidebar-bg: #ffffff;
+    --main-bg: #f7faff;
+    --primary-blue: #5893ea;
+    --dark-blue: #304e7a;
+    --text-primary: #333333;
+    --text-secondary: #888888;
+    --border-color: #e9ecef;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+/* --- GLOBAL RESET & BASE STYLES --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Open Sans", sans-serif; background-color: var(--main-bg); color: var(--text-primary); }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* --- MAIN LAYOUT --- */
+.admin-container { display: flex; min-height: 100vh; }
+
+/* --- SIDEBAR (BAGIAN INI YANG DIPERBAIKI) --- */
+.sidebar {
+    width: 260px; 
+    background-color: var(--sidebar-bg); 
+    border-right: 1px solid var(--border-color);
+    display: flex; 
+    flex-direction: column; 
+    padding: 1.5rem; 
+    flex-shrink: 0;
+    
+    /* ===== KODE BARU DITAMBAHKAN DI SINI ===== */
+    position: sticky; /* Membuat sidebar menempel saat di-scroll */
+    top: 0; /* Menempel di bagian paling atas */
+    height: 100vh; /* Tinggi sidebar setinggi layar browser */
+}
+
+.sidebar-header { margin-bottom: 2.5rem; text-align: center; }
+.sidebar-header .logo { font-size: 2.25rem; font-weight: 800; color: var(--dark-blue); }
+
+.sidebar-nav { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem; 
+    flex-grow: 1;
+
+    /* ===== KODE BARU DITAMBAHKAN DI SINI ===== */
+    overflow-y: auto; /* Tambahkan scroll HANYA pada bagian menu jika tidak cukup */
+}
+
+.nav-item {
+    display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem;
+    border-radius: 8px; font-size: 1rem; font-weight: 600;
+    color: var(--text-secondary); transition: all 0.2s ease-in-out;
+}
+.nav-item .nav-icon { width: 20px; height: 20px; }
+.nav-item:hover { background-color: var(--main-bg); color: var(--dark-blue); }
+.nav-item.active {
+    background-color: var(--primary-blue); color: #ffffff;
+    box-shadow: 0 4px 10px rgba(88, 147, 234, 0.3);
+}
+.nav-item.active:hover { background-color: #4a7fd6; }
+.sidebar-footer .logout { color: #d9534f; }
+.sidebar-footer .logout:hover { background-color: #fdeeee; }
+
+/* --- MAIN CONTENT (TIDAK DIUBAH) --- */
+.main-content { flex-grow: 1; padding: 2rem; }
+.main-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
+}
+.search-bar {
+    display: flex; align-items: center; gap: 0.75rem; background-color: #fff;
+    padding: 0.5rem 1rem; border-radius: 10px; border: 1px solid var(--border-color);
+    width: 100%; max-width: 400px;
+}
+.search-bar img { width: 20px; height: 20px; opacity: 0.5; }
+.search-bar input {
+    border: none; outline: none; width: 100%; font-size: 1rem; font-family: "Open Sans", sans-serif;
+}
+.admin-profile { display: flex; align-items: center; gap: 1rem; }
+.profile-info { text-align: right; }
+.profile-name { font-weight: 700; }
+.profile-role { font-size: 0.9rem; color: var(--text-secondary); }
+.profile-avatar { width: 45px; height: 45px; border-radius: 50%; }
+
+/* --- SETTINGS PAGE STYLES (TIDAK DIUBAH) --- */
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.widget {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+}
+.widget h3 {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: var(--dark-blue);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.settings-form {
+    max-width: 600px;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="password"],
+.form-group textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: "Open Sans", sans-serif;
+    color: var(--text-primary);
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(88, 147, 234, 0.2);
+}
+.form-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 2rem;
+}
+.btn-submit {
+    background-color: var(--primary-blue);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn-submit:hover {
+    background-color: #4a7fd6;
+}
+
+/* --- RESPONSIVE (TIDAK DIUBAH) --- */
+@media (max-width: 768px) {
+    .admin-container { flex-direction: column; }
+    .sidebar { 
+        width: 100%; 
+        height: auto; /* Tinggi sidebar kembali auto di mobile */
+        border-right: none; 
+        border-bottom: 1px solid var(--border-color);
+        position: static; /* Hapus sticky di mobile */
+    }
+    .main-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .nav { padding: 1rem 2rem; }
+    .main-content { padding: 1.5rem; }
+    .widget { padding: 1rem; }
+}

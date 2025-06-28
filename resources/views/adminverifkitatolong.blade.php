@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen KitaTolong - Admin KitaBantu</title>
+    <title>Verifikasi KitaTolong - Admin KitaBantu</title>
     <link rel="stylesheet" href="/css/adminkitatolong.css">
 </head>
 <body>
@@ -41,11 +41,11 @@
                     <img src="./img/icon-pengaturan.png" alt="" class="nav-icon">
                     <span>Pengaturan</span>
                 </a>
-                <a href="#" class="nav-item active"> <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
+                <a href="#" class="nav-item">
+                    <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
                     <span>KitaTolong</span>
                 </a>
-                <a href="#" class="nav-item">
-                    <img src="./img/icon-verifikasi-kitatolong.png" alt="" class="nav-icon">
+                <a href="#" class="nav-item active"> <img src="./img/icon-verifikasi-kitatolong.png" alt="" class="nav-icon">
                     <span>Verifikasi KitaTolong</span>
                 </a>
             </nav>
@@ -61,7 +61,7 @@
             <header class="main-header">
                 <div class="search-bar">
                     <img src="./img/search-icon-gray.png" alt="Search">
-                    <input type="text" placeholder="Cari pemohon atau kategori...">
+                    <input type="text" placeholder="Cari permintaan pertolongan...">
                 </div>
                 <div class="admin-profile">
                     <div class="profile-info">
@@ -74,12 +74,7 @@
 
             <section class="widget list-widget">
                 <div class="widget-header">
-                    <h3>Manajemen Permintaan KitaTolong</h3>
-                    <div class="filter-tabs">
-                        <button class="tab-btn active">Semua</button>
-                        <button class="tab-btn">Akan Datang</button>
-                        <button class="tab-btn">Selesai</button>
-                    </div>
+                    <h3>Verifikasi Permintaan KitaTolong</h3>
                 </div>
                 <div class="table-container">
                     <table class="data-table">
@@ -87,7 +82,7 @@
                             <tr>
                                 <th>Pemohon</th>
                                 <th>Kategori</th>
-                                <th>Tanggal Pelaksanaan</th>
+                                <th>Tanggal Permintaan</th>
                                 <th>Volunteer Ditugaskan</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
@@ -95,36 +90,61 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Citra Lestari</td>
-                                <td>Pendamping Lansia</td>
+                                <td>Budi Santoso</td>
+                                <td>Pengantaran Lansia</td>
                                 <td>30 Jul 2025</td>
-                                <td><button class="btn-action assign">Tugaskan</button></td>
-                                <td><span class="status-tag success">Akan Datang</span></td>
-                                <td><a href="#" class="btn-action detail">Detail</a></td>
+                                <td>-</td>
+                                <td><span class="status-tag pending">Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="#" class="btn-action detail">Detail</a>
+                                        <button class="btn-action approve">Setujui</button>
+                                        <button class="btn-action reject">Tolak</button>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
-                                <td>Budi Santoso</td>
+                                <td>Citra Lestari</td>
+                                <td>Pendamping</td>
+                                <td>29 Jul 2025</td>
+                                <td>Rina Melati</td>
+                                <td><span class="status-tag success">Disetujui</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="#" class="btn-action detail">Detail</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Eko Prasetyo</td>
                                 <td>Evakuasi Barang</td>
                                 <td>28 Jul 2025</td>
-                                <td>Rina Melati</td>
-                                <td><span class="status-tag success">Akan Datang</span></td>
-                                <td><a href="#" class="btn-action detail">Detail</a></td>
+                                <td>-</td>
+                                <td><span class="status-tag rejected">Ditolak</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="#" class="btn-action detail">Detail</a>
+                                    </div>
+                                </td>
                             </tr>
-                             <tr>
-                                <td>Eko Prasetyo</td>
+                            <tr>
+                                <td>Dewi Anggraini</td>
                                 <td>Menjaga Posko</td>
-                                <td>15 Jun 2025</td>
+                                <td>25 Jul 2025</td>
                                 <td>Andi Wijaya</td>
                                 <td><span class="status-tag completed">Selesai</span></td>
-                                <td><a href="#" class="btn-action detail">Detail</a></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="#" class="btn-action detail">Detail</a>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                 <div class="pagination">
+                <div class="pagination">
                     <a href="#">&laquo;</a>
                     <a href="#" class="active">1</a>
-                    <a href="#">2</a>
                     <a href="#">&raquo;</a>
                 </div>
             </section>
@@ -133,33 +153,44 @@
 
     <div class="modal-overlay" id="modalOverlay"></div>
 
-    <div class="modal" id="assignVolunteerModal">
+    <div class="modal" id="approveModal">
         <div class="modal-header">
-            <h3>Tugaskan Volunteer</h3>
+            <h3>Konfirmasi Persetujuan</h3>
             <button class="close-modal">&times;</button>
         </div>
         <div class="modal-body">
-            <label for="volunteerSelect">Pilih volunteer yang akan ditugaskan untuk permintaan ini:</label>
-            <select id="volunteerSelect" class="form-control">
-                <option value="" disabled selected>-- Pilih Volunteer --</option>
-                <option value="andi_wijaya">Andi Wijaya</option>
-                <option value="rina_melati">Rina Melati</option>
-                <option value="doni_saputra">Doni Saputra</option>
-                <option value="sari_kumala">Sari Kumala</option>
-            </select>
+            <p>Anda yakin ingin menyetujui permintaan pertolongan ini?</p>
         </div>
         <div class="modal-footer">
             <button class="btn-modal cancel">Batal</button>
-            <button class="btn-modal confirm-assign">Simpan Penugasan</button>
+            <button class="btn-modal confirm-approve">Ya, Setujui</button>
+        </div>
+    </div>
+
+    <div class="modal" id="rejectModal">
+        <div class="modal-header">
+            <h3>Alasan Penolakan</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <label for="rejectionReason">Mohon berikan alasan mengapa permintaan ini ditolak:</label>
+            <textarea id="rejectionReason" rows="5" placeholder="Contoh: Permintaan di luar jangkauan operasional..."></textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-modal cancel">Batal</button>
+            <button class="btn-modal confirm-reject">Kirim Penolakan</button>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const modalOverlay = document.getElementById('modalOverlay');
-            const assignModal = document.getElementById('assignVolunteerModal');
+            const approveModal = document.getElementById('approveModal');
+            const rejectModal = document.getElementById('rejectModal');
             
-            const assignButtons = document.querySelectorAll('.btn-action.assign');
+            const approveButtons = document.querySelectorAll('.btn-action.approve');
+            const rejectButtons = document.querySelectorAll('.btn-action.reject');
+
             const closeButtons = document.querySelectorAll('.close-modal');
             const cancelButtons = document.querySelectorAll('.btn-modal.cancel');
 
@@ -175,19 +206,11 @@
                 });
             }
 
-            assignButtons.forEach(button => button.addEventListener('click', () => openModal(assignModal)));
+            approveButtons.forEach(button => button.addEventListener('click', () => openModal(approveModal)));
+            rejectButtons.forEach(button => button.addEventListener('click', () => openModal(rejectModal)));
             closeButtons.forEach(button => button.addEventListener('click', closeModal));
             cancelButtons.forEach(button => button.addEventListener('click', closeModal));
             modalOverlay.addEventListener('click', closeModal);
-
-            // Logika untuk filter tabs (visual only)
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
         });
     </script>
 

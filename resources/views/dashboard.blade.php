@@ -13,7 +13,7 @@
                 <a href="#" class="logo">KitaBantu</a>
             </div>
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
+                <a href="#" class="nav-item">
                     <img src="./img/icon-dashboard.png" alt="" class="nav-icon">
                     <span>Dashboard</span>
                 </a>
@@ -33,17 +33,20 @@
                     <img src="./img/icon-verifikasi.png" alt="" class="nav-icon">
                     <span>Verifikasi Campaign</span>
                 </a>
-                 <a href="#" class="nav-item">
+                <a href="#" class="nav-item">
                     <img src="./img/icon-statistik.png" alt="" class="nav-icon">
                     <span>Statistik</span>
                 </a>
-                 <a href="#" class="nav-item">
+                <a href="#" class="nav-item">
                     <img src="./img/icon-pengaturan.png" alt="" class="nav-icon">
                     <span>Pengaturan</span>
                 </a>
-                 <a href="#" class="nav-item">
-                    <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
+                <a href="#" class="nav-item active"> <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
                     <span>KitaTolong</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <img src="./img/icon-verifikasi-kitatolong.png" alt="" class="nav-icon">
+                    <span>Verifikasi KitaTolong</span>
                 </a>
             </nav>
             <div class="sidebar-footer">

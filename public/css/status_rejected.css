@@ -120,7 +120,7 @@ img {
 /* ===== AKHIR STYLE BARU ===== */
 
 
-/* --- FOOTER (SUDAH DIRAPIKAN) --- */
+/* --- FOOTER --- */
 .footer {
   background: linear-gradient(180deg, #bee6ff 0%, #6aa7ce 100%);
   padding: 2.5rem 5rem 1.5rem; 
@@ -172,13 +172,16 @@ img {
 /* --- RESPONSIVE MEDIA QUERIES --- */
 @media (max-width: 1024px) {
   .nav { padding: 1rem 2rem; }
-  .footer { padding: 2rem; }
-}
-
-@media (max-width: 768px) {
-  .status-icon { width: 150px; }
-  .status-title { font-size: 2rem; }
-  .status-subtitle { font-size: 1.1rem; }
-  .footer-content { flex-direction: column; gap: 1.5rem; }
-  .footer-section { min-width: 100%; }
+  .profile-main, .footer { padding: 3rem 2rem; }
+  .profile-container {
+    grid-template-columns: 1fr;
+  }
+  .profile-sidebar {
+    margin-bottom: 2rem;
+  }
+  .profile-nav {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

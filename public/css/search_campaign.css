@@ -63,3 +63,8 @@
     width: 24px;
     height: 24px;
 }
+
+main.list-main {
+    flex-grow: 1;
+    padding-bottom: 5rem; 
+}

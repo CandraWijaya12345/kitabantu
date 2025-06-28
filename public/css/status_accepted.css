@@ -99,7 +99,7 @@ img {
     color: #5a78a5;
 }
 
-/* ===== FOOTER ===== */
+/* --- FOOTER --- */
 .footer {
   background: linear-gradient(180deg, #bee6ff 0%, #6aa7ce 100%);
   padding: 2.5rem 5rem 1.5rem; 
@@ -112,8 +112,8 @@ img {
   max-width: 1200px; margin-left: auto; margin-right: auto;
 }
 .footer-section { flex: 1; min-width: 220px; }
-.footer-logo { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; } /* DIUBAH */
-.footer-description { font-size: 0.9rem; } 
+.footer-logo { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
+.footer-description { font-size: 0.9rem; }
 .footer-title { 
     font-size: 1.25rem;
     font-weight: 600; 
@@ -123,14 +123,14 @@ img {
 .footer-links li, .footer-contact li { 
     margin-bottom: 0.5rem;
 }
-.footer-contact li { display: flex; align-items: center; font-size: 0.9rem;} /* DIUBAH */
-.footer-contact img { width: 18px; height: 18px; margin-right: 0.75rem; } /* DIUBAH */
+.footer-contact li { display: flex; align-items: center; font-size: 0.9rem;}
+.footer-contact img { width: 18px; height: 18px; margin-right: 0.75rem; }
 .faq-item { margin-bottom: 0.5rem; }
 .faq-question {
   display: flex; justify-content: space-between; align-items: center;
-  width: 100%; background-color: #ddf2ff; border: none; padding: 0.6rem 0.75rem; /* DIUBAH */
-  font-size: 0.9rem; text-align: left; cursor: pointer; /* DIUBAH */
-  box-shadow: inset -1px 1px 8px 1px rgba(0,0,0,0.15); border-radius: 5px; color: #304e7a; /* DIUBAH */
+  width: 100%; background-color: #ddf2ff; border: none; padding: 0.6rem 0.75rem;
+  font-size: 0.9rem; text-align: left; cursor: pointer;
+  box-shadow: inset -1px 1px 8px 1px rgba(0,0,0,0.15); border-radius: 5px; color: #304e7a;
 }
 .faq-icon { width: 12px; height: 12px; }
 .footer-bottom {
@@ -142,21 +142,25 @@ img {
 .copyright { font-size: 0.875rem; font-weight: 300; }
 .chat-button {
   display: flex; align-items: center; background-color: #aecfea;
-  border: none; border-radius: 15px 15px 0 0; padding: 0.4rem 1rem; cursor: pointer; /* DIUBAH */
+  border: none; border-radius: 15px 15px 0 0; padding: 0.4rem 1rem;
+  cursor: pointer;
 }
-.chat-button img { width: 18px; height: 18px; margin-right: 0.5rem; } /* DIUBAH */
+.chat-button img { width: 18px; height: 18px; margin-right: 0.5rem; }
 
 
 /* --- RESPONSIVE MEDIA QUERIES --- */
 @media (max-width: 1024px) {
   .nav { padding: 1rem 2rem; }
-  .footer { padding: 2rem; }
-}
-
-@media (max-width: 768px) {
-  .status-icon { width: 150px; }
-  .status-title { font-size: 2rem; }
-  .status-subtitle { font-size: 1.1rem; }
-  .footer-content { flex-direction: column; gap: 1.5rem; }
-  .footer-section { min-width: 100%; }
+  .profile-main, .footer { padding: 3rem 2rem; }
+  .profile-container {
+    grid-template-columns: 1fr;
+  }
+  .profile-sidebar {
+    margin-bottom: 2rem;
+  }
+  .profile-nav {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
