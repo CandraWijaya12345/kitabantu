@@ -73,3 +73,35 @@ Route::get('/home', function () {
 Route::get('/tarikdana', function () {
     return view('tarikdana');
 });
+
+Route::get('/admin/dashboard', function () {
+    return view('dashboard');
+});
+
+Route::get('/admin/campaign', function () {
+    return view('admincampaign');
+});
+
+Route::get('/admin/donasi', function () {
+    return view('admindonasi');
+}); 
+
+Route::get('/admin/user', function () {
+    return view('adminuser');
+});    
+
+Route::get('/admin/verifcampaign', function () {
+    return view('adminverifcampaign');
+}); 
+
+Route::get('/admin/statistik', function () {
+    return view('adminstatistik');
+});
+
+Route::get('/admin/settings', function () {
+    return view('adminsettings');
+});
+
+Route::get('/admin/kitatolong', function () {
+    return view('adminkitatolong');
+});
