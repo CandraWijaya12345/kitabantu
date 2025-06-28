@@ -106,6 +106,6 @@ Route::get('/admin/kitatolong', function () {
     return view('adminkitatolong');
 });
 
-Route::get('/admin/adminverifkitatolong', function () {
+Route::get('/admin/verifkitatolong', function () {
     return view('adminverifkitatolong');
 });
