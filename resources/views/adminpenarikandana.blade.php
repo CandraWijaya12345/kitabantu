@@ -29,10 +29,6 @@
                     <img src="./img/icon-user.png" alt="" class="nav-icon">
                     <span>User</span>
                 </a>
-                <a href="/admin/verifcampaign" class="nav-item">
-                    <img src="./img/icon-verifikasi.png" alt="" class="nav-icon">
-                    <span>Verifikasi Campaign</span>
-                </a>
                 <a href="/admin/tarikdana" class="nav-item active"> <img src="./img/icon-penarikan-dana.png" alt="" class="nav-icon">
                     <span>Penarikan Dana</span>
                 </a>
@@ -47,10 +43,6 @@
                 <a href="/admin/kitatolong" class="nav-item"> 
                     <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
                     <span>KitaTolong</span>
-                </a>
-                <a href="/admin/verifkitatolong" class="nav-item">
-                    <img src="./img/icon-verifikasi-kitatolong.png" alt="" class="nav-icon">
-                    <span>Verifikasi KitaTolong</span>
                 </a>
             </nav>
             <div class="sidebar-footer">

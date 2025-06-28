@@ -29,10 +29,6 @@
                     <img src="./img/icon-user.png" alt="" class="nav-icon">
                     <span>User</span>
                 </a>
-                <a href="/admin/verifcampaign" class="nav-item">
-                    <img src="./img/icon-verifikasi.png" alt="" class="nav-icon">
-                    <span>Verifikasi Campaign</span>
-                </a>
                 <a href="/admin/tarikdana" class="nav-item"> <img src="./img/icon-penarikan-dana.png" alt="" class="nav-icon">
                     <span>Penarikan Dana</span>
                 </a>
@@ -44,13 +40,8 @@
                     <img src="./img/icon-pengaturan.png" alt="" class="nav-icon">
                     <span>Pengaturan</span>
                 </a>
-                <a href="/admin/kitatolong" class="nav-item active"> 
-                    <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
+                <a href="/admin/kitatolong" class="nav-item active"> <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
                     <span>KitaTolong</span>
-                </a>
-                <a href="/admin/verifkitatolong" class="nav-item">
-                    <img src="./img/icon-verifikasi-kitatolong.png" alt="" class="nav-icon">
-                    <span>Verifikasi KitaTolong</span>
                 </a>
             </nav>
             <div class="sidebar-footer">
@@ -65,7 +56,7 @@
             <header class="main-header">
                 <div class="search-bar">
                     <img src="./img/search-icon-gray.png" alt="Search">
-                    <input type="text" placeholder="Cari pemohon atau kategori...">
+                    <input type="text" placeholder="Cari permintaan pertolongan...">
                 </div>
                 <div class="admin-profile">
                     <div class="profile-info">
@@ -77,17 +68,18 @@
             </header>
 
             <section class="widget list-widget">
-                <div class="widget-header">
-                    <h3>Manajemen Permintaan KitaTolong</h3>
-                    <div class="filter-tabs">
-                        <button class="tab-btn active">Semua</button>
-                        <button class="tab-btn">Akan Datang</button>
-                        <button class="tab-btn">Selesai</button>
-                    </div>
+                <div class="widget-tabs">
+                    <button class="tab-btn active" data-target="list-view">List Permintaan</button>
+                    <button class="tab-btn" data-target="verification-view">Verifikasi Permintaan</button>
                 </div>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
+
+                <div class="tab-content active" id="list-view">
+                    <div class="widget-header">
+                        <h3>Manajemen Permintaan KitaTolong</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                           <thead>
                             <tr>
                                 <th>Pemohon</th>
                                 <th>Kategori</th>
@@ -123,13 +115,65 @@
                                 <td><a href="#" class="btn-action detail">Detail</a></td>
                             </tr>
                         </tbody>
-                    </table>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">&raquo;</a>
+                    </div>
                 </div>
-                 <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">&raquo;</a>
+
+                <div class="tab-content" id="verification-view">
+                    <div class="widget-header">
+                        <h3>Verifikasi Permintaan KitaTolong</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                             <thead>
+                                <tr>
+                                    <th>Pemohon</th>
+                                    <th>Kategori</th>
+                                    <th>Tgl Diajukan</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Fajar Nugroho</td>
+                                    <td>Pembersihan Area Bencana</td>
+                                    <td>29 Jun 2025</td>
+                                    <td><span class="status-tag pending">Pending</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a href="#" class="btn-action detail">Detail</a>
+                                            <button class="btn-action approve">Setujui</button>
+                                            <button class="btn-action reject">Tolak</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Siti Aminah</td>
+                                    <td>Pengantaran Lansia</td>
+                                    <td>29 Jun 2025</td>
+                                    <td><span class="status-tag pending">Pending</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a href="#" class="btn-action detail">Detail</a>
+                                            <button class="btn-action approve">Setujui</button>
+                                            <button class="btn-action reject">Tolak</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">&raquo;</a>
+                    </div>
                 </div>
             </section>
         </main>
@@ -137,39 +181,77 @@
 
     <div class="modal-overlay" id="modalOverlay"></div>
 
-    <div class="modal" id="assignVolunteerModal">
-        <div class="modal-header">
-            <h3>Tugaskan Volunteer</h3>
-            <button class="close-modal">&times;</button>
-        </div>
+    <div class="modal" id="approveModal">
+        <div class="modal-header"><h3>Konfirmasi Persetujuan</h3><button class="close-modal">&times;</button></div>
+        <div class="modal-body"><p>Anda yakin ingin menyetujui permintaan ini?</p></div>
+        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-approve">Ya, Setujui</button></div>
+    </div>
+
+    <div class="modal" id="rejectModal">
+        <div class="modal-header"><h3>Alasan Penolakan</h3><button class="close-modal">&times;</button></div>
         <div class="modal-body">
-            <label for="volunteerSelect">Pilih volunteer yang akan ditugaskan untuk permintaan ini:</label>
+            <label for="rejectionReason">Mohon berikan alasan mengapa permintaan ini ditolak:</label>
+            <textarea id="rejectionReason" rows="5" placeholder="Contoh: Permintaan di luar jangkauan..."></textarea>
+        </div>
+        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-reject">Kirim Penolakan</button></div>
+    </div>
+    
+    <div class="modal" id="assignVolunteerModal">
+        <div class="modal-header"><h3>Tugaskan Volunteer</h3><button class="close-modal">&times;</button></div>
+        <div class="modal-body">
+            <label for="volunteerSelect">Pilih volunteer untuk permintaan ini:</label>
             <select id="volunteerSelect" class="form-control">
-                <option value="" disabled selected>-- Pilih Volunteer --</option>
+                <option disabled selected>-- Pilih Volunteer --</option>
                 <option value="andi_wijaya">Andi Wijaya</option>
                 <option value="rina_melati">Rina Melati</option>
-                <option value="doni_saputra">Doni Saputra</option>
-                <option value="sari_kumala">Sari Kumala</option>
             </select>
         </div>
-        <div class="modal-footer">
-            <button class="btn-modal cancel">Batal</button>
-            <button class="btn-modal confirm-assign">Simpan Penugasan</button>
-        </div>
+        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-assign">Simpan</button></div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- LOGIKA UNTUK TAB SUB-MENU ---
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const target = button.dataset.target;
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === target) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // --- LOGIKA UNTUK SEMUA MODAL/POPUP ---
             const modalOverlay = document.getElementById('modalOverlay');
-            const assignModal = document.getElementById('assignVolunteerModal');
-            
-            const assignButtons = document.querySelectorAll('.btn-action.assign');
+            const modals = {
+                approve: document.getElementById('approveModal'),
+                reject: document.getElementById('rejectModal'),
+                assign: document.getElementById('assignVolunteerModal')
+            };
+
+            const openModalButtons = {
+                approve: document.querySelectorAll('.btn-action.approve'),
+                reject: document.querySelectorAll('.btn-action.reject'),
+                assign: document.querySelectorAll('.btn-action.assign')
+            };
+
             const closeButtons = document.querySelectorAll('.close-modal');
             const cancelButtons = document.querySelectorAll('.btn-modal.cancel');
 
             function openModal(modal) {
-                modalOverlay.classList.add('show');
-                modal.classList.add('show');
+                if(modal) {
+                    modalOverlay.classList.add('show');
+                    modal.classList.add('show');
+                }
             }
 
             function closeModal() {
@@ -179,19 +261,15 @@
                 });
             }
 
-            assignButtons.forEach(button => button.addEventListener('click', () => openModal(assignModal)));
+            for (const key in openModalButtons) {
+                openModalButtons[key].forEach(button => {
+                    button.addEventListener('click', () => openModal(modals[key]));
+                });
+            }
+
             closeButtons.forEach(button => button.addEventListener('click', closeModal));
             cancelButtons.forEach(button => button.addEventListener('click', closeModal));
             modalOverlay.addEventListener('click', closeModal);
-
-            // Logika untuk filter tabs (visual only)
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
         });
     </script>
 

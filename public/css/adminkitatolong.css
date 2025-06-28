@@ -1,5 +1,5 @@
 /* =================================================================
-   ADMINKITATOLONG.CSS - STYLESHEET LENGKAP
+   ADMINKITATOLONG-FINAL.CSS - STYLESHEET GABUNGAN
    ================================================================= */
 
 /* --- FONT IMPORT & ROOT VARIABLES --- */
@@ -75,34 +75,45 @@ img { max-width: 100%; height: auto; display: block; }
 .profile-role { font-size: 0.9rem; color: var(--text-secondary); }
 .profile-avatar { width: 45px; height: 45px; border-radius: 50%; }
 
-/* --- LIST WIDGET & TABLE --- */
+/* --- LIST WIDGET & TABS --- */
 .list-widget { background-color: #fff; padding: 0; border-radius: 15px; border: 1px solid var(--border-color); }
-.widget-header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem; border-bottom: 1px solid var(--border-color);
-}
-.widget-header h3 { font-size: 1.25rem; color: var(--dark-blue); margin: 0; }
-.table-container { width: 100%; overflow-x: auto; }
-.data-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.data-table th, .data-table td { padding: 1rem 1.5rem; text-align: left; white-space: nowrap; }
-.data-table thead { background-color: #f8f9fa; }
-.data-table th { font-weight: 600; color: var(--text-secondary); }
-.data-table tbody tr { border-bottom: 1px solid var(--border-color); }
-.data-table tbody tr:last-child { border-bottom: none; }
-.data-table tbody tr:hover { background-color: #f8f9fa; }
 
-/* Filter Tabs */
-.filter-tabs { display: flex; gap: 0.5rem; }
+.widget-tabs {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
 .tab-btn {
-    background-color: #f0f7ff; border: 1px solid #cce2f5;
-    color: var(--primary-blue); padding: 0.5rem 1rem;
+    background-color: transparent; border: 1px solid transparent;
+    color: var(--text-secondary); padding: 0.6rem 1.2rem;
     border-radius: 8px; font-weight: 600; font-size: 0.9rem;
     cursor: pointer; transition: all 0.2s ease;
 }
 .tab-btn.active, .tab-btn:hover {
     background-color: var(--primary-blue); color: #fff;
-    border-color: var(--primary-blue);
 }
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+.widget-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem;
+}
+.widget-header h3 { font-size: 1.25rem; color: var(--dark-blue); margin: 0; }
+.table-container { width: 100%; overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.data-table th, .data-table td { padding: 1rem 1.5rem; text-align: left; white-space: nowrap; vertical-align: middle; border-bottom: 1px solid var(--border-color); }
+.data-table thead { background-color: #f8f9fa; }
+.data-table th { font-weight: 600; color: var(--text-secondary); }
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background-color: #f8f9fa; }
 
 /* Status Tags */
 .status-tag {
@@ -114,8 +125,7 @@ img { max-width: 100%; height: auto; display: block; }
 .status-tag.rejected { background-color: var(--danger-bg); color: var(--danger-text); }
 .status-tag.completed { background-color: var(--completed-bg); color: var(--completed-text); }
 
-
-/* Action Buttons in Table */
+/* Action Buttons */
 .action-buttons { display: flex; gap: 0.5rem; }
 .btn-action {
     padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.9rem;
@@ -129,7 +139,6 @@ img { max-width: 100%; height: auto; display: block; }
 .btn-action.reject:hover { background-color: #fbd7d7; }
 .btn-action.assign { background-color: #f3e8ff; color: #8e44ad; }
 .btn-action.assign:hover { background-color: #e9d6ff; }
-
 
 .pagination {
     display: flex; justify-content: center; padding: 1.5rem;
@@ -184,6 +193,8 @@ img { max-width: 100%; height: auto; display: block; }
 .btn-modal { padding: 0.6rem 1.2rem; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
 .btn-modal.cancel { background-color: #fff; color: var(--text-secondary); border: 1px solid #ced4da; }
 .btn-modal.cancel:hover { background-color: #f1f3f5; }
+.btn-modal.confirm-approve { background-color: var(--success-text); color: #fff; }
+.btn-modal.confirm-reject { background-color: var(--danger-text); color: #fff; }
 .btn-modal.confirm-assign { background-color: var(--primary-blue); color: #fff; }
 
 /* --- RESPONSIVE --- */

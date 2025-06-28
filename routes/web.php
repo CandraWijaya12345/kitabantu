@@ -105,11 +105,3 @@ Route::get('/admin/settings', function () {
 Route::get('/admin/kitatolong', function () {
     return view('adminkitatolong');
 });
-
-Route::get('/admin/verifkitatolong', function () {
-    return view('adminverifkitatolong');
-});
-
-Route::get('/admin/tarikdana', function () {
-    return view('adminpenarikandana');
-});
