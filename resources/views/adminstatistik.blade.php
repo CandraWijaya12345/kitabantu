@@ -33,6 +33,9 @@
                     <img src="./img/icon-verifikasi.png" alt="" class="nav-icon">
                     <span>Verifikasi Campaign</span>
                 </a>
+                <a href="/admin/tarikdana" class="nav-item"> <img src="./img/icon-penarikan-dana.png" alt="" class="nav-icon">
+                    <span>Penarikan Dana</span>
+                </a>
                 <a href="/admin/statistik" class="nav-item active">
                     <img src="./img/icon-statistik.png" alt="" class="nav-icon">
                     <span>Statistik</span>
