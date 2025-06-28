@@ -109,3 +109,7 @@ Route::get('/admin/kitatolong', function () {
 Route::get('/admin/verifkitatolong', function () {
     return view('adminverifkitatolong');
 });
+
+Route::get('/admin/tarikdana', function () {
+    return view('adminpenarikandana');
+});
