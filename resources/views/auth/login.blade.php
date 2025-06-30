@@ -30,43 +30,45 @@
     </header>
 
 <main>
-<div class="sign-up">
-  <div class="signup-box">
-    <h1 class="brand-title">KitaBantu</h1>
-    <p class="welcome-text">Selamat Datang</p>
-    <p class="subtitle-text">Daftar untuk mulai bantu sesama!</p>
+  <div class="sign-in">
+    <div class="login-box">
+      <h2 class="brand-title">KitaBantu</h2>
+      <p class="welcome-text">Selamat Datang</p>
+      <p class="subtitle-text">Masuk untuk mulai bantu sesama!</p>
 
-    <form action="/signup" method="POST" class="form-wrapper">
-      <label for="fullname">Nama Lengkap</label>
-      <input type="text" id="fullname" name="fullname" placeholder="Masukkan Nama Lengkap Anda" class="form-control" required />
+      <form method="POST" action="{{ route('login') }}" class="form-wrapper">
+    
+          @csrf
+          <div>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan Email Anda" required autofocus>
+              
+              @error('email')
+                  <span class="error-message">{{ $message }}</span>
+              @enderror
+          </div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" class="form-control" required />
+          <div style="margin-top: 1rem;">
+              <label for="password">Password</label>
+              <div class="password-wrapper">
+                  <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan Password" required>
+                  <img class="eye-slash-outline" src="{{ asset('img/eye-slash.png') }}" alt="toggle visibility">
+              </div>
+          </div>
 
-      <label for="password">Password</label>
-      <div class="password-wrapper">
-        <input type="password" id="password" name="password" placeholder="Masukkan Password" class="form-control" required />
-        <img src="img/eye-slash.png" alt="toggle visibility" class="eye-slash-outline" />
-      </div>
+          <button type="submit" class="login-button2">Masuk</button>
 
-      <label for="confirm-password">Konfirmasi Password</label>
-      <div class="password-wrapper">
-        <input type="password" id="confirm-password" name="confirm-password" placeholder="Masukkan Ulang Password" class="form-control" required />
-        <img src="img/eye-slash.png" alt="toggle visibility" class="eye-slash-outline" />
-      </div>
-
-      <button type="submit" class="login-button2">Daftar</button>
-
-      <div class="terms">
-        <input type="checkbox" id="terms" required />
-        <label for="terms">Dengan mengetuk “Daftar”, Anda setuju dengan <a href="#">Syarat dan Ketentuan Kitabantu.com</a></label>
-      </div>
-      <div class="login-link">
-        <p>Sudah Punya Akun? <a href="/signin" class="register-link">Masuk</a></p>
-      </div>
-    </form>
+        <div class="form-footer">
+          <div class="forgot-password">
+            <a href="#">Lupa Password?</a>
+          </div>
+          <div class="register-link">
+            Belum Punya Akun? <a href="/signup">Daftar</a>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </main>
 
     <footer class="footer">

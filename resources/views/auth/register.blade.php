@@ -24,41 +24,61 @@
                     <img src="./img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
-                <a href="/signin" class="login-button">Masuk</a>
+                <a href="/login" class="login-button">Masuk</a>
             </div>
         </nav>
     </header>
 
 <main>
-  <div class="sign-in">
-    <div class="login-box">
-      <h2 class="brand-title">KitaBantu</h2>
-      <p class="welcome-text">Selamat Datang</p>
-      <p class="subtitle-text">Masuk untuk mulai bantu sesama!</p>
+<div class="sign-up">
+  <div class="signup-box">
+    <h1 class="brand-title">KitaBantu</h1>
+    <p class="welcome-text">Selamat Datang</p>
+    <p class="subtitle-text">Daftar untuk mulai bantu sesama!</p>
 
-      <form class="form-wrapper">
+    <form method="POST" action="{{ route('register') }}" class="form-wrapper">
+        @csrf
+
+        <label for="name">Nama Lengkap</label>
+        <input type="text" id="name" name="name" placeholder="Masukkan Nama Lengkap Anda" class="form-control" required autofocus value="{{ old('name') }}">
+        @error('name')
+            <span class="error-message">{{ $message }}</span>
+        @enderror
+
         <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" placeholder="Masukkan Email Anda" required>
+        <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" class="form-control" required value="{{ old('email') }}">
+        @error('email')
+            <span class="error-message">{{ $message }}</span>
+        @enderror
 
         <label for="password">Password</label>
         <div class="password-wrapper">
-          <input type="password" id="password" class="form-control" placeholder="Masukkan Password" required>
-          <img class="eye-slash-outline" src="img/eye-slash.png" alt="toggle visibility">
+            <input type="password" id="password" name="password" placeholder="Masukkan Password" class="form-control" required>
+            <img src="{{ asset('img/eye-slash.png') }}" alt="toggle visibility" class="eye-slash-outline" />
+        </div>
+        @error('password')
+            <span class="error-message">{{ $message }}</span>
+        @enderror
+
+        <label for="password_confirmation">Konfirmasi Password</label>
+        <div class="password-wrapper">
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukkan Ulang Password" class="form-control" required>
+            <img src="{{ asset('img/eye-slash.png') }}" alt="toggle visibility" class="eye-slash-outline" />
         </div>
 
-        <button type="submit" class="login-button2">Masuk</button>
+        <button type="submit" class="login-button2">Daftar</button>
 
-        <div class="form-footer">
-          <div class="forgot-password">
-            <a href="#">Lupa Password?</a>
-          </div>
-          <div class="register-link">
-            Belum Punya Akun? <a href="/signup">Daftar</a>
-          </div>
+        <div class="terms">
+          <input type="checkbox" id="terms" name="terms" required />
+          <label for="terms">Dengan mengetuk “Daftar”, Anda setuju dengan <a href="#">Syarat dan Ketentuan Kitabantu.com</a></label>
         </div>
-      </form>
-    </div>
+
+        <div class="login-link">
+          <p>Sudah Punya Akun? <a href="{{ route('login') }}" class="register-link">Masuk</a></p>
+        </div>
+    </form>
   </div>
+</div>
 </main>
 
     <footer class="footer">
