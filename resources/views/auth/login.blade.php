@@ -24,7 +24,7 @@
                     <img src="./img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
-                <a href="/signin" class="login-button">Masuk</a>
+                <a href="/login" class="login-button">Masuk</a>
             </div>
         </nav>
     </header>
@@ -63,7 +63,7 @@
             <a href="#">Lupa Password?</a>
           </div>
           <div class="register-link">
-            Belum Punya Akun? <a href="/signup">Daftar</a>
+            Belum Punya Akun? <a href="/register">Daftar</a>
           </div>
         </div>
       </form>

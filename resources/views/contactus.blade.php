@@ -25,7 +25,29 @@
                     <img src="./img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
-                <a href="/login" class="login-button">Masuk</a>
+                
+                @auth
+                    <div class="user-dropdown">
+                        <button class="user-button" id="userDropdownButton">
+                            <span>{{ Auth::user()->name }}</span>
+                            <img src="{{ asset('img/arrow-down-dark.png') }}" class="dropdown-arrow" alt="arrow">
+                        </button>
+                        <div class="dropdown-menu" id="userDropdownMenu">
+                            <a href="/user">Profil Saya</a>
+                            
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a href="{{ route('logout') }}" 
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                                    Log Out
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="/login" class="login-button">Masuk</a>
+                @endguest
             </div>
         </nav>
     </header>
@@ -94,6 +116,35 @@
             <button class="chat-button"><img src="./img/message.png" alt="chat icon"><span>1 Message Arrived</span></button>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userDropdownButton = document.getElementById('userDropdownButton');
+            const userDropdownMenu = document.getElementById('userDropdownMenu');
 
+            if (userDropdownButton) {
+                userDropdownButton.addEventListener('click', function(event) {
+                    // Mencegah event lain yang mungkin terjadi
+                    event.stopPropagation();
+                    
+                    // Toggle (tampilkan/sembunyikan) menu dropdown
+                    userDropdownMenu.classList.toggle('show');
+                    
+                    // Toggle rotasi panah
+                    this.classList.toggle('active');
+                });
+            }
+
+            // Menutup dropdown jika user mengklik di luar area dropdown
+            window.addEventListener('click', function(event) {
+                if (userDropdownMenu && userDropdownMenu.classList.contains('show')) {
+                    // Cek apakah klik terjadi di luar area dropdown
+                    if (!userDropdownButton.contains(event.target)) {
+                        userDropdownMenu.classList.remove('show');
+                        userDropdownButton.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

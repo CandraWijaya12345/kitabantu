@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController; 
 
@@ -19,6 +21,13 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [RegisterController::class, 'store']);
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
 
 Route::get('/detail', function () {
     return view('detail');

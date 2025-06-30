@@ -60,6 +60,76 @@ main {
 .search-icon { width: 20px; height: 20px; margin-right: 8px; }
 .login-button { padding: 0.5rem 1.5rem; background-color: #5893ea; color: #ffffff; border-radius: 6px; font-weight: 600; }
 
+/* --- Dropdown Pengguna di Navbar --- */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-button {
+    background-color: transparent;
+    border: 1px solid transparent; /* Tambahkan border transparan untuk konsistensi ukuran */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #304e7a;
+    padding: 0.5rem; /* Tambahkan sedikit padding */
+    border-radius: 8px; /* Tambahkan border-radius */
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Efek hover HANYA untuk tombolnya */
+.user-button:hover {
+    background-color: #f1f1f1;
+}
+
+.user-button .dropdown-arrow {
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Putar panah jika dropdown aktif */
+.user-button.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    display: none; /* Sembunyi secara default */
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 10px;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index: 10;
+    overflow: hidden;
+}
+
+/* Style untuk menampilkan dropdown dengan JavaScript */
+.dropdown-menu.show {
+    display: block; 
+}
+
+.dropdown-menu a {
+    color: #304e7a;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
 .cta-button {
   display: inline-block;
   padding: 0.75rem 2rem;
