@@ -89,34 +89,37 @@ Route::get('/tarikdana', function () {
     return view('tarikdana');
 });
 
-Route::get('/admin/dashboard', function () {
-    return view('dashboard');
-});
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
 
-Route::get('/admin/campaign', function () {
-    return view('admincampaign');
-});
+    Route::get('/campaign', function () {
+        return view('admincampaign');
+    });
 
-Route::get('/admin/donasi', function () {
-    return view('admindonasi');
-}); 
+    Route::get('/donasi', function () {
+        return view('admindonasi');
+    }); 
 
-Route::get('/admin/user', function () {
-    return view('adminuser');
-});    
+    Route::get('/user', function () {
+        return view('adminuser');
+    });    
 
-Route::get('/admin/verifcampaign', function () {
-    return view('adminverifcampaign');
-}); 
+    Route::get('/verifcampaign', function () {
+        return view('adminverifcampaign');
+    }); 
 
-Route::get('/admin/statistik', function () {
-    return view('adminstatistik');
-});
+    Route::get('/statistik', function () {
+        return view('adminstatistik');
+    });
 
-Route::get('/admin/settings', function () {
-    return view('adminsettings');
-});
+    Route::get('/settings', function () {
+        return view('adminsettings');
+    });
 
-Route::get('/admin/kitatolong', function () {
-    return view('adminkitatolong');
+    Route::get('/kitatolong', function () {
+        return view('adminkitatolong');
+    });
+
 });

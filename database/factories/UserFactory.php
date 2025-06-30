@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
     /**
@@ -28,9 +25,24 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => 'user', // Nilai default adalah 'user'
             'remember_token' => Str::random(10),
         ];
     }
+
+    // ===== TAMBAHKAN FUNGSI BARU INI =====
+    /**
+     * Menandakan bahwa user ini adalah seorang admin.
+     */
+    public function admin(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'admin',
+            ];
+        });
+    }
+    // ===== AKHIR FUNGSI BARU =====
 
     /**
      * Indicate that the model's email address should be unverified.
