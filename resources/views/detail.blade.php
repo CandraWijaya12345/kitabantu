@@ -17,7 +17,7 @@
                 <a href="/formkitatolong" class="nav-link">KitaTolong</a>
             </div>
             <div class="nav-section">
-                <a href="/home" class="logo">KitaBantu</a>
+                <a href="/" class="logo">KitaBantu</a>
             </div>
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
@@ -212,8 +212,9 @@
         <section class="main-cta">
             <h2>Siap Membantu Sesama?</h2>
             <div class="main-cta-buttons">
-                <a href="#" class="cta-button primary">Donasi Sekarang</a>
-                <a href="#" class="cta-button secondary">Bagikan ke yang lain</a>
+                <a href="/donate" class="cta-button primary">Donasi Sekarang</a>
+                
+                <button id="openShareModalButton" class="cta-button secondary">Bagikan ke yang lain</button>
             </div>
         </section>
     </main>
@@ -255,8 +256,43 @@
             <button class="chat-button"><img src="./img/message.png" alt="chat icon"><span>1 Message Arrived</span></button>
         </div>
     </footer>
+    <div class="modal-overlay" id="shareModalOverlay"></div>
+        <div class="share-modal" id="shareModal">
+            <div class="share-modal-header">
+                <h2>Bagikan</h2>
+                <button class="close-modal" id="closeShareModalButton">&times;</button>
+            </div>
+            <div class="share-modal-body">
+                <p class="share-subtitle">Bagikan campaign ini ke teman-teman Anda</p>
+                <div class="social-icons-grid">
+                    <a href="#" class="social-icon-link">
+                        <img src="./img/icon-whatsapp.png" alt="WhatsApp">
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="#" class="social-icon-link">
+                        <img src="./img/icon-facebook-color.png" alt="Facebook">
+                        <span>Facebook</span>
+                    </a>
+                    <a href="#" class="social-icon-link">
+                        <img src="./img/icon-twitter-color.png" alt="X/Twitter">
+                        <span>X</span>
+                    </a>
+                    <a href="#" class="social-icon-link">
+                        <img src="./img/icon-email-color.png" alt="Email">
+                        <span>Email</span>
+                    </a>
+                </div>
+                <div class="copy-link-container">
+                    <input type="text" id="shareableLink" value="{{ url()->current() }}" readonly>
+                    <button id="copyLinkButton">Copy</button>
+                </div>
+            </div>
+        </div>
 
-        <script>
+    <div id="copyNotification" class="notification">
+            Link berhasil disalin ke clipboard!
+    </div>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         const userDropdownButton = document.getElementById('userDropdownButton');
         const userDropdownMenu = document.getElementById('userDropdownMenu');
@@ -285,6 +321,73 @@
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // Elemen Notifikasi
+        const notification = document.getElementById('copyNotification');
+
+        // Elemen Modal Berbagi
+        const shareModalOverlay = document.getElementById('shareModalOverlay');
+        const shareModal = document.getElementById('shareModal');
+        const openShareModalButton = document.getElementById('openShareModalButton');
+        const closeShareModalButton = document.getElementById('closeShareModalButton');
+
+        // Elemen di dalam Modal
+        const copyLinkButton = document.getElementById('copyLinkButton');
+        const shareableLinkInput = document.getElementById('shareableLink');
+
+        // Fungsi untuk membuka modal
+        function openModal() {
+            if (shareModal) {
+                shareModalOverlay.classList.add('show');
+                shareModal.classList.add('show');
+            }
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            if (shareModal) {
+                shareModalOverlay.classList.remove('show');
+                shareModal.classList.remove('show');
+            }
+        }
+
+        // Event listener untuk tombol utama "Bagikan"
+        if (openShareModalButton) {
+            openShareModalButton.addEventListener('click', openModal);
+        }
+
+        // Event listener untuk tombol close (X) dan overlay
+        if (closeShareModalButton) {
+            closeShareModalButton.addEventListener('click', closeModal);
+        }
+        if (shareModalOverlay) {
+            shareModalOverlay.addEventListener('click', closeModal);
+        }
+        
+        // Event listener untuk tombol "Copy" di dalam modal
+        if (copyLinkButton) {
+            copyLinkButton.addEventListener('click', function() {
+                const linkToCopy = shareableLinkInput.value;
+
+                navigator.clipboard.writeText(linkToCopy).then(function() {
+                    // Tampilkan notifikasi "berhasil disalin"
+                    notification.textContent = 'Link berhasil disalin!';
+                    notification.classList.add('show');
+
+                    // Sembunyikan notifikasi setelah 3 detik
+                    setTimeout(function() {
+                        notification.classList.remove('show');
+                    }, 3000);
+                    
+                }).catch(function(err) {
+                    console.error('Gagal menyalin link: ', err);
+                });
+            });
+        }
+    });
+
     </script>
 </body>
 </html>
