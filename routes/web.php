@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController; 
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\DonationController;
 
 Route::get('/', function () {
     return view('home');
@@ -37,6 +38,19 @@ Route::get('/detail', function () {
     return view('detail');
 });
 
+Route::middleware(['auth'])->group(function () {
+    // Menampilkan form untuk melakukan donasi ke campaign spesifik
+    Route::get('/formdonasi/{campaign:slug}', [DonationController::class, 'create'])->name('donate.form');
+    
+    // Memproses data dari form donasi yang di-submit
+    Route::post('/formdonasi', [DonationController::class, 'store'])->name('donate.store');
+
+    // Route untuk halaman profil dan lainnya yang butuh login
+    Route::get('/user', function () { return view('user'); });
+    Route::get('/user/ganti_password', function () { return view('ganti_password'); });
+    Route::get('/formkitatolong', function () { return view('formkitatolong'); });
+});
+
 Route::get('/donate', function () {
     return view('donate');
 });
@@ -53,10 +67,6 @@ Route::get('/contactus', function () {
     return view('contactus');
 });
 
-Route::get('/formkitatolong', function () {
-    return view('formkitatolong');
-});
-
 Route::get('/onprocess', function () {
     return view('onprocess');
 });
@@ -71,14 +81,6 @@ Route::get('/rejected', function () {
 
 Route::get('/list_kitatolong', function () {
     return view('list_kitatolong');
-});
-
-Route::get('/user', function () {
-    return view('user');
-});
-
-Route::get('/user/ganti_password', function () {
-    return view('ganti_password');
 });
 
 Route::get('/search_campaign', function () {

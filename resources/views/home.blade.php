@@ -16,7 +16,7 @@
                 <a href="/formkitatolong" class="nav-link">KitaTolong</a>
             </div>
             <div class="nav-section">
-                <a href="/home" class="logo">KitaBantu</a>
+                <a href="/" class="logo">KitaBantu</a>
             </div>
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
