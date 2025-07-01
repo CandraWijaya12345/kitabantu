@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController; 
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', function () {
     return view('home');
@@ -85,41 +85,42 @@ Route::get('/home', function () {
     return view('home');
 });
 
-Route::get('/tarikdana', function () {
-    return view('tarikdana');
-});
-
+// Rute Admin dikelompokkan dalam prefix 'admin' dan middleware 'auth', 'admin'
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('dashboard'); // Pastikan ini mengacu ke file Blade yang benar (misal: dashboard.blade.php)
     });
 
     Route::get('/campaign', function () {
-        return view('admincampaign');
+        return view('admincampaign'); // Mengacu ke admincampaign.blade.php
     });
 
     Route::get('/donasi', function () {
-        return view('admindonasi');
-    }); 
+        return view('admindonasi'); // Mengacu ke admindonasi.blade.php
+    });
 
     Route::get('/user', function () {
-        return view('adminuser');
-    });    
+        return view('adminuser'); // Mengacu ke adminuser.blade.php
+    });
 
     Route::get('/verifcampaign', function () {
-        return view('adminverifcampaign');
-    }); 
+        return view('adminverifcampaign'); // Mengacu ke adminverifcampaign.blade.php
+    });
 
     Route::get('/statistik', function () {
-        return view('adminstatistik');
+        return view('adminstatistik'); // Mengacu ke adminstatistik.blade.php
     });
 
     Route::get('/settings', function () {
-        return view('adminsettings');
+        return view('adminsettings'); // Mengacu ke adminsettings.blade.php
     });
 
     Route::get('/kitatolong', function () {
-        return view('adminkitatolong');
+        return view('adminkitatolong'); // Mengacu ke adminkitatolong.blade.php
+    });
+
+    Route::get('/tarikdana', function () {
+        return view('adminpenarikandana'); // Mengacu ke adminpenarikandana.blade.php
     });
 
 });

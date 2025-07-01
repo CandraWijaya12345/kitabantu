@@ -54,7 +54,7 @@
             </nav>
             <div class="sidebar-footer">
                 <a href="#" class="nav-item logout">
-                    <img src="./img/icon-logout.png" alt="" class="nav-icon">
+                    <img src="/public/img/logout.png" alt="" class="nav-icon">
                     <span>Logout</span>
                 </a>
             </div>

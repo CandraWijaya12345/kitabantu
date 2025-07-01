@@ -14,39 +14,41 @@
             </div>
             <nav class="sidebar-nav">
                 <a href="/admin/dashboard" class="nav-item active">
-                    <img src="./img/icon-dashboard.png" alt="" class="nav-icon">
+                    <img src="/img/dashboardadmin.png" alt="" class="nav-icon">
                     <span>Dashboard</span>
                 </a>
                 <a href="/admin/campaign" class="nav-item">
-                    <img src="./img/icon-campaign.png" alt="" class="nav-icon">
+                    <img src="/img/ads.png" alt="Campaign" class="nav-icon"> 
                     <span>Campaign</span>
                 </a>
                 <a href="/admin/donasi" class="nav-item">
-                    <img src="./img/icon-donasi.png" alt="" class="nav-icon">
+                    <img src="/img/donationicon.png" alt="Donasi Icon" class="nav-icon">
                     <span>Donasi</span>
                 </a>
                 <a href="/admin/user" class="nav-item">
-                    <img src="./img/icon-user.png" alt="" class="nav-icon">
+                    <img src="/img/usericon.png" alt="User Icon" class="nav-icon">
                     <span>User</span>
                 </a>
-                <a href="/admin/tarikdana" class="nav-item"> <img src="./img/icon-penarikan-dana.png" alt="" class="nav-icon">
+                <a href="/admin/tarikdana" class="nav-item">
+                    <img src="/img/penarikandanaicon.png" alt="Penarikan Dana Icon" class="nav-icon">
                     <span>Penarikan Dana</span>
                 </a>
                 <a href="/admin/statistik" class="nav-item">
-                    <img src="./img/icon-statistik.png" alt="" class="nav-icon">
+                    <img src="/img/statistikicon.png" alt="Statistik Icon" class="nav-icon">
                     <span>Statistik</span>
                 </a>
                 <a href="/admin/settings" class="nav-item">
-                    <img src="./img/icon-pengaturan.png" alt="" class="nav-icon">
+                    <img src="/img/settingicon.png" alt="Setting Icon" class="nav-icon">
                     <span>Pengaturan</span>
                 </a>
-                <a href="/admin/kitatolong" class="nav-item"> <img src="./img/icon-kitatolong.png" alt="" class="nav-icon">
+                <a href="/admin/kitatolong" class="nav-item">
+                    <img src="/img/kitatolongicon.png" alt="Kita Tolong Icon" class="nav-icon">
                     <span>KitaTolong</span>
                 </a>
             </nav>
             <div class="sidebar-footer">
                 <a href="#" class="nav-item logout">
-                    <img src="./img/icon-logout.png" alt="" class="nav-icon">
+                    <img src="/img/logout.png" alt="Logout Icon" class="nav-icon">
                     <span>Logout</span>
                 </a>
             </div>
@@ -55,7 +57,7 @@
         <main class="main-content">
             <header class="main-header">
                 <div class="search-bar">
-                    <img src="./img/search-icon-gray.png" alt="Search">
+                    <img src="/img/search.png" alt="Search">
                     <input type="text" placeholder="Cari...">
                 </div>
                 <div class="admin-profile">
@@ -63,7 +65,7 @@
                         <p class="profile-name">Admin</p>
                         <p class="profile-role">Super Admin</p>
                     </div>
-                    <img src="./img/admin-avatar.png" alt="Admin Avatar" class="profile-avatar">
+                    <img src="/img/adminicon.png" alt="Admin Avatar" class="profile-avatar">
                 </div>
             </header>
 
@@ -71,28 +73,28 @@
                 <h2>Selamat Datang Kembali!</h2>
                 <div class="summary-grid">
                     <div class="summary-card">
-                        <div class="card-icon blue"><img src="./img/icon-campaign-white.png" alt=""></div>
+                        <div class="card-icon blue"><img src="/img/campaigntotal.png" alt=""></div>
                         <div class="card-info">
                             <p class="card-title">Total Campaign Aktif</p>
                             <p class="card-value">75</p>
                         </div>
                     </div>
                     <div class="summary-card">
-                        <div class="card-icon green"><img src="./img/icon-donasi-white.png" alt=""></div>
+                        <div class="card-icon green"><img src="/img/donasihariiniicon.png" alt=""></div>
                         <div class="card-info">
                             <p class="card-title">Total Donasi Hari Ini</p>
                             <p class="card-value">1,230</p>
                         </div>
                     </div>
                     <div class="summary-card">
-                        <div class="card-icon orange"><img src="./img/icon-dana-white.png" alt=""></div>
+                        <div class="card-icon orange"><img src="/img/danaterkumpulicon.png" alt=""></div>
                         <div class="card-info">
                             <p class="card-title">Dana Terkumpul</p>
                             <p class="card-value">Rp27,1 Jt</p>
                         </div>
                     </div>
                     <div class="summary-card">
-                        <div class="card-icon purple"><img src="./img/icon-user-white.png" alt=""></div>
+                        <div class="card-icon purple"><img src="/img/userbaruicon.png" alt=""></div>
                         <div class="card-info">
                             <p class="card-title">User Baru Terdaftar</p>
                             <p class="card-value">45</p>
@@ -104,7 +106,7 @@
             <section class="dashboard-details">
                 <div class="widget chart-widget">
                     <h3>Statistik Campaign</h3>
-                    <img src="./img/chart-placeholder.png" alt="Grafik Statistik Campaign" class="chart-placeholder">
+                    <img src="/img/statistikiconn.png" alt="Grafik Statistik Campaign" class="chart-placeholder">
                 </div>
                 <div class="widget activity-widget">
                     <h3>Campaign Baru</h3>
