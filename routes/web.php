@@ -5,10 +5,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController; 
+use App\Http\Controllers\CampaignController;
 
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/', [CampaignController::class, 'home'])->name('home');
+
+Route::get('/home', [CampaignController::class, 'home'])->name('home');
 
 Route::get('/login', function () {
     return view('auth.login');

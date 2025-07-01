@@ -66,63 +66,46 @@
         <section class="campaigns">
             <h2 class="section-title">MariBantu</h2>
             <p class="section-description">Bantuan anda sangat diperlukan. Uluran tangan anda, kebahagiaan untuk mereka.</p>
-            <div class="campaign-grid">
-                <div class="campaign-card">
-                    <div class="campaign-top-info">
-                        <span>Rp<span class="amount">123.000</span> Terkumpul</span>
-                    </div>
-                    <img src="./img/donasi_image.png" alt="Bantu Ahmad" class="campaign-image">
-                    <div class="campaign-content">
-                        <h3 class="campaign-title">Bantu Ahmad Selamat dari Bencana</h3>
-                        <div class="campaign-progress">
-                            <div class="progress-bar"><div class="progress" style="width: 25%;"></div></div>
+            <div class="campaign-grid">       
+                @forelse ($campaigns as $campaign)
+                    {{-- Loop ini akan mengulang untuk setiap data campaign dari database --}}
+                    <a href="#" class="campaign-card">
+                        <div class="campaign-top-info">
+                            <span>Rp{{ number_format($campaign->dana_terkumpul) }} Terkumpul</span>
                         </div>
-                        <div class="campaign-details">
-                            <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp 500.000</strong></div>
-                            <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
+                        <img src="{{ asset('storage/' . $campaign->gambar_url) }}" alt="{{ $campaign->judul }}" class="campaign-image">
+                        <div class="campaign-content">
+                            <h3 class="campaign-title">{{ $campaign->judul }}</h3>
+                            <div class="campaign-progress">
+                                @php
+                                    // Menghindari pembagian dengan nol jika target dana adalah 0
+                                    $persentase = $campaign->target_dana > 0 ? ($campaign->dana_terkumpul / $campaign->target_dana) * 100 : 0;
+                                @endphp
+                                <div class="progress-bar"><div class="progress" style="width: {{ min($persentase, 100) }}%;"></div></div>
+                            </div>
+                            <div class="campaign-details">
+                                <div class="campaign-target">
+                                    <span>Dibutuhkan</span><br>
+                                    <strong>Rp{{ number_format($campaign->target_dana) }}</strong>
+                                </div>
+                                <div class="campaign-time-left">
+                                    <span>Tersisa</span><br>
+                                    <strong>{{ \Carbon\Carbon::parse($campaign->batas_waktu)->diffForHumans() }}</strong>
+                                </div>
+                            </div>
+                            <div class="campaign-organizer">
+                                <img src="{{ asset('img/user-icon.png') }}" alt="User Icon">
+                                <span>{{ $campaign->user->name ?? 'Penggalang Dana' }}</span>
+                            </div>
                         </div>
-                        <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
+                    </a>
+                @empty
+                    {{-- Teks ini akan muncul jika tidak ada campaign aktif di database --}}
+                    <div class="no-campaign">
+                        <p>Belum ada campaign yang tersedia saat ini.</p>
                     </div>
-                </div>
-                <div class="campaign-card">
-                    <div class="campaign-top-info"><span>Rp<span class="amount">123.000</span> Terkumpul</span></div>
-                    <img src="./img/donasi_image.png" alt="Bantu Ahmad" class="campaign-image">
-                    <div class="campaign-content">
-                        <h3 class="campaign-title">Bantu Ahmad Selamat dari Bencana</h3>
-                        <div class="campaign-progress"><div class="progress-bar"><div class="progress" style="width: 25%;"></div></div></div>
-                        <div class="campaign-details">
-                            <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp 500.000</strong></div>
-                            <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
-                        </div>
-                        <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
-                    </div>
-                </div>
-                <div class="campaign-card">
-                    <div class="campaign-top-info"><span>Rp<span class="amount">123.000</span> Terkumpul</span></div>
-                    <img src="./img/donasi_image.png" alt="Bantu Ahmad" class="campaign-image">
-                    <div class="campaign-content">
-                        <h3 class="campaign-title">Bantu Ahmad Selamat dari Bencana</h3>
-                        <div class="campaign-progress"><div class="progress-bar"><div class="progress" style="width: 25%;"></div></div></div>
-                        <div class="campaign-details">
-                            <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp 500.000</strong></div>
-                            <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
-                        </div>
-                        <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
-                    </div>
-                </div>
-                <div class="campaign-card">
-                    <div class="campaign-top-info"><span>Rp<span class="amount">123.000</span> Terkumpul</span></div>
-                    <img src="./img/donasi_image.png" alt="Bantu Ahmad" class="campaign-image">
-                    <div class="campaign-content">
-                        <h3 class="campaign-title">Bantu Ahmad Selamat dari Bencana</h3>
-                        <div class="campaign-progress"><div class="progress-bar"><div class="progress" style="width: 25%;"></div></div></div>
-                        <div class="campaign-details">
-                            <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp 500.000</strong></div>
-                            <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
-                        </div>
-                        <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
-                    </div>
-                </div>
+                @endforelse
+
             </div>
             <a href="/donate" class="view-more-button">Lihat Selengkapnya</a>
         </section>
