@@ -36,13 +36,12 @@ Route::get('/detail', function () {
     return view('detail');
 });
 
-Route::get('/donate', function () {
-    return view('donate');
-});
+// Pastikan route ini ada
+Route::get('/donate', [CampaignController::class, 'index'])->name('donate.index');
 
-Route::get('/donatemenu', function () {
-    return view('donatemenu');
-});
+
+// Menampilkan halaman detail satu campaign. Namanya disesuaikan dengan error.
+Route::get('/donatemenu/{campaign:slug}', [CampaignController::class, 'show'])->name('donate.menu');
 
 Route::get('/contactus', function () {
     return view('contactus');

@@ -26,6 +26,7 @@ class Campaign extends Model
         'batas_waktu',
         'gambar_url',
         'status',
+        'view_count',
     ];
 
     /**
@@ -34,5 +35,10 @@ class Campaign extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+        public function donations()
+    {
+        return $this->hasMany(Donation::class);
     }
 }

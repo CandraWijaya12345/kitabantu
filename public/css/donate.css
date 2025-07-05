@@ -141,32 +141,44 @@ main {
     line-height: 1.5;
 }
 
-.sort-button {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+/* --- Filter/Sort Dropdown --- */
+.sort-form {
+    /* Form ini hanya sebagai pembungkus, tidak perlu style khusus */
+    position: relative;
+}
+
+.sort-dropdown {
+    /* Meniru gaya tombol yang sudah ada */
     background-color: #ffffff;
     border: 1px solid #cce2f5;
     border-radius: 12px;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2.5rem 0.75rem 1.5rem; /* Padding kanan lebih besar untuk ikon panah */
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
     font-weight: 700;
     color: #304e7b;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+
+    /* Menghilangkan panah default browser */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Menambahkan ikon panah kustom menggunakan SVG */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23304e7b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.2em;
 }
 
-.sort-button:hover {
-    background-color: #eaf4ff;
+.sort-dropdown:hover,
+.sort-dropdown:focus {
+    /* Memberi efek hover dan focus seperti tombol */
     border-color: #a3c9e8;
+    background-color: #eaf4ff;
+    outline: none; /* Menghilangkan outline biru bawaan saat di-klik */
 }
-
-.sort-button img {
-    width: 24px;
-    height: 24px;
-}
-
 
 /* --- Dropdown Pengguna di Navbar --- */
 .user-dropdown {
@@ -337,6 +349,44 @@ main {
     width: 24px;
     height: 24px;
     margin-right: 8px;
+}
+
+/* --- Pagination Links --- */
+.pagination-links {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-links nav {
+    display: flex;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.pagination-links a, .pagination-links span {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e6f0;
+    color: #5893ea;
+    font-weight: 600;
+    text-decoration: none;
+    background-color: #fff;
+}
+
+.pagination-links a:hover {
+    background-color: #f7faff;
+}
+
+.pagination-links .active span {
+    background-color: #5893ea;
+    color: #fff;
+    border-color: #5893ea;
+}
+
+.pagination-links .disabled span {
+    color: #a0a0a0;
+    background-color: #f8f9fa;
 }
 
 

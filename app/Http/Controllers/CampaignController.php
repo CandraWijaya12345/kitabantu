@@ -22,10 +22,36 @@ class CampaignController extends Controller
     /**
      * Menampilkan semua campaign di halaman donasi.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $campaigns = Campaign::where('status', 'aktif')->latest()->paginate(12); // Menggunakan paginate untuk banyak data
-        return view('donate', ['campaigns' => $campaigns]);
+        // Ambil input 'sort' dari URL, jika tidak ada, default-nya 'terbaru'
+        $sortOption = $request->input('sort', 'terbaru');
+
+        // Mulai query builder untuk campaign yang aktif
+        $query = Campaign::where('status', 'aktif');
+
+        // Terapkan sorting berdasarkan pilihan pengguna
+        switch ($sortOption) {
+            case 'terbaru':
+                $query->latest(); // Sama dengan orderBy('created_at', 'desc')
+                break;
+            case 'akan_berakhir':
+                $query->orderBy('batas_waktu', 'asc');
+                break;
+            case 'paling_lama':
+                $query->oldest(); // Sama dengan orderBy('created_at', 'asc')
+                break;
+            // Anda bisa menambahkan opsi lain di sini jika perlu
+        }
+
+        // Eksekusi query untuk mendapatkan hasilnya
+        $campaigns = $query->get(); // Kita tetap pakai get() sesuai permintaan sebelumnya
+
+        // Kirim data ke view 'donate' beserta opsi sort yang aktif
+        return view('donate', [
+            'campaigns' => $campaigns,
+            'sortOption' => $sortOption
+        ]);
     }
 
     /**
@@ -33,7 +59,29 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        return view('donatemenu', ['campaign' => $campaign]);
+        // Kunci unik untuk session berdasarkan ID campaign
+        $sessionKey = 'viewed_campaign_' . $campaign->id;
+
+        // Cek apakah session untuk campaign ini belum ada
+        if (!session()->has($sessionKey)) {
+            // Jika belum ada, naikkan view_count sebesar 1
+            $campaign->increment('view_count');
+
+            // Set session agar view tidak dihitung lagi jika user me-refresh halaman
+            session([$sessionKey => true]);
+        }
+
+        // Mengambil donasi yang statusnya berhasil
+        $donations = $campaign->donations()
+                              ->where('status', 'success') // Anda bisa sesuaikan status ini
+                              ->latest()
+                              ->get();
+
+        // Kirim data campaign DAN data donasi ke view
+        return view('donatemenu', [
+            'campaign' => $campaign,
+            'donations' => $donations
+        ]);
     }
 
     /**

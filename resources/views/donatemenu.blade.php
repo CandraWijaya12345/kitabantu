@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donasi - Bantu Ahmad - KitaBantu</title>
-    <link rel="stylesheet" href="css/globals.css">
-    <link rel="stylesheet" href="css/donatemenu.css">
+    {{-- Judul dinamis --}}
+    <title>Donasi - {{ $campaign->judul }} - KitaBantu</title>
+    <link rel="stylesheet" href="/css/globals.css">
+    <link rel="stylesheet" href="/css/donatemenu.css">
 </head>
 <body>
 
     <header class="header">
+        {{-- Header Anda tetap sama --}}
         <nav class="nav">
             <div class="nav-section nav-left">
                 <a href="{{ route('campaigns.create') }}" class="nav-link">Galang Dana</a>
@@ -22,7 +24,7 @@
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
                 <a href="/search_campaign" class="search-link">
-                    <img src="./img/search.png" alt="Search Icon" class="search-icon">
+                    <img src="/img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
                 
@@ -38,8 +40,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="{{ route('logout') }}" 
-                                onclick="event.preventDefault();
-                                            this.closest('form').submit();">
+                                onclick="event.preventDefault(); this.closest('form').submit();">
                                     Log Out
                                 </a>
                             </form>
@@ -56,11 +57,14 @@
         <section class="donate-section">
             <div class="donate-container">
                 <div class="donate-left-column">
-                    <h1 class="donate-title">Bantu Pak Ahmad dalam Mencapai Cita-Citanya akan Kesembuhan Adiknya dari Kanker</h1>
+                    {{-- Judul Campaign --}}
+                    <h1 class="donate-title">{{ $campaign->judul }}</h1>
                     <div class="donate-image-wrapper">
-                        <img src="./img/donasi.jpg" alt="Kegiatan donasi">
+                        {{-- Gambar Campaign --}}
+                        <img src="{{ asset('storage/' . $campaign->gambar_url) }}" alt="{{ $campaign->judul }}">
                     </div>
                     <div class="donate-buttons">
+                        {{-- Tombol Donasi (arahkah ke halaman pembayaran nanti) --}}
                         <a href="#" class="donate-button primary">Donasi Sekarang</a>
                         <a href="#" class="donate-button secondary">Bagikan ke yang lain</a>
                     </div>
@@ -69,35 +73,47 @@
                 <div class="donate-right-column">
                     <div class="fundraising-details">
                         <div class="fundraising-amount">
-                            <span class="raised">Rp250,000</span>
-                            <span class="target">dari target Rp 15,000,000</span>
+                            {{-- Dana Terkumpul --}}
+                            <span class="raised">Rp{{ number_format($campaign->dana_terkumpul, 0, ',', '.') }}</span>
+                            {{-- Target Dana --}}
+                            <span class="target">dari target Rp{{ number_format($campaign->target_dana, 0, ',', '.') }}</span>
                         </div>
+                        
+                        {{-- Kalkulasi Progress Bar --}}
+                        @php
+                            $persentase = $campaign->target_dana > 0 ? ($campaign->dana_terkumpul / $campaign->target_dana) * 100 : 0;
+                        @endphp
                         <div class="progress-bar">
-                            <div class="progress" style="width: 1.6%;"></div>
+                            <div class="progress" style="width: {{ min($persentase, 100) }}%;"></div>
                         </div>
-                        <p class="fundraising-summary">
-                            Pak Ahmad seorang kakak yang ingin adiknya selamat dari kanker sejak 1995
-                        </p>
+
+                        {{-- Deskripsi Singkat --}}
+                        <p class="fundraising-summary">{{ $campaign->deskripsi_singkat }}</p>
+                        
                         <div class="donor-info">
-                            <img src="./img/eye.png" alt="Donatur">
-                            <span class="donor-count">1212121212</span>
-                            <span class="donor-location">
-                                <img src="./img/lokasi.png" alt="Lokasi">
-                                Bali
-                            </span>
+                            <img src="/img/eye.png" alt="Dilihat">
+
+                            {{-- Menampilkan Jumlah View dari kolom 'view_count' --}}
+                            <span class="donor-count">{{ number_format($campaign->view_count) }} Dilihat</span>
+
+                            {{-- Bagian lokasi/kategori sudah dihapus sesuai permintaan --}}
                         </div>
                     </div>
 
                     <div class="fundraiser-profile">
-                        <img src="./img/person.png" alt="Avatar Ahmad Winarno" class="fundraiser-avatar">
+                        {{-- Foto profil bisa ditambahkan nanti jika ada di model User --}}
+                        <img src="/img/person.png" alt="Avatar {{ $campaign->user->name }}" class="fundraiser-avatar">
                         <div class="fundraiser-info">
-                            <h3 class="fundraiser-name">Ahmad Winarno</h3>
+                            {{-- Nama Penggalang Dana --}}
+                            <h3 class="fundraiser-name">{{ $campaign->user->name }}</h3>
                             <p class="fundraiser-role">Penggalang Dana</p>
                         </div>
                     </div>
 
                     <div class="campaign-story">
-                        <p>Kisah/cerita penggalang dana. Lorem ipsum dolor sit amet consectetur. Non massa aliquam sed enim arcu quisque. Vitae auctor magna consectetur purus sit at ultrices. Tincidunt aenean congue aenean augue consequat pharetra sed netus. Felis phasellus venenatis duis bibendum porttitor. Lorem ipsum dolor sit amet consectetur. Non massa aliquam sed enim arcu quisque. Vitae auctor magna consectetur purus sit at ultrices. Tincidunt aenean congue aenean augue consequat pharetra sed netus. Felis phasellus venenatis duis bibendum porttitor. Lorem ipsum dolor sit amet consectetur. Non massa aliquam sed enim arcu quisque. Vitae auctor magna consectetur purus sit at ultrices. Tincidunt aenean congue aenean augue consequat pharetra sed netus. Felis phasellus venenatis duis bibendum porttitor.</p>
+                        {{-- Deskripsi Lengkap (Cerita Campaign) --}}
+                        {{-- nl2br mengubah baris baru (\n) menjadi tag <br> agar format paragraf terjaga --}}
+                        <p>{!! nl2br(e($campaign->deskripsi_lengkap)) !!}</p>
                     </div>
                 </div>
             </div>
@@ -106,28 +122,33 @@
         <section class="donor-support-section">
             <div class="donor-support-container">
                 <h2>Dukungan Donatur</h2>
-                <div class="donor-comment">
-                    <img src="./img/person.png" alt="Avatar Donatur" class="commenter-avatar">
-                    <div class="comment-content">
-                        <h4 class="commenter-name">Ahmad Winarno</h4>
-                        <p class="comment-date">24-06-2024 • 19:40</p>
-                        <p class="comment-text">Anjay mabar gws yah. Lorem ipsum dolor sit amet consectetur. Non massa aliquam sed enim arcu quisque. Vitae auctor magna consectetur purus sit at ultrices.</p>
+
+                {{-- Loop untuk menampilkan setiap donasi --}}
+                @forelse ($donations as $donation)
+                    <div class="donor-comment">
+                        <img src="/img/person.png" alt="Avatar Donatur" class="commenter-avatar">
+                        <div class="comment-content">
+                            {{-- Nama bisa dari user yang login atau nama yang diinput saat donasi --}}
+                            <h4 class="commenter-name">{{ $donation->user->name ?? $donation->nama_donatur }}</h4>
+                            {{-- Format tanggal donasi --}}
+                            <p class="comment-date">{{ $donation->created_at->format('d-m-Y • H:i') }}</p>
+                            {{-- Pesan dukungan dari donatur --}}
+                            <p class="comment-text">{{ $donation->pesan_dukungan }}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="donor-comment">
-                    <img src="./img/person.png" alt="Avatar Donatur" class="commenter-avatar">
-                    <div class="comment-content">
-                        <h4 class="commenter-name">Ahmad Winarno</h4>
-                        <p class="comment-date">24-06-2024 • 19:40</p>
-                        <p class="comment-text">Anjay mabar gws yah. Lorem ipsum dolor sit amet consectetur. Non massa aliquam sed enim arcu quisque. Vitae auctor magna consectetur purus sit at ultrices.</p>
+                @empty
+                    {{-- Pesan ini akan tampil jika tidak ada donasi sama sekali --}}
+                    <div class="donor-comment">
+                        <p>Belum ada dukungan donatur untuk campaign ini. Jadilah yang pertama!</p>
                     </div>
-                </div>
+                @endforelse
+
             </div>
         </section>
     </main>
     
     <button class="floating-chat-button">
-        <img src="./img/message.png" alt="chat icon">
+        <img src="/img/message.png" alt="chat icon">
         <span>1 Message Arrived</span>
     </button>
 

@@ -20,8 +20,10 @@ return new class extends Migration
             $table->unsignedBigInteger('dana_terkumpul')->default(0);
             $table->date('batas_waktu');
             $table->string('gambar_url')->nullable();
-            $table->string('status')->default('pending'); // pending, aktif, selesai, ditolak
+            $table->string('status')->default('pending');  // pending, aktif, selesai, ditolak
+            $table->unsignedInteger('view_count')->default(0);
             $table->timestamps();
+            
         });
     }
 
