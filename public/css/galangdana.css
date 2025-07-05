@@ -1,0 +1,557 @@
+/* =================================================================
+   GALANGDANA.CSS - STYLESHEET LENGKAP
+   ================================================================= */
+
+/* --- FONT IMPORT & BASE STYLES --- */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
+
+:root {
+    --primary-blue: #5893ea;
+    --dark-blue: #304e7a;
+    --light-blue: #f0f7ff;
+    --text-primary: #333333;
+    --text-secondary: #5a78a5;
+    --border-color: #ced4da;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Open Sans", sans-serif;
+  color: var(--dark-blue);
+  line-height: 1.6;
+  background-color: var(--light-blue);
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+.page-wrapper { padding-top: 80px; }
+
+/* --- HEADER & NAVIGATION --- */
+.header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem;
+  max-width: 1536px;
+  margin: 0 auto;
+  height: 80px;
+}
+
+/* --- Dropdown Pengguna di Navbar --- */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-button {
+    background-color: transparent;
+    border: 1px solid transparent; /* Tambahkan border transparan untuk konsistensi ukuran */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #304e7a;
+    padding: 0.5rem; /* Tambahkan sedikit padding */
+    border-radius: 8px; /* Tambahkan border-radius */
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Efek hover HANYA untuk tombolnya */
+.user-button:hover {
+    background-color: #f1f1f1;
+}
+
+.user-button .dropdown-arrow {
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Putar panah jika dropdown aktif */
+.user-button.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    display: none; /* Sembunyi secara default */
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 10px;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index: 10;
+    overflow: hidden;
+}
+
+/* Style untuk menampilkan dropdown dengan JavaScript */
+.dropdown-menu.show {
+    display: block; 
+}
+
+.dropdown-menu a {
+    color: #304e7a;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+.nav-section { flex: 1; display: flex; align-items: center; justify-content: center; }
+.nav-left { justify-content: flex-start; gap: 2rem; }
+.nav-right { justify-content: flex-end; gap: 1.5rem; }
+.logo { font-size: 2.5rem; font-weight: 800; color: #304e7b; }
+.nav-link { font-size: 1.1rem; font-weight: 400; color: #304e7b; }
+.search-link { display: flex; align-items: center; font-weight: 400; font-size: 1.1rem; }
+.search-icon { width: 20px; height: 20px; margin-right: 8px; }
+.login-button { padding: 0.5rem 1.5rem; background-color: #5893ea; color: #ffffff; border-radius: 6px; font-weight: 600; }
+
+/* --- MAIN FORM CONTENT --- */
+.form-main {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+.form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+.form-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+.form-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+.fundraising-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-section {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.form-section h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+.category-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+.category-buttons input[type="radio"] {
+    display: none; /* Sembunyikan radio button asli */
+}
+.category-buttons label {
+    display: block;
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.8rem;
+    font-weight: 600;
+    color: var(--dark-blue);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+.category-buttons input[type="radio"]:checked + label {
+    background-color: var(--primary-blue);
+    color: #fff;
+    border-color: var(--primary-blue);
+}
+.category-buttons label:hover {
+    border-color: var(--primary-blue);
+}
+
+.upload-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.upload-area:hover {
+    border-color: var(--primary-blue);
+    background-color: #fdfdff;
+}
+.upload-area img { width: 48px; height: 48px; margin-bottom: 0.5rem; }
+.upload-area p { font-weight: 600; color: var(--text-secondary); }
+
+.form-group { margin-bottom: 1.5rem; }
+.form-group:last-child { margin-bottom: 0; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+.form-group input[type="text"], .form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+.form-group input[type="text"]:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(88, 147, 234, 0.2);
+}
+
+/* Menata ulang kontainer untuk input tanggal */
+.date-range .date-inputs {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Memberi style pada teks "sampai dengan" */
+.date-range .date-inputs span {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* Mengatur input tanggal agar tidak memakan seluruh lebar */
+.date-range .date-inputs input {
+    width: auto;
+    flex-grow: 1;
+}
+
+/* Menata ulang kontainer untuk input mata uang */
+.currency-input {
+    display: flex;
+}
+
+/* Memberi style pada prefix "Rp" */
+.currency-input span {
+    padding: 1rem;
+    background-color: #f8f9fa; /* Warna latar abu-abu muda */
+    border: 1px solid var(--border-color);
+    border-right: none;
+    border-radius: 8px 0 0 8px; /* Sudut tumpul hanya di kiri */
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+
+/* ==========================================================
+    PERBAIKAN CSS: KETERANGAN PENGGALANGAN DANA & CHECKBOX
+    ========================================================== */
+
+/* Pastikan semua input di dalam form-group memiliki style yang konsisten */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ced4da; /* var(--border-color) */
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="number"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #5893ea; /* var(--primary-blue) */
+    box-shadow: 0 0 0 3px rgba(88, 147, 234, 0.2);
+}
+
+/* Styling untuk Date Input
+  Meskipun HTML Anda menggunakan satu input, labelnya menyebutkan rentang tanggal.
+  Kita akan menata satu input ini agar terlihat rapi.
+  Struktur HTML Anda sudah benar dengan .date-inputs.
+*/
+.form-group.date-range .date-inputs {
+    display: flex; /* Untuk memastikan input mengisi ruang yang tersedia */
+}
+
+/* Styling untuk Target Donasi (Rp)
+*/
+.currency-input {
+    display: flex;
+    align-items: center;
+}
+
+.currency-input span {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da; /* var(--border-color) */
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    font-weight: 600;
+    color: #5a78a5; /* var(--text-secondary) */
+}
+
+.currency-input input[type="number"] {
+    border-left: none; /* Membuat input menyatu dengan span "Rp" */
+    border-radius: 0 8px 8px 0;
+}
+
+/* Menghilangkan panah atas/bawah pada input number */
+.currency-input input[type="number"]::-webkit-outer-spin-button,
+.currency-input input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.currency-input input[type="number"] {
+    -moz-appearance: textfield; /* Untuk Firefox */
+}
+
+
+/*
+  Styling untuk bagian Checkbox Persetujuan (Terms)
+  Menghilangkan background putih dan bayangan dari .form-section.
+*/
+.agreement-section {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-top: -1rem; /* Mengurangi jarak dengan elemen di atasnya */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start; /* Rata atas untuk teks yang mungkin lebih dari 1 baris */
+    gap: 0.75rem; /* Jarak antara checkbox dan label */
+    margin-bottom: 1rem;
+}
+
+.checkbox-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    flex-shrink: 0; /* Mencegah checkbox mengecil */
+    width: 16px;
+    height: 16px;
+    margin-top: 4px; /* Menyesuaikan posisi vertikal checkbox dengan teks */
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    font-size: 0.95rem;
+    font-weight: 400; /* Teks tidak tebal */
+    color: #5a78a5; /* var(--text-secondary) */
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+
+/*
+  Styling untuk tombol Submit agar full-width dan sesuai desain
+*/
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    background: #304e7a; /* Menggunakan --dark-blue agar lebih kontras */
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 1rem; /* Memberi jarak dari checkbox */
+}
+.submit-button:hover {
+    background-color: #5893ea; /* var(--primary-blue) */
+}
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--primary-blue);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.submit-button:hover {
+    background-color: #4a7fd6;
+}
+
+/* ==============================================
+   STYLE UNTUK POPUP SUKSES (TAMBAHKAN INI)
+   ============================================== */
+
+/* Overlay untuk latar belakang gelap */
+.modal-overlay {
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1050;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Kotak popup itu sendiri */
+.success-modal {
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 450px;
+    z-index: 1060;
+    opacity: 0;
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 2.5rem 2rem;
+}
+
+.success-modal.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.success-modal img {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+}
+
+.success-modal h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin-bottom: 0.75rem;
+}
+
+.success-modal p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.btn-back-home {
+    display: inline-block;
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--primary-blue);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+}
+
+/* Style untuk Pesan Error Validasi */
+.error-text {
+    color: #d9534f; /* Warna merah */
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.btn-back-home:hover {
+    background-color: #4a7fd6;
+}
+
+/* --- FOOTER --- */
+.footer {
+  background: linear-gradient(180deg, #bee6ff 0%, #6aa7ce 100%);
+  padding: 2.5rem 5rem 1.5rem; 
+}
+.footer-content {
+  display: flex; justify-content: space-between; flex-wrap: wrap;
+  gap: 2rem; margin-bottom: 1.5rem; max-width: 1200px; margin-left: auto; margin-right: auto;
+}
+.footer-section { flex: 1; min-width: 220px; }
+.footer-logo { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
+.footer-description { font-size: 0.9rem; }
+.footer-title { 
+    font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; 
+}
+.footer-links, .footer-contact, .faq-list { list-style: none; padding: 0; }
+.footer-links li, .footer-contact li { margin-bottom: 0.5rem; }
+.footer-contact li { display: flex; align-items: center; font-size: 0.9rem;}
+.footer-contact img { width: 18px; height: 18px; margin-right: 0.75rem; }
+.faq-item { margin-bottom: 0.5rem; }
+.faq-question {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; background-color: #ddf2ff; border: none; padding: 0.6rem 0.75rem;
+  font-size: 0.9rem; text-align: left; cursor: pointer;
+  box-shadow: inset -1px 1px 8px 1px rgba(0,0,0,0.15); border-radius: 5px; color: var(--dark-blue);
+}
+.faq-icon { width: 12px; height: 12px; }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1.5rem; border-top: 1px solid rgba(48, 78, 122, 0.2);
+  max-width: 1200px; margin-left: auto; margin-right: auto;
+}
+.copyright { font-size: 0.875rem; font-weight: 300; }
+.chat-button {
+  display: flex; align-items: center; background-color: #aecfea;
+  border: none; border-radius: 15px 15px 0 0; padding: 0.4rem 1rem;
+  cursor: pointer;
+}
+.chat-button img { width: 18px; height: 18px; margin-right: 0.5rem; }
+
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
+    .nav { padding: 1rem 2rem; }
+    .footer { padding: 3rem 2rem; }
+    .footer-content { flex-direction: column; }
+    .date-range .date-inputs { flex-direction: column; align-items: stretch; }
+}

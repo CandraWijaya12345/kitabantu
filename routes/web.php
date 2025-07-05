@@ -44,8 +44,6 @@ Route::get('/donatemenu', function () {
     return view('donatemenu');
 });
 
-
-
 Route::get('/contactus', function () {
     return view('contactus');
 });
@@ -78,11 +76,13 @@ Route::middleware(['auth'])->group(function () {
 
     // Memproses data dari form donasi yang di-submit
     Route::post('/formdonasi', [DonationController::class, 'store'])->name('donate.store');
-
+    
     // Rute untuk halaman profil dan lainnya yang butuh login
     Route::get('/user', function () { return view('user'); });
     Route::get('/user/ganti_password', function () { return view('ganti_password'); });
     Route::get('/formkitatolong', function () { return view('formkitatolong'); });
+    Route::get('/galang-dana/create', [CampaignController::class, 'create'])->name('campaigns.create');
+    Route::post('/galang-dana', [CampaignController::class, 'store'])->name('campaigns.store');
 });
 
 

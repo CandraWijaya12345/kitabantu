@@ -11,12 +11,12 @@
     <header class="header">
         <nav class="nav">
             <div class="nav-section nav-left">
-                <a href="/formdonasi" class="nav-link">Galang Dana</a>
+                <a href="{{ route('campaigns.create') }}" class="nav-link">Galang Dana</a>
                 <a href="/donate" class="nav-link">Donasi</a>
                 <a href="/formkitatolong" class="nav-link">KitaTolong</a>
             </div>
             <div class="nav-section">
-                <a href="/home" class="logo">KitaBantu</a>
+                <a href="/" class="logo">KitaBantu</a>
             </div>
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
@@ -24,7 +24,29 @@
                     <img src="./img/search.png" alt="Search Icon" class="search-icon">
                     Search
                 </a>
-                <a href="/login" class="login-button">Masuk</a>
+                
+                @auth
+                    <div class="user-dropdown">
+                        <button class="user-button" id="userDropdownButton">
+                            <span>{{ Auth::user()->name }}</span>
+                            <img src="{{ asset('img/arrow-down-dark.png') }}" class="dropdown-arrow" alt="arrow">
+                        </button>
+                        <div class="dropdown-menu" id="userDropdownMenu">
+                            <a href="/user">Profil Saya</a>
+                            
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a href="{{ route('logout') }}" 
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                                    Log Out
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="/login" class="login-button">Masuk</a>
+                @endguest
             </div>
         </nav>
     </header>

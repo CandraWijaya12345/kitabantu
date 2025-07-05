@@ -11,7 +11,7 @@
     <header class="header">
         <nav class="nav">
             <div class="nav-section nav-left">
-                <a href="/formdonasi" class="nav-link">Galang Dana</a>
+                <a href="{{ route('campaigns.create') }}" class="nav-link">Galang Dana</a>
                 <a href="/donate" class="nav-link">Donasi</a>
                 <a href="/formkitatolong" class="nav-link">KitaTolong</a>
             </div>
@@ -49,7 +49,7 @@
                 @endguest
             </div>
         </nav>
-    </header>  
+    </header> 
     
     <main class="profile-main">
             <div class="profile-container">

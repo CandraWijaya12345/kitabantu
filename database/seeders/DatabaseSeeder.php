@@ -3,30 +3,26 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Campaign; // <-- Tambahkan ini
+use App\Models\Campaign;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Schema; // <-- Tambahkan ini
+use Illuminate\Support\Facades\Schema;
 
-    class DatabaseSeeder extends Seeder
+class DatabaseSeeder extends Seeder
+{
+    public function run(): void
     {
-        /**
-         * Seed the application's database.
-         */
-        public function run(): void
-    {
-        // Membuat 1 Akun Admin
-        \App\Models\User::factory()->admin()->create([
+        // 1. Buat Akun User dan Admin terlebih dahulu
+        User::factory()->admin()->create([
             'name' => 'Admin KitaBantu',
             'email' => 'admin@kitabantu.com',
         ]);
 
-        // Membuat 1 Akun User Biasa
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'User Biasa',
             'email' => 'user@kitabantu.com',
         ]);
 
-        // Membuat 8 data campaign contoh
-        \App\Models\Campaign::factory(8)->create();
+        // 2. Baru buat data campaign setelah user ada
+        Campaign::factory(8)->create();
     }
 }

@@ -15,14 +15,17 @@ class Campaign extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'judul',
-        'deskripsi',
+        'slug',             // <-- DITAMBAHKAN
+        'kategori',         // <-- DITAMBAHKAN
+        'deskripsi_singkat',// <-- DIPERBARUI
+        'deskripsi_lengkap',// <-- DITAMBAHKAN
         'target_dana',
         'dana_terkumpul',
+        'batas_waktu',
         'gambar_url',
         'status',
-        'user_id',
-        'batas_waktu',
     ];
 
     /**
