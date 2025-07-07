@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\UpdateUserLastSeenAt::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            'api/midtrans-callback', // <-- Pastikan baris ini ada
+            'api/midtrans/callback', // <-- Pastikan baris ini ada
         ]);
     })
     ->withProviders([ // <-- Tambahkan bagian ini jika belum ada
