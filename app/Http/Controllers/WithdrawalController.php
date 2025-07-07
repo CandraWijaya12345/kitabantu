@@ -9,30 +9,34 @@ use App\Models\Withdrawal;
 
 class WithdrawalController extends Controller
 {
-    // app/Http/Controllers/WithdrawalController.php
-    public function store(Request $request, $campaign_id)
+    public function store(Request $request, $campaignId)
     {
         $request->validate([
-            'jumlah' => 'required|numeric|min:1',
-            'judul' => 'required|string',
+            'jumlah' => 'required|numeric|min:10000',
+            'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
+            'rekening_tujuan' => 'required|string|max:100',
         ]);
 
-        $campaign = Campaign::findOrFail($campaign_id);
 
+        $campaign = Campaign::findOrFail($campaignId);
+
+        // Optional: validasi saldo mencukupi
         if ($request->jumlah > $campaign->dana_terkumpul) {
-            return back()->with('error', 'Jumlah melebihi saldo tersedia');
+            return back()->with('error', 'Saldo campaign tidak mencukupi untuk penarikan.');
         }
 
         Withdrawal::create([
-            'campaign_id' => $campaign->id,
+            'campaign_id' => $campaignId,
             'jumlah' => $request->jumlah,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
+            'rekening_tujuan' => $request->rekening_tujuan,
             'status' => 'pending',
         ]);
 
-        return redirect()->back()->with('success', 'Permintaan penarikan dana berhasil dikirim. Menunggu persetujuan admin.');
+
+        return redirect()->back()->with('success', 'Permintaan penarikan dana berhasil diajukan.');
     }
 
 }

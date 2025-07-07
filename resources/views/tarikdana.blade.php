@@ -108,6 +108,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="rekening_tujuan">Bank & Nomor Rekening</label>
+                        <input type="text" name="rekening_tujuan" id="rekening_tujuan" placeholder="Contoh: BCA - 1234567890" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="description">Deskripsikan Alasan Anda Melakukan Penarikan Dana</label>
                         <textarea name="deskripsi" id="description" rows="5" placeholder="Jelaskan secara rinci penggunaan dana yang akan ditarik"></textarea>
                     </div>

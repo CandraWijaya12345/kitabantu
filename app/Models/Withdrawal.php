@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Withdrawal extends Model
 {
-    protected $fillable = ['campaign_id', 'jumlah', 'judul', 'deskripsi', 'status'];
+    protected $fillable = [
+        'campaign_id',
+        'jumlah',
+        'judul',
+        'deskripsi',
+        'status',
+        'rekening_tujuan', 
+    ];
 
     public function campaign()
     {

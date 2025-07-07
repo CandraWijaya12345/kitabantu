@@ -17,6 +17,7 @@ use App\Http\Controllers\AdminKitaTolongController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminDonationController;
 use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\AdminWithdrawalController;
 
 // == RUTE PUBLIK ==
 Route::get('/', [CampaignController::class, 'home'])->name('home');
@@ -80,7 +81,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/settings/profile', [AdminSettingsController::class, 'updateProfile'])->name('settings.updateProfile');
     Route::post('/settings/password', [AdminSettingsController::class, 'updatePassword'])->name('settings.updatePassword');
     Route::get('/donasi', [AdminDonationController::class, 'index'])->name('admin.donasi.index');
-    Route::patch('/withdrawals/{id}/approve', [AdminWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
-    Route::patch('/withdrawals/{id}/reject', [AdminWithdrawalController::class, 'reject'])->name('admin.withdrawals.reject');
-
+    Route::get('/tarikdana', [AdminWithdrawalController::class, 'index'])->name('withdrawals.index');
+    Route::post('/tarikdana/{id}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
+    Route::post('/tarikdana/{id}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
 });

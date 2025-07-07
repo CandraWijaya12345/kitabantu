@@ -93,6 +93,14 @@
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
+                        @if(session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        @if(session('error'))
+                            <div class="alert alert-danger">{{ session('error') }}</div>
+                        @endif
+
                             <tr>
                                 <th>Campaign</th>
                                 <th>Pemilik</th>
@@ -105,50 +113,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Bantu Renovasi Sekolah</td>
-                                <td>Ahmad Winarno</td>
-                                <td>Rp15.000.000</td>
-                                <td>Rp5.000.000</td>
-                                <td>BCA - 1234567890</td>
-                                <td>28 Jun 2025</td>
-                                <td><span class="status-tag pending">Pending</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-action detail">Detail</a>
-                                        <button class="btn-action process">Proses</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Pengobatan Ibu Siti</td>
-                                <td>Yayasan Harapan Bunda</td>
-                                <td>Rp20.000.000</td>
-                                <td>Rp12.500.000</td>
-                                <td>Mandiri - 0987654321</td>
-                                <td>27 Jun 2025</td>
-                                <td><span class="status-tag success">Diterima</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-action detail">Lihat Bukti</a>
-                                    </div>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>Modal Warung Pak Budi</td>
-                                <td>Eko Prasetyo</td>
-                                <td>Rp1.500.000</td>
-                                <td>Rp1.500.000</td>
-                                <td>BRI - 555666777</td>
-                                <td>26 Jun 2025</td>
-                                <td><span class="status-tag rejected">Ditolak</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-action detail">Lihat Alasan</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                            @foreach ($withdrawals as $withdrawal)
+                                <tr>
+                                    <td>{{ $withdrawal->campaign->judul }}</td>
+                                    <td>{{ $withdrawal->campaign->user->name }}</td>
+                                    <td>Rp{{ number_format($withdrawal->campaign->dana_terkumpul, 0, ',', '.') }}</td>
+                                    <td>Rp{{ number_format($withdrawal->jumlah, 0, ',', '.') }}</td>
+                                    <td>{{ $withdrawal->rekening_tujuan }}</td>
+                                    <td>{{ $withdrawal->created_at->format('d M Y') }}</td>
+                                    <td>
+                                        <span class="status-tag {{ 
+                                            $withdrawal->status == 'pending' ? 'pending' : 
+                                            ($withdrawal->status == 'disetujui' ? 'success' : 'rejected') }}">
+                                            {{ ucfirst($withdrawal->status) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            @if ($withdrawal->status == 'pending')
+                                                <form action="{{ route('admin.withdrawals.approve', $withdrawal->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    <button class="btn-action process" onclick="return confirm('Setujui permintaan ini?')">Proses</button>
+                                                </form>
+                                                <form action="{{ route('admin.withdrawals.reject', $withdrawal->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    <button class="btn-action detail" onclick="return confirm('Tolak permintaan ini?')">Tolak</button>
+                                                </form>
+                                            @else
+                                                <a href="#" class="btn-action detail">
+                                                    {{ $withdrawal->status == 'disetujui' ? 'Lihat Bukti' : 'Lihat Alasan' }}
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+
                     </table>
                 </div>
                  <div class="pagination">
