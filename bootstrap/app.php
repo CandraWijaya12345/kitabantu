@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\CheckIfAdmin::class
         ]);
+        $middleware->web(append: [
+            \App\Http\Middleware\UpdateUserLastSeenAt::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

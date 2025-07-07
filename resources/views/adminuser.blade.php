@@ -71,85 +71,58 @@
 
             <section class="user-summary">
                 <div class="summary-card">
-                    <div class="card-icon green">
-                        <img src="/img/usericon.png" alt="">
-                    </div>
+                    <div class="card-icon green"><img src="/img/usericon.png" alt=""></div>
                     <div class="card-info">
-                        <p class="card-title">User Sedang Login</p>
-                        <p class="card-value">1,234</p>
+                        <p class="card-title">User Sedang Online</p>
+                        {{-- Tampilkan data jumlah user online --}}
+                        <p class="card-value">{{ number_format($onlineUsersCount) }}</p>
                     </div>
                 </div>
             </section>
 
             <section class="widget list-widget">
-                <div class="widget-header">
-                    <h3>Data Pengguna Terdaftar</h3>
-                </div>
+                <div class="widget-header"><h3>Data Pengguna Terdaftar</h3></div>
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Nama User</th>
                                 <th>Email</th>
-                                <th>Terakhir Login</th>
+                                <th>Terakhir Aktif</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($users as $user)
                             <tr>
-                                <td>Budi Santoso</td>
-                                <td>budi.s@email.com</td>
-                                <td>28 Jun 2025, 14:05</td>
-                                <td><span class="status-tag online">Online</span></td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->last_seen_at ? $user->last_seen_at->diffForHumans() : 'Belum Pernah' }}</td>
+                                <td>
+                                    {{-- Tampilkan status Online/Offline berdasarkan method isOnline() --}}
+                                    @if($user->isOnline())
+                                        <span class="status-tag online">Online</span>
+                                    @else
+                                        <span class="status-tag offline">Offline</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="action-buttons">
+                                        {{-- Nanti link ini bisa ke halaman detail user di admin --}}
                                         <a href="#" class="btn-detail">Lihat Detail</a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Citra Lestari</td>
-                                <td>citra.lestari@email.com</td>
-                                <td>28 Jun 2025, 11:30</td>
-                                <td><span class="status-tag offline">Offline</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-detail">Lihat Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Eko Prasetyo</td>
-                                <td>eko.pras@email.com</td>
-                                <td>27 Jun 2025, 20:15</td>
-                                <td><span class="status-tag offline">Offline</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-detail">Lihat Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Dewi Anggraini</td>
-                                <td>dewi.a@email.com</td>
-                                <td>28 Jun 2025, 14:02</td>
-                                <td><span class="status-tag online">Online</span></td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-detail">Lihat Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
+                            @empty
+                            <tr><td colspan="5">Tidak ada data pengguna ditemukan.</td></tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
-                 <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">&raquo;</a>
+                {{-- Tampilkan link paginasi --}}
+                <div class="pagination">
+                    {{ $users->appends(request()->query())->links() }}
                 </div>
             </section>
 

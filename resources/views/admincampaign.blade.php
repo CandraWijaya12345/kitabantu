@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Campaign - Admin KitaBantu</title>
-    <link rel="stylesheet" href="/css/admincampaign.css">
+    <title>Manajemen Campaign - Admin</title>
+    <link rel="stylesheet" href="{{ asset('css/admincampaign.css') }}">
 </head>
 <body>
     <div class="admin-container">
@@ -72,14 +72,12 @@
             <section class="widget list-widget">
                 <div class="widget-tabs">
                     <button class="tab-btn active" data-target="list-view">List Campaign</button>
-                    <button class="tab-btn" data-target="verification-view">Verifikasi Campaign</button>
+                    <button class="tab-btn" data-target="verification-view">Verifikasi Campaign ({{ $pendingCampaigns->total() }})</button>
                 </div>
 
+                {{-- TAB 1: LIST SEMUA CAMPAIGN --}}
                 <div class="tab-content active" id="list-view">
-                    <div class="widget-header">
-                        <h3>List Semua Campaign</h3>
-                        <a href="#" class="btn-add">+ Tambah Campaign</a>
-                    </div>
+                    <div class="widget-header"><h3>List Semua Campaign</h3></div>
                     <div class="table-container">
                         <table class="data-table">
                             <thead>
@@ -92,45 +90,36 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($campaigns as $campaign)
                                 <tr>
-                                    <td>Bantu Renovasi Sekolah Tepian Negeri</td>
-                                    <td>Pendidikan</td>
-                                    <td>Rp50.000.000</td>
-                                    <td><span class="status-tag active">Aktif</span></td>
+                                    <td>{{ Str::limit($campaign->judul, 40) }}</td>
+                                    <td>{{ $campaign->kategori }}</td>
+                                    <td>Rp{{ number_format($campaign->target_dana) }}</td>
+                                    <td><span class="status-tag {{ strtolower($campaign->status) }}">{{ $campaign->status }}</span></td>
                                     <td>
                                         <div class="action-buttons">
                                             <a href="#" class="btn-edit">Edit</a>
-                                            <a href="#" class="btn-delete">Hapus</a>
+                                            <form action="{{ route('admin.campaigns.destroy', $campaign->id) }}" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus campaign ini secara permanen?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-delete">Hapus</button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Modal Usaha untuk Warung Pak Budi</td>
-                                    <td>UMKM</td>
-                                    <td>Rp5.000.000</td>
-                                    <td><span class="status-tag rejected">Ditolak</span></td>
-                                    <td>
-                                        <div class="action-buttons">
-                                             <a href="#" class="btn-edit">Edit</a>
-                                            <a href="#" class="btn-delete">Hapus</a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @empty
+                                <tr><td colspan="5">Tidak ada data campaign.</td></tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
-                    <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">&raquo;</a>
-                    </div>
+                    {{-- Pagination Links --}}
+                    <div class="pagination">{{ $campaigns->links() }}</div>
                 </div>
 
+                {{-- TAB 2: VERIFIKASI CAMPAIGN --}}
                 <div class="tab-content" id="verification-view">
-                     <div class="widget-header">
-                        <h3>Campaign Menunggu Verifikasi</h3>
-                    </div>
+                    <div class="widget-header"><h3>Campaign Menunggu Verifikasi</h3></div>
                     <div class="table-container">
                         <table class="data-table">
                             <thead>
@@ -143,40 +132,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($pendingCampaigns as $campaign)
                                 <tr>
-                                    <td>Pembangunan Jembatan Desa Sukamaju</td>
-                                    <td>Ahmad Winarno</td>
-                                    <td>Rp250.000.000</td>
-                                    <td>28 Jun 2025</td>
+                                    <td>{{ Str::limit($campaign->judul, 30) }}</td>
+                                    <td>{{ $campaign->user->name }}</td>
+                                    <td>Rp{{ number_format($campaign->target_dana) }}</td>
+                                    <td>{{ $campaign->created_at->format('d M Y') }}</td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="#" class="btn-action detail">Detail</a>
-                                            <button class="btn-action approve">Setujui</button>
-                                            <button class="btn-action reject">Tolak</button>
+                                            <a href="{{ route('donate.menu', $campaign->slug) }}" target="_blank" class="btn-action detail">Detail</a>
+                                            <button class="btn-action approve" data-action="{{ route('admin.campaigns.approve', $campaign->id) }}">Setujui</button>
+                                            <button class="btn-action reject" data-action="{{ route('admin.campaigns.reject', $campaign->id) }}">Tolak</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Beasiswa untuk Anak Yatim</td>
-                                    <td>Yayasan Harapan Bunda</td>
-                                    <td>Rp50.000.000</td>
-                                    <td>27 Jun 2025</td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="#" class="btn-action detail">Detail</a>
-                                            <button class="btn-action approve">Setujui</button>
-                                            <button class="btn-action reject">Tolak</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @empty
+                                <tr><td colspan="5">Tidak ada campaign yang perlu diverifikasi.</td></tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
-                    <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">&raquo;</a>
-                    </div>
+                    {{-- Pagination Links --}}
+                    <div class="pagination">{{ $pendingCampaigns->links() }}</div>
                 </div>
             </section>
         </main>
@@ -185,18 +162,43 @@
     <div class="modal-overlay" id="modalOverlay"></div>
 
     <div class="modal" id="approveModal">
-        <div class="modal-header"><h3>Konfirmasi Persetujuan</h3><button class="close-modal">&times;</button></div>
-        <div class="modal-body"><p>Anda yakin ingin menyetujui campaign ini dan menampilkannya kepada publik?</p></div>
-        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-approve">Ya, Setujui</button></div>
+        {{-- Form ini akan diisi action-nya oleh JavaScript --}}
+        <form id="approveForm" action="" method="POST">
+            @csrf
+            <div class="modal-header">
+                <h3>Konfirmasi Persetujuan</h3>
+                <button type="button" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Anda yakin ingin menyetujui campaign ini dan menampilkannya kepada publik?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal cancel">Batal</button>
+                {{-- Tombol ini sekarang men-submit form 'approveForm' saat diklik --}}
+                <button type="button" class="btn-modal confirm-approve" onclick="document.getElementById('approveForm').submit();">Ya, Setujui</button>
+            </div>
+        </form>
     </div>
 
     <div class="modal" id="rejectModal">
-        <div class="modal-header"><h3>Alasan Penolakan</h3><button class="close-modal">&times;</button></div>
-        <div class="modal-body">
-            <label for="rejectionReason">Mohon berikan alasan mengapa campaign ini ditolak:</label>
-            <textarea id="rejectionReason" rows="5" placeholder="Contoh: Dokumen pendukung tidak lengkap..."></textarea>
-        </div>
-        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-reject">Kirim Penolakan</button></div>
+        {{-- Form ini akan diisi action-nya oleh JavaScript --}}
+        <form id="rejectForm" action="" method="POST">
+            @csrf
+            <div class="modal-header">
+                <h3>Alasan Penolakan</h3>
+                <button type="button" class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label for="rejectionReason">Mohon berikan alasan mengapa campaign ini ditolak:</label>
+                {{-- Pastikan textarea memiliki 'name' --}}
+                <textarea id="rejectionReason" name="rejection_reason" rows="5" placeholder="Contoh: Dokumen pendukung tidak lengkap..." required></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal cancel">Batal</button>
+                {{-- Tombol ini sekarang adalah tombol submit dari form 'rejectForm' --}}
+                <button type="submit" class="btn-modal confirm-reject">Kirim Penolakan</button>
+            </div>
+        </form>
     </div>
 
     <script>
@@ -204,18 +206,14 @@
             // --- LOGIKA UNTUK TAB SUB-MENU ---
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
-
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
-
                     const target = button.dataset.target;
                     tabContents.forEach(content => {
                         content.classList.remove('active');
-                        if (content.id === target) {
-                            content.classList.add('active');
-                        }
+                        if (content.id === target) content.classList.add('active');
                     });
                 });
             });
@@ -224,32 +222,61 @@
             const modalOverlay = document.getElementById('modalOverlay');
             const approveModal = document.getElementById('approveModal');
             const rejectModal = document.getElementById('rejectModal');
-            
-            const approveButtons = document.querySelectorAll('.btn-action.approve');
-            const rejectButtons = document.querySelectorAll('.btn-action.reject');
-            const closeButtons = document.querySelectorAll('.close-modal');
-            const cancelButtons = document.querySelectorAll('.btn-modal.cancel');
+            const approveForm = document.getElementById('approveForm');
+            const rejectForm = document.getElementById('rejectForm');
 
-            function openModal(modal) {
-                if(modal) {
+            function openModal(modal, actionUrl) {
+                if(modal && actionUrl) {
+                    // Set action form di dalam modal sesuai tombol yang diklik
+                    if(modal.id === 'approveModal') approveForm.action = actionUrl;
+                    if(modal.id === 'rejectModal') rejectForm.action = actionUrl;
+                    
                     modalOverlay.classList.add('show');
                     modal.classList.add('show');
                 }
             }
 
-            function closeModal() {
-                modalOverlay.classList.remove('show');
-                document.querySelectorAll('.modal.show').forEach(modal => {
-                    modal.classList.remove('show');
-                });
+        function closeModal() {
+            modalOverlay.classList.remove('show');
+            approveModal.classList.remove('show');
+            rejectModal.classList.remove('show');
+        }
+
+        // Menempelkan SATU event listener pada elemen utama
+        document.body.addEventListener('click', function(event) {
+            const target = event.target; // Element yang diklik
+
+            // Cek jika yang diklik adalah tombol 'Setujui'
+            if (target.matches('.btn-action.approve')) {
+                const actionUrl = target.dataset.action;
+                const approveForm = document.getElementById('approveForm');
+                if (approveForm) {
+                    approveForm.action = actionUrl;
+                }
+                modalOverlay.classList.add('show');
+                approveModal.classList.add('show');
             }
 
-            approveButtons.forEach(button => button.addEventListener('click', () => openModal(approveModal)));
-            rejectButtons.forEach(button => button.addEventListener('click', () => openModal(rejectModal)));
-            closeButtons.forEach(button => button.addEventListener('click', closeModal));
-            cancelButtons.forEach(button => button.addEventListener('click', closeModal));
-            modalOverlay.addEventListener('click', closeModal);
+            // Cek jika yang diklik adalah tombol 'Tolak'
+            if (target.matches('.btn-action.reject')) {
+                const actionUrl = target.dataset.action;
+                const rejectForm = document.getElementById('rejectForm');
+                if (rejectForm) {
+                    rejectForm.action = actionUrl;
+                }
+                modalOverlay.classList.add('show');
+                rejectModal.classList.add('show');
+            }
+
+            // Cek jika yang diklik adalah tombol close atau cancel
+            if (target.matches('.close-modal') || target.matches('.btn-modal.cancel')) {
+                closeModal();
+            }
         });
+
+        // Menutup modal jika area overlay diklik
+        modalOverlay.addEventListener('click', closeModal);
+    });
     </script>
 </body>
 </html>

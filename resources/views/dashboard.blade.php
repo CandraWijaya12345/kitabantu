@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - KitaBantu</title>
-    <link rel="stylesheet" href="/css/admindashboard.css">
+    <link rel="stylesheet" href="{{ asset('css/admindashboard.css') }}">
+    {{-- TAMBAHKAN SCRIPT LIBRARY CHART.JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="admin-container">
@@ -47,7 +49,9 @@
                 </a>
             </nav>
             <div class="sidebar-footer">
-                <a href="#" class="nav-item logout">
+                {{-- Form Logout --}}
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+                <a href="/login" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-item logout">
                     <img src="/img/logout.png" alt="Logout Icon" class="nav-icon">
                     <span>Logout</span>
                 </a>
@@ -62,8 +66,8 @@
                 </div>
                 <div class="admin-profile">
                     <div class="profile-info">
-                        <p class="profile-name">Admin</p>
-                        <p class="profile-role">Super Admin</p>
+                        <p class="profile-name">{{ Auth::user()->name }}</p>
+                        <p class="profile-role">{{ Auth::user()->role }}</p>
                     </div>
                     <img src="/img/adminicon.png" alt="Admin Avatar" class="profile-avatar">
                 </div>
@@ -72,32 +76,36 @@
             <section class="dashboard-overview">
                 <h2>Selamat Datang Kembali!</h2>
                 <div class="summary-grid">
+                    {{-- KARTU 1: Total Campaign Aktif --}}
                     <div class="summary-card">
                         <div class="card-icon blue"><img src="/img/campaigntotal.png" alt=""></div>
                         <div class="card-info">
                             <p class="card-title">Total Campaign Aktif</p>
-                            <p class="card-value">75</p>
+                            <p class="card-value">{{ $total_active_campaigns }}</p>
                         </div>
                     </div>
+                    {{-- KARTU 2: Total Donasi Hari Ini --}}
                     <div class="summary-card">
                         <div class="card-icon green"><img src="/img/donasihariiniicon.png" alt=""></div>
                         <div class="card-info">
                             <p class="card-title">Total Donasi Hari Ini</p>
-                            <p class="card-value">1,230</p>
+                            <p class="card-value">{{ number_format($donations_today_count) }}</p>
                         </div>
                     </div>
+                    {{-- KARTU 3: Dana Terkumpul --}}
                     <div class="summary-card">
                         <div class="card-icon orange"><img src="/img/danaterkumpulicon.png" alt=""></div>
                         <div class="card-info">
                             <p class="card-title">Dana Terkumpul</p>
-                            <p class="card-value">Rp27,1 Jt</p>
+                            <p class="card-value">Rp{{ number_format($total_funds_raised, 0, ',', '.') }}</p>
                         </div>
                     </div>
+                    {{-- KARTU 4: User Baru --}}
                     <div class="summary-card">
                         <div class="card-icon purple"><img src="/img/userbaruicon.png" alt=""></div>
                         <div class="card-info">
-                            <p class="card-title">User Baru Terdaftar</p>
-                            <p class="card-value">45</p>
+                            <p class="card-title">User Baru Hari Ini</p>
+                            <p class="card-value">{{ $new_users_today_count }}</p>
                         </div>
                     </div>
                 </div>
@@ -105,37 +113,71 @@
 
             <section class="dashboard-details">
                 <div class="widget chart-widget">
-                    <h3>Statistik Campaign</h3>
-                    <img src="/img/statistikiconn.png" alt="Grafik Statistik Campaign" class="chart-placeholder">
+                    <h3>Campaign Dibuat (7 Hari Terakhir)</h3>
+                    {{-- Di sini grafik akan digambar oleh JavaScript --}}
+                    <canvas id="campaignChart"></canvas>
                 </div>
                 <div class="widget activity-widget">
-                    <h3>Campaign Baru</h3>
+                    <h3>Campaign Baru (Perlu Tinjauan)</h3>
                     <ul class="activity-list">
-                        <li class="activity-item">
-                            <div class="activity-info">
-                                <p class="activity-title">Bantu Renovasi Sekolah Tepian Negeri</p>
-                                <p class="activity-category">Kategori: Pendidikan</p>
-                            </div>
-                            <a href="#" class="btn-tinjau">Tinjau</a>
-                        </li>
-                         <li class="activity-item">
-                            <div class="activity-info">
-                                <p class="activity-title">Pengobatan Kanker untuk Ibu Siti</p>
-                                <p class="activity-category">Kategori: Kesehatan</p>
-                            </div>
-                            <a href="#" class="btn-tinjau">Tinjau</a>
-                        </li>
-                         <li class="activity-item">
-                            <div class="activity-info">
-                                <p class="activity-title">Modal Usaha untuk Warung Pak Budi</p>
-                                <p class="activity-category">Kategori: UMKM</p>
-                            </div>
-                           <a href="#" class="btn-tinjau">Tinjau</a>
-                        </li>
+                        @forelse($pending_campaigns as $campaign)
+                            <li class="activity-item">
+                                <div class="activity-info">
+                                    <p class="activity-title">{{ \Illuminate\Support\Str::limit($campaign->judul, 35) }}</p>
+                                    <p class="activity-category">Kategori: {{ $campaign->kategori }}</p>
+                                </div>
+                                <a href="#" class="btn-tinjau">Tinjau</a>
+                            </li>
+                        @empty
+                            <li class="activity-item"><p>Tidak ada campaign baru yang perlu ditinjau.</p></li>
+                        @endforelse
                     </ul>
                 </div>
             </section>
         </main>
     </div>
+
+    {{-- TAMBAHKAN SCRIPT DI BAWAH INI --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const ctx = document.getElementById('campaignChart');
+
+    // Mengambil data dari controller yang sudah di-format sebagai JSON
+    const chartLabels = @json($chartLabels);
+    const chartData = @json($chartData);
+
+    new Chart(ctx, {
+        type: 'bar', // Jenis grafik: bar, line, pie, dll.
+        data: {
+            labels: chartLabels,
+            datasets: [{
+                label: 'Campaign Baru',
+                data: chartData,
+                backgroundColor: 'rgba(88, 147, 234, 0.5)',
+                borderColor: 'rgba(88, 147, 234, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        // Memastikan sumbu Y hanya menampilkan angka bulat
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Menyembunyikan legenda di atas
+                }
+            }
+        }
+    });
+});
+</script>
+
 </body>
 </html>

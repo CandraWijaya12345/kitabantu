@@ -9,7 +9,9 @@ use App\Http\Controllers\CampaignController; // Diambil dari versi remote/merge
 use App\Http\Controllers\DonationController; // Diambil dari versi remote/merge
 use App\Http\Controllers\HelpRequestController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminCampaignController;
+use App\Http\Controllers\AdminUserController;
 
 Route::get('/', [CampaignController::class, 'home'])->name('home');
 
@@ -91,20 +93,15 @@ Route::middleware(['auth'])->group(function () {
 
 // Rute Admin dikelompokkan dalam prefix 'admin' dan middleware 'auth', 'admin'
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard'); // Pastikan ini mengacu ke file Blade yang benar (misal: dashboard.blade.php)
-    });
+    Route::get('/dashboard', [AdminDashboardController::class, 'index']);
 
-    Route::get('/campaign', function () {
-        return view('admincampaign'); // Mengacu ke admincampaign.blade.php
-    });
-
+    Route::get('/campaign', [AdminCampaignController::class, 'index'])->name('campaigns.index');
+    Route::post('/campaign/{campaign}/approve', [AdminCampaignController::class, 'approve'])->name('campaigns.approve');
+    Route::post('/campaign/{campaign}/reject', [AdminCampaignController::class, 'reject'])->name('campaigns.reject');
+    Route::delete('/campaign/{campaign}', [AdminCampaignController::class, 'destroy'])->name('campaigns.destroy');
+    Route::get('/user', [AdminUserController::class, 'index'])->name('users.index');
     Route::get('/donasi', function () {
         return view('admindonasi'); // Mengacu ke admindonasi.blade.php
-    });
-
-    Route::get('/user', function () {
-        return view('adminuser'); // Mengacu ke adminuser.blade.php
     });
 
     Route::get('/verifcampaign', function () {
