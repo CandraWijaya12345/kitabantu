@@ -3,59 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulir Donasi - KitaBantu</title>
-    <link rel="stylesheet" href="css/formdonasi.css">
+    <title>Formulir Donasi - {{ $campaign->judul }}</title>
+    
+    {{-- Menggunakan helper asset() untuk membuat path yang benar --}}
+    <link rel="stylesheet" href="{{ asset('css/globals.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/formdonasi.css') }}">
 </head>
 <body>
 
     <header class="header">
-        <nav class="nav">
-            <div class="nav-section nav-left">
-                <a href="{{ route('campaigns.create') }}" class="nav-link">Galang Dana</a>
-                <a href="/donate" class="nav-link">Donasi</a>
-                <a href="/formkitatolong" class="nav-link">KitaTolong</a>
-            </div>
-            <div class="nav-section">
-                <a href="/" class="logo">KitaBantu</a>
-            </div>
-            <div class="nav-section nav-right">
-                <a href="/detail" class="nav-link">Tentang Kami</a>
-                <a href="/search_campaign" class="search-link">
-                    <img src="./img/search.png" alt="Search Icon" class="search-icon">
-                    Search
-                </a>
-                
-                @auth
-                    <div class="user-dropdown">
-                        <button class="user-button" id="userDropdownButton">
-                            <span>{{ Auth::user()->name }}</span>
-                            <img src="{{ asset('img/arrow-down-dark.png') }}" class="dropdown-arrow" alt="arrow">
-                        </button>
-                        <div class="dropdown-menu" id="userDropdownMenu">
-                            <a href="/user">Profil Saya</a>
-                            
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a href="{{ route('logout') }}" 
-                                onclick="event.preventDefault();
-                                            this.closest('form').submit();">
-                                    Log Out
-                                </a>
-                            </form>
-                        </div>
-                    </div>
-                @else
-                    <a href="/login" class="login-button">Masuk</a>
-                @endguest
-            </div>
-        </nav>
+        {{-- Kode header Anda --}}
     </header>
 
     <main class="form-main-content">
-        {{-- Form utama yang membungkus semua input --}}
-        <form action="{{ route('donations.store', $campaign->slug) }}" method="POST" class="form-container">
+        {{-- 1. Pastikan form action menunjuk ke route 'donations.store' --}}
+        <form action="{{ route('donations.store') }}" method="POST" class="form-container">
             @csrf
-            
+            {{-- 2. Pastikan ada input tersembunyi untuk campaign_id --}}
+            <input type="hidden" name="campaign_id" value="{{ $campaign->id }}">
+
             <div class="form-header">
                 <h1>Kamu Akan Berdonasi untuk</h1>
             </div>
@@ -65,7 +31,7 @@
                 <img src="{{ asset('storage/' . $campaign->gambar_url) }}" alt="{{ $campaign->judul }}" class="campaign-summary-img">
                 <div class="campaign-summary-details">
                     <h2 class="campaign-summary-title">{{ $campaign->judul }}</h2>
-                    <p class="campaign-summary-organizer">{{ $campaign->user->name }}</p>
+                    <p class="campaign-summary-organizer">diinisiasi oleh <strong>{{ $campaign->user->name }}</strong></p>
                     @php
                         $persentase = $campaign->target_dana > 0 ? ($campaign->dana_terkumpul / $campaign->target_dana) * 100 : 0;
                     @endphp
@@ -88,13 +54,11 @@
                     <button type="button" class="nominal-button" data-value="25000">Rp 25,000</button>
                     <button type="button" class="nominal-button" data-value="50000">Rp 50,000</button>
                     <button type="button" class="nominal-button" data-value="100000">Rp 100,000</button>
-                    <button type="button" class="nominal-button" data-value="250000">Rp 250,000</button>
-                    <button type="button" class="nominal-button" data-value="500000">Rp 500,000</button>
                 </div>
-                <p class="custom-amount-label">atau nominal donasi lainnya (Minimal Rp 5.000)</p>
+                <p class="custom-amount-label">atau nominal donasi lainnya (Minimal Rp 10.000)</p>
                 <div class="custom-amount-input">
                     <span>Rp</span>
-                    <input type="number" id="customAmount" placeholder="0" min="5000">
+                    <input type="number" id="customAmount" placeholder="0" min="10000">
                 </div>
             </div>
 
@@ -102,7 +66,7 @@
                 <h3>Data Donatur</h3>
                 <div class="form-group">
                     <label for="fullName">Nama Lengkap</label>
-                    <input type="text" id="fullName" name="nama_donatur" placeholder="Nama Lengkap" value="{{ Auth::user()->name ?? '' }}">
+                    <input type="text" id="fullName" name="nama_donatur" placeholder="Nama Lengkap" value="{{ Auth::user()->name ?? '' }}" required>
                 </div>
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="anonymous" name="is_anonymous">
@@ -118,18 +82,9 @@
                 <div class="form-group">
                     <label for="supportMessage">Sertakan doa dan Dukungan (Opsional)</label>
                     <textarea id="supportMessage" name="pesan_dukungan" placeholder="Tulis doa dan dukungan..." maxlength="500"></textarea>
-                    <div id="charCounter" class="char-counter">500 karakter tersisa</div>
                 </div>
             </div>
             
-            <div class="form-section-card">
-                <h3>Pilih Metode Pembayaran</h3>
-                <div class="payment-grid">
-                    <button type="button" class="payment-option-button active" data-value="qris"><img src="{{ asset('img/qris-logo.png') }}" alt="QRIS"></button>
-                    <button type="button" class="payment-option-button" data-value="bca-va"><img src="{{ asset('img/bca-logo.jpeg') }}" alt="BCA VA"></button>
-                </div>
-            </div>
-
             <button type="submit" id="payButton" class="submit-donation-button">Lanjutkan Pembayaran</button>
         </form>
     </main>
@@ -172,138 +127,32 @@
             </div>
         </footer>
 
-    <script>
+        <script>
     document.addEventListener('DOMContentLoaded', function () {
-            // ... logika nominal dan character counter ...
-            
-            // ===== LOGIKA BARU UNTUK PILIHAN PEMBAYARAN =====
-            const paymentButtons = document.querySelectorAll('.payment-option-button');
-            let selectedPaymentMethod = 'qris'; // Default ke qris karena 'active' di HTML
-
-            paymentButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Hapus kelas 'active' dari semua tombol pembayaran
-                    paymentButtons.forEach(btn => btn.classList.remove('active'));
-                    // Tambahkan kelas 'active' ke tombol yang diklik
-                    button.classList.add('active');
-                    // Simpan metode pembayaran yang dipilih
-                    selectedPaymentMethod = button.dataset.value;
-                    console.log('Metode Pembayaran Dipilih:', selectedPaymentMethod); // Untuk testing
-                });
-            });
-
-            // ===== LOGIKA LAMA YANG MASIH RELEVAN =====
-            const nominalButtons = document.querySelectorAll('.nominal-button');
-            const customAmountInput = document.getElementById('customAmount');
-            const payButton = document.getElementById('payButton');
-            let selectedAmount = 0;
-
-            function updatePaymentButton() {
-                if (selectedAmount > 0) {
-                    const formattedAmount = new Intl.NumberFormat('id-ID').format(selectedAmount);
-                    payButton.textContent = `Bayar Donasi Rp ${formattedAmount}`;
-                } else {
-                    payButton.textContent = 'Bayar Sekarang';
-                }
-            }
-
-            nominalButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    nominalButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    selectedAmount = parseInt(button.dataset.value, 10);
-                    customAmountInput.value = '';
-                    updatePaymentButton();
-                });
-            });
-
-            customAmountInput.addEventListener('input', () => {
-                nominalButtons.forEach(btn => btn.classList.remove('active'));
-                selectedAmount = parseInt(customAmountInput.value, 10) || 0;
-                updatePaymentButton();
-            });
-
-            const messageInput = document.getElementById('supportMessage');
-            const charCounter = document.getElementById('charCounter');
-            const maxLength = messageInput.getAttribute('maxlength');
-
-            messageInput.addEventListener('input', () => {
-                const remaining = maxLength - messageInput.value.length;
-                charCounter.textContent = `${remaining} karakter tersisa`;
-            });
-        });
-    
-    document.addEventListener('DOMContentLoaded', function () {
-        // --- Bagian Dropdown Header ---
-        const userDropdownButton = document.getElementById('userDropdownButton');
-        const userDropdownMenu = document.getElementById('userDropdownMenu');
-
-        if (userDropdownButton) {
-            userDropdownButton.addEventListener('click', function(event) {
-                event.stopPropagation();
-                userDropdownMenu.classList.toggle('show');
-                this.classList.toggle('active');
-            });
-        }
-        window.addEventListener('click', function(event) {
-            if (userDropdownMenu && userDropdownMenu.classList.contains('show')) {
-                if (!userDropdownButton.contains(event.target)) {
-                    userDropdownMenu.classList.remove('show');
-                    userDropdownButton.classList.remove('active');
-                }
-            }
-        });
-
-        // --- Bagian Form Donasi ---
         const nominalButtons = document.querySelectorAll('.nominal-button');
         const customAmountInput = document.getElementById('customAmount');
-        const finalAmountInput = document.getElementById('finalAmount'); // Input tersembunyi untuk jumlah
-        
-        const paymentButtons = document.querySelectorAll('.payment-option-button');
-        const paymentMethodInput = document.getElementById('paymentMethod'); // Input tersembunyi untuk metode bayar
+        const finalAmountInput = document.getElementById('finalAmount');
 
-        const messageInput = document.getElementById('supportMessage');
-        const charCounter = document.getElementById('charCounter');
-        const maxLength = messageInput.getAttribute('maxlength');
-
-        // Fungsi untuk mengupdate nilai di input tersembunyi
         function selectAmount(amount) {
             finalAmountInput.value = amount;
         }
 
-        // Event listener untuk tombol nominal
         nominalButtons.forEach(button => {
             button.addEventListener('click', () => {
                 nominalButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 const value = parseInt(button.dataset.value, 10);
                 selectAmount(value);
-                customAmountInput.value = ''; // Kosongkan input manual
+                customAmountInput.value = '';
             });
         });
 
-        // Event listener untuk input nominal manual
         customAmountInput.addEventListener('input', () => {
             nominalButtons.forEach(btn => btn.classList.remove('active'));
             const value = parseInt(customAmountInput.value, 10) || 0;
             selectAmount(value);
         });
-
-        // Event listener untuk tombol metode pembayaran
-        paymentButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                paymentButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                paymentMethodInput.value = button.dataset.value; // Update nilai input tersembunyi
-            });
-        });
-
-        // Event listener untuk penghitung karakter
-        messageInput.addEventListener('input', () => {
-            const remaining = maxLength - messageInput.value.length;
-            charCounter.textContent = `${remaining} karakter tersisa`;
-        });
     });
-    </script>
+        </script>
 </body>
 </html>

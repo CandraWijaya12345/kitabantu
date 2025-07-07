@@ -16,6 +16,9 @@ class Donation extends Model
         'pesan_dukungan',
         'status',
         'nama_donatur',
+        'order_id',
+        'payment_response',
+        'payment_type',
     ];
 
     public function campaign()

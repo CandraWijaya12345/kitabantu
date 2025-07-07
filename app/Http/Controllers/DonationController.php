@@ -7,66 +7,69 @@ use App\Models\Campaign;
 use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Midtrans\Snap; // <-- Pastikan ini di-import
 
 class DonationController extends Controller
 {
     /**
-     * Menampilkan formulir donasi untuk campaign tertentu.
+     * Menampilkan formulir donasi.
      */
     public function create(Request $request)
     {
-        // Ambil ID campaign dari URL (?campaign_id=...)
         $campaignId = $request->input('campaign_id');
-        
-        // Cari campaign atau tampilkan error jika tidak ditemukan
         $campaign = Campaign::findOrFail($campaignId);
-
         return view('formdonasi', ['campaign' => $campaign]);
     }
 
     /**
-     * Menyimpan data donasi baru ke database.
+     * Memproses form donasi dan meminta Snap Token ke Midtrans.
      */
-    public function store(Request $request, Campaign $campaign)
+    public function store(Request $request)
     {
         // 1. Validasi data dari form
         $validated = $request->validate([
             'campaign_id' => 'required|exists:campaigns,id',
-            'jumlah' => 'required|numeric|min:5000',
+            'jumlah' => 'required|numeric|min:10000', // Minimum donasi Midtrans
             'nama_donatur' => 'required_unless:is_anonymous,on|string|max:255',
             'kontak_donatur' => 'nullable|string|max:255',
             'pesan_dukungan' => 'nullable|string|max:500',
-            'metode_pembayaran' => 'required|string',
         ]);
 
-        // 2. Siapkan data untuk disimpan
-        $donorName = $request->has('is_anonymous') ? 'Donatur Anonim' : $validated['nama_donatur'];
-
-        // 3. Simpan donasi ke database
-        Donation::create([
-            'user_id' => Auth::id(), // Akan null jika donatur tidak login
+        // 2. Buat catatan donasi di database dengan status 'unpaid'
+        $donation = Donation::create([
+            'user_id' => Auth::id(),
             'campaign_id' => $validated['campaign_id'],
             'jumlah' => $validated['jumlah'],
-            'nama_donatur' => $donorName,
-            'pesan_dukungan' => $validated['pesan_dukungan'],
-            'status' => 'pending', // Status awal, nanti bisa diupdate oleh payment gateway
-            // 'metode_pembayaran' => $validated['metode_pembayaran'], // Anda bisa menambahkan kolom ini jika perlu
+            'nama_donatur' => $request->has('is_anonymous') ? 'Donatur Anonim' : $validated['nama_donatur'],
+            'pesan_dukungan' => $validated['pesan_dukungan'] ?? null,
+            'status' => 'unpaid',
         ]);
 
-        // Di dunia nyata, di sini Anda akan mengarahkan ke payment gateway.
-        // Untuk sekarang, kita langsung update dana terkumpul dan arahkan ke halaman terima kasih.
-        $campaign = Campaign::findOrFail($validated['campaign_id']);
-        $campaign->increment('dana_terkumpul', $validated['jumlah']);
+        // 3. Siapkan parameter untuk Midtrans
+        $params = [
+            'transaction_details' => [
+                'order_id' => 'DONASI-' . $donation->id . '-' . time(), // ID unik
+                'gross_amount' => $donation->jumlah,
+            ],
+            'customer_details' => [
+                'first_name' => $donation->nama_donatur,
+                'email' => Auth::user()->email ?? 'donatur@example.com',
+                'phone' => $validated['kontak_donatur'] ?? '08123456789',
+            ],
+        ];
 
-        return redirect()->route('donations.thankyou');
-    }
+        try {
+            // 4. Dapatkan Snap Token dari Midtrans
+            $snapToken = Snap::getSnapToken($params);
+            
+            // 5. Kirim token ke view baru yang akan menampilkan halaman pembayaran
+            return view('donation_payment', [
+                'snapToken' => $snapToken,
+                'donation' => $donation
+            ]);
 
-    /**
-     * Menampilkan halaman terima kasih.
-     */
-    public function thankYou()
-    {
-        return view('donation_thankyou');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }
