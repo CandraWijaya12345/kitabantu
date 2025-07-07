@@ -73,9 +73,10 @@ class CampaignController extends Controller
 
         // Mengambil donasi yang statusnya berhasil
         $donations = $campaign->donations()
-                              ->where('status', 'success') // Anda bisa sesuaikan status ini
-                              ->latest()
-                              ->get();
+            ->whereIn('status', ['paid', 'settlement', 'success']) // tergantung status yang kamu anggap sah
+            ->latest()
+            ->get();
+
 
         // Kirim data campaign DAN data donasi ke view
         return view('donatemenu', [

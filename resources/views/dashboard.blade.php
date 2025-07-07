@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - KitaBantu</title>
-    <link rel="stylesheet" href="{{ asset('css/admindashboard.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/admindashboard.css') }}">
     {{-- TAMBAHKAN SCRIPT LIBRARY CHART.JS --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>

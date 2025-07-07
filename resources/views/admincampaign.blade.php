@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Campaign - Admin</title>
-    <link rel="stylesheet" href="{{ asset('css/admincampaign.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/admincampaign.css') }}">
 </head>
 <body>
     <div class="admin-container">

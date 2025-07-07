@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campaign Saya - KitaBantu</title>
     {{-- Menggunakan CSS yang sama dengan list_kitatolong untuk referensi --}}
-    <link rel="stylesheet" href="{{ asset('css/list_kitatolong.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/list_kitatolong.css') }}">
     <style>
         /* CSS tambahan untuk status campaign */
         .status-badge { text-transform: capitalize; padding: 5px 12px; border-radius: 20px; color: white; font-weight: 600; font-size: 0.8rem; }

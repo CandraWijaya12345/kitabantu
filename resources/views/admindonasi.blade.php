@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Donasi - KitaBantu</title>
-    <link rel="stylesheet" href="/css/admindonasi.css">
+    <link rel="stylesheet" href="{{ secure_asset('css/admindonasi.css') }}">
 </head>
 <body>
     <div class="admin-container">
@@ -86,63 +86,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Budi Santoso</td>
-                                <td>Bantu Renovasi Sekolah Tepian Negeri</td>
-                                <td>Rp100.000</td>
-                                <td><span class="status-tag success">Berhasil</span></td>
-                                <td>28 Jun 2025</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-detail">Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Citra Lestari</td>
-                                <td>Pengobatan Kanker untuk Ibu Siti</td>
-                                <td>Rp250.000</td>
-                                <td><span class="status-tag success">Berhasil</span></td>
-                                <td>28 Jun 2025</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-detail">Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>Donatur Anonim</td>
-                                <td>Modal Usaha untuk Warung Pak Budi</td>
-                                <td>Rp50.000</td>
-                                <td><span class="status-tag pending">Tertunda</span></td>
-                                <td>27 Jun 2025</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-detail">Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>Eko Prasetyo</td>
-                                <td>Pembangunan Masjid Al-Hidayah</td>
-                                <td>Rp500.000</td>
-                                <td><span class="status-tag failed">Gagal</span></td>
-                                <td>27 Jun 2025</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="#" class="btn-detail">Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
+                            @forelse ($donations as $donation)
+                                <tr>
+                                    <td>{{ $donation->nama_donatur }}</td>
+                                    <td>{{ $donation->campaign->judul ?? '-' }}</td>
+                                    <td>Rp{{ number_format($donation->jumlah, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if ($donation->status === 'paid')
+                                            <span class="status-tag success">Berhasil</span>
+                                        @elseif ($donation->status === 'settlement')
+                                            <span class="status-tag pending">Tertunda</span>
+                                        @else
+                                            <span class="status-tag failed">Gagal</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($donation->created_at)->format('d M Y') }}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a href="#" class="btn-detail">Detail</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6">Belum ada donasi.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
-                </div>
-                 <div class="pagination">
-                    <a href="#">&laquo;</a>
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">&raquo;</a>
+                <div class="pagination-wrapper">
+                    {{ $donations->links('vendor.pagination.default')}}
                 </div>
             </section>
 

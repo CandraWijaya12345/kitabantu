@@ -227,27 +227,75 @@ img { max-width: 100%; height: auto; display: block; }
     background-color: #d4e7ff;
 }
 
-.pagination {
+/* Style Laravel Pagination */
+/* --- REVISED PAGINATION STYLES --- */
+.pagination-wrapper {
     display: flex;
     justify-content: center;
-    padding: 1.5rem;
-    border-top: 1px solid var(--border-color);
+    margin-top: 1.5rem;
 }
-.pagination a {
-    color: var(--primary-blue);
-    padding: 0.5rem 1rem;
-    margin: 0 0.25rem;
-    border-radius: 8px;
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    font-size: 0.85rem;
+}
+
+.pagination li {
+    display: flex;
+    align-items: center;
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    color: var(--text-primary);
     font-weight: 600;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
 }
-.pagination a:hover {
-    background-color: #eaf4ff;
+
+.pagination li a:hover {
+    background-color: var(--main-bg);
+    color: var(--primary-blue);
 }
-.pagination a.active {
+
+.pagination li.active span {
     background-color: var(--primary-blue);
     color: #ffffff;
+    border-color: var(--primary-blue);
 }
+
+.pagination li.disabled span {
+    color: var(--text-secondary);
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+}
+
+/* Optional: adjust arrow styles */
+.pagination li svg,
+.pagination li .page-link-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.page-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+
 
 /* --- RESPONSIVE MEDIA QUERIES --- */
 @media (max-width: 1200px) {

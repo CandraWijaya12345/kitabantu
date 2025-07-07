@@ -129,7 +129,10 @@
                         <img src="/img/person.png" alt="Avatar Donatur" class="commenter-avatar">
                         <div class="comment-content">
                             {{-- Nama bisa dari user yang login atau nama yang diinput saat donasi --}}
-                            <h4 class="commenter-name">{{ $donation->user->name ?? $donation->nama_donatur }}</h4>
+                            <h4 class="commenter-name">
+                                {{ $donation->nama_donatur ?? ($donation->user->name ?? 'Donatur') }}
+                            </h4>
+
                             {{-- Format tanggal donasi --}}
                             <p class="comment-date">{{ $donation->created_at->format('d-m-Y • H:i') }}</p>
                             {{-- Pesan dukungan dari donatur --}}

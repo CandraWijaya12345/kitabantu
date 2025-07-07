@@ -33,6 +33,6 @@ class RegisterController extends Controller
         Auth::login($user);
 
         // 4. Arahkan ke halaman home setelah berhasil registrasi dan login
-        return redirect('/home');
+        return redirect('/');
     }
 }

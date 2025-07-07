@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganti Password - KitaBantu</title>
-    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/ganti_password.css') }}"> 
+    <link rel="stylesheet" href="{{ secure_asset('css/user.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/ganti_password.css') }}"> 
 </head>
 <body>
 

@@ -24,7 +24,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             // 3. Jika berhasil, arahkan ke halaman home atau dashboard
-            return redirect()->intended('/home');
+            return redirect()->intended('/');
         }
 
         // 4. Jika gagal, kembali ke halaman login dengan pesan error

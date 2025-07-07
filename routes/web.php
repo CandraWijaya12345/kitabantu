@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminCampaignController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminKitaTolongController;
 use App\Http\Controllers\AdminSettingsController;
+use App\Http\Controllers\AdminDonationController;
 
 // == RUTE PUBLIK ==
 Route::get('/', [CampaignController::class, 'home'])->name('home');
@@ -39,9 +40,9 @@ Route::middleware(['auth'])->group(function () {
     // Profil Pengguna
     Route::get('/user', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/user', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/user/ganti-password', [ProfileController::class, 'showChangePasswordForm'])->name('password.edit');
-    Route::post('/user/ganti-password', [ProfileController::class, 'updatePassword'])->name('password.update');
-    Route::get('/user/campaigns', [ProfileController::class, 'myCampaigns'])->name('profile.campaigns');
+    Route::get('/user/ganti_password', [ProfileController::class, 'showChangePasswordForm'])->name('password.edit');
+    Route::post('/user/ganti_password', [ProfileController::class, 'updatePassword'])->name('password.update');
+    Route::get('/list_campaign', [ProfileController::class, 'myCampaigns'])->name('profile.campaigns');
     
     // Galang Dana
     Route::get('/galang-dana/create', [CampaignController::class, 'create'])->name('campaigns.create');
@@ -75,4 +76,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/settings', [AdminSettingsController::class, 'show'])->name('settings.show');
     Route::post('/settings/profile', [AdminSettingsController::class, 'updateProfile'])->name('settings.updateProfile');
     Route::post('/settings/password', [AdminSettingsController::class, 'updatePassword'])->name('settings.updatePassword');
+    Route::get('/donasi', [AdminDonationController::class, 'index'])->name('admin.donasi.index');
+
 });

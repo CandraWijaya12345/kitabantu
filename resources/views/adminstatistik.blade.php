@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistik - Admin KitaBantu</title>
-    <link rel="stylesheet" href="/css/adminstatistik.css">
+    <link rel="stylesheet" href="{{ secure_asset('css/adminstatistik.css') }}">
 </head>
 <body>
     <div class="admin-container">
