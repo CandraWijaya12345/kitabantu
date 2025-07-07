@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ganti Password - KitaBantu</title>
-    <link rel="stylesheet" href="/css/ganti_password.css"> 
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ganti_password.css') }}"> 
 </head>
 <body>
 
@@ -55,8 +56,8 @@
             <div class="profile-container">
                 <aside class="profile-sidebar">
                     <nav class="profile-nav">
-                        <a href="/user" class="profile-nav-link">Informasi Pengguna</a>
-                        <a href="/user/ganti_password" class="profile-nav-link active">Ganti Password</a>
+                        <a href="{{ route('profile.show') }}" class="profile-nav-link">Informasi Pengguna</a>
+                        <a href="{{ route('password.edit') }}" class="profile-nav-link active">Ganti Password</a>
                         <a href="#" class="profile-nav-link">Campaign Saya</a>
                         <a href="/list_kitatolong" class="profile-nav-link">Permintaan KitaTolong</a>
                     </nav>
@@ -65,18 +66,41 @@
                 <section class="profile-content">
                     <div class="form-card">
                         <h1 class="form-title">Ganti Password</h1>
-                        <form>
-                            <div class="form-group">
-                                <label for="old-password">Masukkan Password Lama</label>
-                                <input type="password" id="old-password" placeholder="Password Lama">
+
+                        {{-- Menampilkan pesan sukses --}}
+                        @if (session('success'))
+                            <div class="alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        {{-- Menampilkan pesan error validasi --}}
+                        @if ($errors->any())
+                            <div class="alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
+                        @endif
+
+                        {{-- Sesuaikan Form --}}
+                        <form action="{{ route('password.update') }}" method="POST">
+                            @csrf
                             <div class="form-group">
-                                <label for="new-password">Masukkan Password Baru</label>
-                                <input type="password" id="new-password" placeholder="Password Baru">
+                                <label for="current_password">Masukkan Password Lama</label>
+                                {{-- 'name' harus sesuai dengan aturan validasi --}}
+                                <input type="password" id="current_password" name="current_password" placeholder="Password Lama" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="confirm-password">Konfirmasi Password Baru</label>
-                                <input type="password" id="confirm-password" placeholder="Ulangi Password Baru">
+                                <label for="new_password">Masukkan Password Baru</label>
+                                <input type="password" id="new_password" name="new_password" placeholder="Password Baru" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="new_password_confirmation">Konfirmasi Password Baru</label>
+                                {{-- 'name' harus 'nama_field_sebelumnya_confirmation' --}}
+                                <input type="password" id="new_password_confirmation" name="new_password_confirmation" placeholder="Ulangi Password Baru" required>
                             </div>
                             
                             <button type="submit" class="submit-button">Simpan Perubahan</button>

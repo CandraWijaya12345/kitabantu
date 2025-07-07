@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Saya - KitaBantu</title>
-    <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 </head>
 <body>
 
@@ -65,37 +65,57 @@
                 <section class="profile-content">
                     <div class="form-card">
                         <h1 class="form-title">Profil Saya</h1>
-                        <form>
+
+                        {{-- Menampilkan pesan sukses jika ada --}}
+                        @if(session('success'))
+                            <div class="alert-success">{{ session('success') }}</div>
+                        @endif
+
+                        {{-- Form yang terhubung ke controller --}}
+                        <form action="{{ route('profile.update') }}" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <label for="name">Nama</label>
-                                <input type="text" id="name" placeholder="Nama lengkap pengguna">
+                                {{-- Tampilkan nama dari tabel users --}}
+                                <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}">
+                                @error('name')<span class="error-text">{{ $message }}</span>@enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="birthdate">Tanggal lahir</label>
-                                <div class="date-input-wrapper">
-                                    <input type="text" id="birthdate" placeholder="DD/MM/YY">
-                                    <img src="./img/calendar-icon.png" alt="Calendar Icon" class="input-icon">
-                                </div>
+                                <input type="date" id="birthdate" name="tanggal_lahir" value="{{ old('tanggal_lahir', $user->detail->tanggal_lahir ?? '') }}">
+                                @error('tanggal_lahir')<span class="error-text">{{ $message }}</span>@enderror
                             </div>
+
                             <div class="form-group">
                                 <label>Jenis Kelamin</label>
+                                {{-- Input tersembunyi untuk menyimpan nilai jenis kelamin --}}
+                                <input type="hidden" name="jenis_kelamin" id="gender-input" value="{{ old('jenis_kelamin', $user->detail->jenis_kelamin ?? '') }}">
                                 <div class="gender-options">
-                                    <button type="button" class="gender-button">Laki-laki</button>
-                                    <button type="button" class="gender-button active">Perempuan</button>
+                                    <button type="button" class="gender-button {{ (old('jenis_kelamin', $user->detail->jenis_kelamin ?? '') == 'Laki-laki') ? 'active' : '' }}" data-value="Laki-laki">Laki-laki</button>
+                                    <button type="button" class="gender-button {{ (old('jenis_kelamin', $user->detail->jenis_kelamin ?? '') == 'Perempuan') ? 'active' : '' }}" data-value="Perempuan">Perempuan</button>
                                 </div>
+                                @error('jenis_kelamin')<span class="error-text">{{ $message }}</span>@enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="phone">Nomor Handphone</label>
-                                <input type="tel" id="phone" placeholder="08XXXXXXXXXX">
+                                <input type="tel" id="phone" name="nomor_hp" value="{{ old('nomor_hp', $user->detail->nomor_hp ?? '') }}" placeholder="08XXXXXXXXXX">
+                                @error('nomor_hp')<span class="error-text">{{ $message }}</span>@enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="address">Alamat</label>
-                                <textarea id="address" placeholder="Masukkan Alamat"></textarea>
+                                <textarea id="address" name="alamat" placeholder="Masukkan Alamat">{{ old('alamat', $user->detail->alamat ?? '') }}</textarea>
+                                @error('alamat')<span class="error-text">{{ $message }}</span>@enderror
                             </div>
-                             <div class="form-group">
+
+                            <div class="form-group">
                                 <label for="bio">Deskripsi Diri</label>
-                                <textarea id="bio" placeholder="Deskripsikan Diri Anda"></textarea>
+                                <textarea id="bio" name="bio" placeholder="Deskripsikan Diri Anda">{{ old('bio', $user->detail->bio ?? '') }}</textarea>
+                                @error('bio')<span class="error-text">{{ $message }}</span>@enderror
                             </div>
+
                             <button type="submit" class="submit-button">Simpan Perubahan</button>
                         </form>
                     </div>
@@ -171,6 +191,17 @@
             }
         });
     });
+            // Script untuk tombol jenis kelamin
+        document.querySelectorAll('.gender-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Hapus kelas 'active' dari semua tombol
+                document.querySelectorAll('.gender-button').forEach(btn => btn.classList.remove('active'));
+                // Tambahkan kelas 'active' ke tombol yang diklik
+                this.classList.add('active');
+                // Set nilai input tersembunyi
+                document.getElementById('gender-input').value = this.dataset.value;
+            });
+        });
     </script>
 </body>
 </html>

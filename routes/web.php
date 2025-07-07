@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CampaignController; // Diambil dari versi remote/merge
 use App\Http\Controllers\DonationController; // Diambil dari versi remote/merge
 use App\Http\Controllers\HelpRequestController;
+use App\Http\Controllers\ProfileController;
 
 
 Route::get('/', [CampaignController::class, 'home'])->name('home');
@@ -70,14 +71,12 @@ Route::get('/search_campaign', [App\Http\Controllers\CampaignController::class, 
 // Rute yang memerlukan autentikasi pengguna
 Route::middleware(['auth'])->group(function () {
     // Menampilkan form untuk melakukan donasi ke campaign spesifik
+    Route::get('/user', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/user', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/user/ganti_password', [ProfileController::class, 'showChangePasswordForm'])->name('password.edit');
+    Route::post('/user/ganti_password', [ProfileController::class, 'updatePassword'])->name('password.update');
     Route::get('/formdonasi/{campaign:slug}', [DonationController::class, 'create'])->name('donate.form');
-
-    // Memproses data dari form donasi yang di-submit
     Route::post('/formdonasi', [DonationController::class, 'store'])->name('donate.store');
-    
-    // Rute untuk halaman profil dan lainnya yang butuh login
-    Route::get('/user', function () { return view('user'); });
-    Route::get('/user/ganti_password', function () { return view('ganti_password'); });
     Route::get('/formkitatolong', function () { return view('formkitatolong'); });
     Route::get('/galang-dana/create', [CampaignController::class, 'create'])->name('campaigns.create');
     Route::post('/galang-dana', [CampaignController::class, 'store'])->name('campaigns.store');

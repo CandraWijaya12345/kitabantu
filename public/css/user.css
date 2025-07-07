@@ -206,6 +206,7 @@ img {
 
 .form-group input[type="text"],
 .form-group input[type="tel"],
+.form-group input[type="date"],
 .form-group textarea {
     width: 100%;
     padding: 0.9rem 1rem;
@@ -229,22 +230,6 @@ img {
 .form-group textarea {
     min-height: 120px;
     resize: vertical;
-}
-
-.date-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.date-input-wrapper input {
-    padding-right: 3rem; /* Ruang untuk ikon */
-}
-.date-input-wrapper .input-icon {
-    position: absolute;
-    right: 1rem;
-    width: 24px;
-    height: 24px;
-    pointer-events: none; /* Agar ikon tidak bisa diklik */
 }
 
 .gender-options {
