@@ -69,7 +69,7 @@
             <div class="campaign-grid">       
                 @forelse ($campaigns as $campaign)
                     {{-- Loop ini akan mengulang untuk setiap data campaign dari database --}}
-                    <a href="#" class="campaign-card">
+                    <a href="{{ route('donate.menu', $campaign->slug) }}" class="campaign-card">
                         <div class="campaign-top-info">
                             <span>Rp{{ number_format($campaign->dana_terkumpul) }} Terkumpul</span>
                         </div>
@@ -125,31 +125,33 @@
             <section class="impact">
                 <h2 class="impact-title">Bantuan Tersampaikan</h2>
                 <p class="impact-description">
-                    <span class="impact-number">12345678</span> Orang terbantu berkat anda dan akan terus bertambah. Mari berikan yang terbaik untuk mereka yang membutuhkan.
+                    <span class="impact-number">{{ $totalUser }}</span> Orang terbantu berkat anda dan akan terus bertambah. Mari berikan yang terbaik untuk mereka yang membutuhkan.
                 </p>
             </section>
+
             <section class="stats home-stats">
                 <div class="stat-card">
                     <div class="stat-icon"><img src="./img/icon-dana.png" alt="Dana Terkumpul"></div>
-                    <p class="stat-number">Rp250.000.000</p>
+                    <p class="stat-number">Rp{{ number_format($totalDana, 0, ',', '.') }}</p>
                     <p class="stat-label">Dana terkumpul</p>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><img src="./img/icon-orang.png" alt="Orang Terdaftar"></div>
-                    <p class="stat-number">123.456.789</p>
+                    <p class="stat-number">{{ number_format($totalUser, 0, ',', '.') }}</p>
                     <p class="stat-label">Orang Terdaftar</p>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><img src="./img/icon-campaign.png" alt="Campaign Dibuat"></div>
-                    <p class="stat-number">12.345</p>
+                    <p class="stat-number">{{ number_format($totalCampaign, 0, ',', '.') }}</p>
                     <p class="stat-label">Campaign Dibuat</p>
                 </div>
-                 <div class="stat-card">
+                <div class="stat-card">
                     <div class="stat-icon"><img src="./img/icon-donasi.png" alt="Donasi Dilakukan"></div>
-                    <p class="stat-number">12.345</p>
+                    <p class="stat-number">{{ number_format($totalDonasi, 0, ',', '.') }}</p>
                     <p class="stat-label">Donasi Dilakukan</p>
                 </div>
             </section>
+
         </div>
 
         <section class="features">

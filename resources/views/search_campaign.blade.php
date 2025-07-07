@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cari Campaign - KitaBantu</title>
     {{-- Pastikan path CSS sudah benar --}}
-    <link rel="stylesheet" href="{{ asset('css/donate.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/search_campaign.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/donate.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/search_campaign.css') }}">
 </head>
 <body>
 
@@ -149,7 +149,6 @@
         </div>
         <div class="footer-bottom">
             <p class="copyright">Copyright © 2025 Kitabantu</p>
-            <button class="chat-button"><img src="./img/message.png" alt="chat icon"><span>1 Message Arrived</span></button>
         </div>
     </footer>
     </div>

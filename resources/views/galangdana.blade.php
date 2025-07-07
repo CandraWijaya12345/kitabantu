@@ -201,7 +201,6 @@
             </div>
             <div class="footer-bottom">
                 <p class="copyright">Copyright © 2025 Kitabantu</p>
-                <button class="chat-button"><img src="./img/message.png" alt="chat icon"><span>1 Message Arrived</span></button>
             </div>
         </footer>
     </div>

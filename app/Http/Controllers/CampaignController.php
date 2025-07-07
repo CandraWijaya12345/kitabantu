@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
-use App\Models\User; // Pastikan ini ada
+use App\Models\Donation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -15,8 +16,20 @@ class CampaignController extends Controller
      */
     public function home()
     {
-        $campaigns = Campaign::where('status', 'aktif')->latest()->take(4)->get();
-        return view('home', ['campaigns' => $campaigns]);
+        $campaigns = Campaign::where('status', 'aktif')->latest()->take(6)->get();
+
+        $totalDana = Donation::where('status', 'paid')->sum('jumlah');
+        $totalUser = User::count();
+        $totalCampaign = Campaign::where('status', 'aktif')->count();
+        $totalDonasi = Donation::where('status', 'paid')->count();
+
+        return view('home', compact(
+            'campaigns',
+            'totalDana',
+            'totalUser',
+            'totalCampaign',
+            'totalDonasi'
+        ));
     }
 
     /**

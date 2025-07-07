@@ -151,10 +151,6 @@
         </section>
     </main>
     
-    <button class="floating-chat-button">
-        <img src="/img/message.png" alt="chat icon">
-        <span>1 Message Arrived</span>
-    </button>
 
         <script>
     document.addEventListener('DOMContentLoaded', function() {
