@@ -252,6 +252,18 @@ main {
     box-shadow: 0 0 0 3px rgba(88, 147, 234, 0.2);
 }
 
+.category-grid input[type="radio"] { display: none; }
+.category-grid input[type="radio"] + label {
+/* Style ini meniru .category-button Anda */
+    cursor: pointer; display: inline-block; text-align: center;
+    padding: 1rem; border: 1px solid #ddd; border-radius: 8px;
+    background-color: #f8f9fa; transition: all 0.2s ease;
+}
+.category-grid input[type="radio"]:checked + label {
+    background-color: #5893ea; color: white; border-color: #5893ea;
+}
+.error-message { color: red; font-size: 0.875em; margin-top: 5px; }
+
 /* ===== STYLE BARU untuk rentang waktu ===== */
 .time-range-group {
     display: flex;

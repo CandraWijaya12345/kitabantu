@@ -63,62 +63,77 @@
         </section>
 
         <section class="kitatolong-form-section">
-            <form class="kitatolong-form">
+            {{-- Tambahkan action, method, dan @csrf --}}
+            <form class="kitatolong-form" action="{{ route('kitatolong.store') }}" method="POST">
+                @csrf
+
+                {{-- Menampilkan pesan error validasi --}}
+                @if ($errors->any())
+                    <div class="alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+
                 <div class="form-card">
                     <h2 class="form-card-title">Pilih Kategori Pertolongan</h2>
                     <div class="category-grid">
-                        <button type="button" class="category-button">Menjaga Posko</button>
-                        <button type="button" class="category-button">Distribusi Logistik</button>
-                        <button type="button" class="category-button">Evakuasi Barang</button>
-                        <button type="button" class="category-button">Pencatatan</button>
-                        <button type="button" class="category-button">Pembersihan Area Bencana</button>
-                        <button type="button" class="category-button">Pendamping</button>
-                        <button type="button" class="category-button">Pengantaran Lansia</button>
-                        <button type="button" class="category-button">Mengurus Dokumen</button>
+                        {{-- Ganti <button> menjadi <input type="radio"> dan <label> --}}
+                        <input type="radio" id="cat1" name="kategori" value="Menjaga Posko"><label for="cat1" class="category-button">Menjaga Posko</label>
+                        <input type="radio" id="cat2" name="kategori" value="Distribusi Logistik"><label for="cat2" class="category-button">Distribusi Logistik</label>
+                        <input type="radio" id="cat3" name="kategori" value="Evakuasi Barang"><label for="cat3" class="category-button">Evakuasi Barang</label>
+                        <input type="radio" id="cat4" name="kategori" value="Pencatatan"><label for="cat4" class="category-button">Pencatatan</label>
+                        <input type="radio" id="cat5" name="kategori" value="Pembersihan Area Bencana"><label for="cat5" class="category-button">Pembersihan Area Bencana</label>
+                        <input type="radio" id="cat6" name="kategori" value="Pendamping"><label for="cat6" class="category-button">Pendamping</label>
+                        <input type="radio" id="cat7" name="kategori" value="Pengantaran Lansia"><label for="cat7" class="category-button">Pengantaran Lansia</label>
+                        <input type="radio" id="cat8" name="kategori" value="Mengurus Dokumen"><label for="cat8" class="category-button">Mengurus Dokumen</label>
                     </div>
 
                     <div class="form-group">
                         <label for="help-detail">Jelaskan dengan detail perihal pertolongan yang anda butuhkan</label>
-                        <input type="text" id="help-detail" placeholder="Saya membutuhkan...">
+                        {{-- Tambahkan name dan old() --}}
+                        <input type="text" id="help-detail" name="detail_pertolongan" placeholder="Saya membutuhkan..." value="{{ old('detail_pertolongan') }}">
                     </div>
 
                     <div class="form-group">
-                        <label for="help-date">Tentukan tanggal permintaan pertolongan (Minimal H-3 Permintaan)</label>
-                        <input type="date" id="help-date">
+                        <label for="help-date">Tentukan tanggal permintaan pertolongan</label>
+                        <input type="date" id="help-date" name="tanggal_pertolongan" value="{{ old('tanggal_pertolongan') }}">
                     </div>
 
                     <div class="form-group">
                         <label>Tentukan Rentang Waktu Permintaan Pertolongan</label>
                         <div class="time-range-group">
-                           <input type="time" id="help-time-start" aria-label="Jam Mulai">
+                           <input type="time" name="waktu_mulai" aria-label="Jam Mulai" value="{{ old('waktu_mulai') }}">
                            <span>-</span>
-                           <input type="time" id="help-time-end" aria-label="Jam Selesai">
+                           <input type="time" name="waktu_selesai" aria-label="Jam Selesai" value="{{ old('waktu_selesai') }}">
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="help-location">Tentukan Lokasi Permintaan Pertolongan</label>
-                        <input type="text" id="help-location" placeholder="Alamat lengkap">
+                        <input type="text" id="help-location" name="lokasi" placeholder="Alamat lengkap" value="{{ old('lokasi') }}">
                     </div>
                 </div>
 
                 <div class="form-card">
                     <h2 class="form-card-title">Data Pengirim</h2>
                      <div class="form-group">
-                        <label for="sender-name">Nama Lengkap (Sesuai KTP)</label>
-                        <input type="text" id="sender-name" placeholder="Nama Lengkap (Sesuai KTP)">
-                    </div>
+                         <label for="sender-name">Nama Lengkap (Sesuai KTP)</label>
+                         {{-- Isi otomatis dengan nama user, tapi bisa diubah --}}
+                         <input type="text" id="sender-name" name="nama_pemohon" placeholder="Nama Lengkap (Sesuai KTP)" value="{{ old('nama_pemohon', Auth::user()->name) }}">
+                     </div>
                      <div class="form-group">
-                        <label for="sender-contact">Nomor Ponsel atau Email (Opsional)</label>
-                        <input type="text" id="sender-contact" placeholder="Nomor Ponsel atau Email (Opsional)">
-                    </div>
+                         <label for="sender-contact">Nomor Ponsel atau Email</label>
+                         <input type="text" id="sender-contact" name="kontak_pemohon" placeholder="Nomor Ponsel atau Email" value="{{ old('kontak_pemohon') }}">
+                     </div>
                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="terms-1">
-                        <label for="terms-1">Dengan ini menyetujui syarat dan ketentuan penggunaan KitaTolong.</label>
-                    </div>
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="terms-2">
-                        <label for="terms-2">Menyatakan identitas saya asli dan siap ditindak lanjuti apabila melanggar peraturan yang berlaku.</label>
+                        {{-- Ganti `id` dan tambahkan `name`--}}
+                        <input type="checkbox" id="terms" name="terms">
+                        <label for="terms">Dengan ini saya menyetujui syarat & ketentuan dan menyatakan identitas saya asli.</label>
                     </div>
                 </div>
 

@@ -128,4 +128,30 @@ class CampaignController extends Controller
         // 4. Arahkan pengguna ke halaman lain dengan pesan sukses
         return redirect()->route('home')->with('success', 'Campaign Anda berhasil dibuat dan sedang menunggu verifikasi oleh tim kami.');
     }
+
+        public function search(Request $request)
+    {
+        // Ambil kata kunci pencarian dari input 'query'
+        $searchQuery = $request->input('query');
+
+        // Mulai query untuk campaign yang aktif
+        $query = Campaign::where('status', 'aktif');
+
+        // Jika ada kata kunci pencarian, filter hasilnya
+        if ($searchQuery) {
+            $query->where(function ($q) use ($searchQuery) {
+                $q->where('judul', 'like', '%' . $searchQuery . '%')
+                  ->orWhere('deskripsi_lengkap', 'like', '%' . $searchQuery . '%');
+            });
+        }
+
+        // Ambil semua hasil yang cocok, urutkan dari yang terbaru
+        $campaigns = $query->latest()->get();
+
+        // Kirim data ke view search_campaign
+        return view('search_campaign', [
+            'campaigns' => $campaigns,
+            'searchQuery' => $searchQuery // Kirim juga kata kunci untuk ditampilkan kembali
+        ]);
+    }
 }

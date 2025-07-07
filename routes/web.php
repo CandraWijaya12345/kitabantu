@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CampaignController; // Diambil dari versi remote/merge
 use App\Http\Controllers\DonationController; // Diambil dari versi remote/merge
+use App\Http\Controllers\HelpRequestController;
 
 
 Route::get('/', [CampaignController::class, 'home'])->name('home');
@@ -63,9 +64,7 @@ Route::get('/list_kitatolong', function () {
     return view('list_kitatolong');
 });
 
-Route::get('/search_campaign', function () {
-    return view('search_campaign');
-});
+Route::get('/search_campaign', [App\Http\Controllers\CampaignController::class, 'search'])->name('campaigns.search');
 
 
 // Rute yang memerlukan autentikasi pengguna
@@ -82,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/formkitatolong', function () { return view('formkitatolong'); });
     Route::get('/galang-dana/create', [CampaignController::class, 'create'])->name('campaigns.create');
     Route::post('/galang-dana', [CampaignController::class, 'store'])->name('campaigns.store');
+    Route::get('/formkitatolong', [HelpRequestController::class, 'create'])->name('kitatolong.create');
+    Route::post('/formkitatolong', [HelpRequestController::class, 'store'])->name('kitatolong.store');
 });
 
 

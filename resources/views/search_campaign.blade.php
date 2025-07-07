@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cari Campaign - KitaBantu</title>
-    <link rel="stylesheet" href="css/donate.css">
-    <link rel="stylesheet" href="css/search_campaign.css"> </head>
+    {{-- Pastikan path CSS sudah benar --}}
+    <link rel="stylesheet" href="{{ asset('css/donate.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/search_campaign.css') }}">
+</head>
 <body>
 
     <header class="header">
@@ -20,8 +22,8 @@
             </div>
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
-                <a href="/search_campaign" class="search-link">
-                    <img src="./img/search.png" alt="Search Icon" class="search-icon">
+                <a href="{{ route('campaigns.search') }}" class="search-link">
+                    <img src="{{ asset('img/search.png') }}" alt="Search Icon" class="search-icon">
                     Search
                 </a>
                 
@@ -51,77 +53,67 @@
         </nav>
     </header>
     
-        <main class="list-main">
-            <div class="list-container">
-                <div class="search-header">
-                    <h1 class="page-title">Cari Campaign</h1>
-                    <p class="section-description">
-                        Pilih campaign yang ingin anda berikan bantuan, seluruh bantuan anda sangat berharga bagi mereka.
-                    </p>
-                    <form class="search-form">
-                        <input type="text" placeholder="Search">
-                        <button type="submit">
-                            <img src="./img/search_white.png" alt="Search">
-                        </button>
-                    </form>
-                </div>
-    
-                <div class="campaign-grid">
-                    <div class="campaign-card">
-                        <div class="campaign-top-info"><span>Rp<span class="amount">123.000</span> Terkumpul</span></div>
-                        <img src="./img/donasi.jpg" alt="Bantu Ahmad" class="campaign-image">
-                        <div class="campaign-content">
-                            <h3 class="campaign-title">Bantu Ahmad Selamat dari Kanker</h3>
-                            <div class="campaign-progress"><div class="progress-bar"><div class="progress" style="width: 12%;"></div></div></div>
-                            <div class="campaign-details">
-                                <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp1.000.000</strong></div>
-                                <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
-                            </div>
-                            <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
-                        </div>
-                    </div>
-                    <div class="campaign-card">
-                        <div class="campaign-top-info"><span>Rp<span class="amount">123.000</span> Terkumpul</span></div>
-                        <img src="./img/donasi.jpg" alt="Bantu Ahmad" class="campaign-image">
-                        <div class="campaign-content">
-                            <h3 class="campaign-title">Bantu Ahmad Selamat dari Kanker</h3>
-                            <div class="campaign-progress"><div class="progress-bar"><div class="progress" style="width: 12%;"></div></div></div>
-                            <div class="campaign-details">
-                                <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp1.000.000</strong></div>
-                                <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
-                            </div>
-                            <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
-                        </div>
-                    </div>
-                    <div class="campaign-card">
-                        <div class="campaign-top-info"><span>Rp<span class="amount">123.000</span> Terkumpul</span></div>
-                        <img src="./img/donasi.jpg" alt="Bantu Ahmad" class="campaign-image">
-                        <div class="campaign-content">
-                            <h3 class="campaign-title">Bantu Ahmad Selamat dari Kanker</h3>
-                            <div class="campaign-progress"><div class="progress-bar"><div class="progress" style="width: 12%;"></div></div></div>
-                            <div class="campaign-details">
-                                <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp1.000.000</strong></div>
-                                <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
-                            </div>
-                            <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
-                        </div>
-                    </div>
-                    <div class="campaign-card">
-                        <div class="campaign-top-info"><span>Rp<span class="amount">123.000</span> Terkumpul</span></div>
-                        <img src="./img/donasi.jpg" alt="Bantu Ahmad" class="campaign-image">
-                        <div class="campaign-content">
-                            <h3 class="campaign-title">Bantu Ahmad Selamat dari Kanker</h3>
-                            <div class="campaign-progress"><div class="progress-bar"><div class="progress" style="width: 12%;"></div></div></div>
-                            <div class="campaign-details">
-                                <div class="campaign-target"><span>Dibutuhkan</span><br><strong>Rp1.000.000</strong></div>
-                                <div class="campaign-time-left"><span>Tersisa</span><br><strong>1 Minggu lagi</strong></div>
-                            </div>
-                            <div class="campaign-organizer"><img src="./img/user-icon.png" alt="User Icon"><span>Kakak Ahmad</span></div>
-                        </div>
-                    </div>
-                </div>
+    <main class="list-main">
+        <div class="list-container">
+            <div class="search-header">
+                <h1 class="page-title">Cari Campaign</h1>
+                <p class="section-description">
+                    Pilih campaign yang ingin anda berikan bantuan, seluruh bantuan anda sangat berharga bagi mereka.
+                </p>
+                
+                {{-- FORM PENCARIAN DINAMIS --}}
+                <form action="{{ route('campaigns.search') }}" method="GET" class="search-form">
+                    <input type="text" name="query" placeholder="Cari judul atau isi campaign..." value="{{ $searchQuery ?? '' }}">
+                    <button type="submit">
+                        <img src="{{ asset('img/search_white.png') }}" alt="Search">
+                    </button>
+                </form>
             </div>
-        </main>
+
+            {{-- HASIL PENCARIAN DINAMIS --}}
+            <div class="campaign-grid">
+                @forelse ($campaigns as $campaign)
+                    <a href="{{ route('donate.menu', $campaign->slug) }}" class="campaign-card">
+                        <div class="campaign-top-info">
+                            <span>Rp{{ number_format($campaign->dana_terkumpul, 0, ',', '.') }} Terkumpul</span>
+                        </div>
+                        <img src="{{ asset('storage/' . $campaign->gambar_url) }}" alt="{{ $campaign->judul }}" class="campaign-image">
+                        <div class="campaign-content">
+                            <h3 class="campaign-title">{{ $campaign->judul }}</h3>
+                            <div class="campaign-progress">
+                                @php
+                                    $persentase = $campaign->target_dana > 0 ? ($campaign->dana_terkumpul / $campaign->target_dana) * 100 : 0;
+                                @endphp
+                                <div class="progress-bar"><div class="progress" style="width: {{ min($persentase, 100) }}%;"></div></div>
+                            </div>
+                            <div class="campaign-details">
+                                <div class="campaign-target">
+                                    <span>Dibutuhkan</span><br>
+                                    <strong>Rp{{ number_format($campaign->target_dana, 0, ',', '.') }}</strong>
+                                </div>
+                                <div class="campaign-time-left">
+                                    <span>Tersisa</span><br>
+                                    <strong>{{ \Carbon\Carbon::parse($campaign->batas_waktu)->diffForHumans() }}</strong>
+                                </div>
+                            </div>
+                            <div class="campaign-organizer">
+                                <img src="{{ asset('img/user-icon.png') }}" alt="User Icon">
+                                <span>{{ $campaign->user->name ?? 'Penggalang Dana' }}</span>
+                            </div>
+                        </div>
+                    </a>
+                @empty
+                    <div class="no-results-message">
+                        @if (!empty($searchQuery))
+                            <p>Campaign dengan kata kunci "<strong>{{ $searchQuery }}</strong>" tidak ditemukan.</p>
+                        @else
+                            <p>Silakan masukkan kata kunci untuk memulai pencarian.</p>
+                        @endif
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </main>
     
     <footer class="footer">
         <div class="footer-content">
