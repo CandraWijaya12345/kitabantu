@@ -86,19 +86,19 @@
                                     <td>{{ $request->user->name }}</td>
                                     <td>{{ $request->kategori }}</td>
                                     <td>{{ \Carbon\Carbon::parse($request->tanggal_pertolongan)->format('d M Y') }}</td>
-                                    <td>
-                                        @if($request->volunteer)
-                                            {{-- Jika sudah ada, tampilkan nama sebagai tombol untuk MENGGANTI --}}
-                                            <button class="btn-action assign re-assign" 
-                                                    data-action="{{ route('admin.kitatolong.assign', $request->id) }}"
-                                                    data-current-volunteer="{{ $request->volunteer->id }}">
-                                                {{ $request->volunteer->name }} (Ganti)
-                                            </button>
-                                        @else
-                                            {{-- Jika belum ada, tampilkan tombol untuk MENUGASKAN --}}
-                                            <button class="btn-action assign" data-action="{{ route('admin.kitatolong.assign', $request->id) }}">Tugaskan</button>
-                                        @endif
-                                    </td>
+                                <td>
+                                    @if($request->volunteer)
+                                        {{-- Jika sudah ada, tampilkan nama sebagai tombol untuk MENGGANTI --}}
+                                        <button class="btn-action assign re-assign" 
+                                                data-action="{{ route('admin.kitatolong.assign', $request->id) }}"
+                                                data-current-volunteer="{{ $request->volunteer->id }}">
+                                            {{ $request->volunteer->name }} (Ganti)
+                                        </button>
+                                    @else
+                                        {{-- Jika belum ada, tampilkan tombol untuk MENUGASKAN --}}
+                                        <button class="btn-action assign" data-action="{{ route('admin.kitatolong.assign', $request->id) }}">Tugaskan</button>
+                                    @endif
+                                </td>
                                     <td><span class="status-tag {{ strtolower($request->status) }}">{{ $request->status }}</span></td>
                                     <td><a href="#" class="btn-action detail">Detail</a></td>
                                 </tr>

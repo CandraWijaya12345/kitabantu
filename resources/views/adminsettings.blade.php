@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengaturan Akun - Admin KitaBantu</title>
-    <link rel="stylesheet" href="/css/adminsettings.css">
+    <link rel="stylesheet" href="{{ asset('css/adminsettings.css') }}">
 </head>
 <body>
     <div class="admin-container">
@@ -70,20 +70,27 @@
             </header>
 
             <section class="settings-container">
+                {{-- WIDGET INFORMASI AKUN --}}
                 <div class="widget">
                     <h3>Informasi Akun</h3>
-                    <form class="settings-form">
+                    @if(session('success_profile'))<div class="alert-success">{{ session('success_profile') }}</div>@endif
+                    
+                    <form action="{{ route('admin.settings.updateProfile') }}" method="POST" class="settings-form">
+                        @csrf
                         <div class="form-group">
                             <label for="admin-name">Nama Lengkap</label>
-                            <input type="text" id="admin-name" value="Admin KitaBantu">
+                            <input type="text" id="admin-name" name="name" value="{{ old('name', $user->name) }}">
+                            @error('name')<span class="error-text">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group">
                             <label for="admin-email">Email</label>
-                            <input type="email" id="admin-email" value="admin@kitabantu.com">
+                            <input type="email" id="admin-email" name="email" value="{{ old('email', $user->email) }}">
+                            @error('email')<span class="error-text">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group">
                             <label for="admin-phone">Nomor Handphone</label>
-                            <input type="tel" id="admin-phone" value="081234567890">
+                            <input type="tel" id="admin-phone" name="nomor_hp" value="{{ old('nomor_hp', $user->detail->nomor_hp ?? '') }}">
+                            @error('nomor_hp')<span class="error-text">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn-submit">Simpan Informasi</button>
@@ -91,20 +98,26 @@
                     </form>
                 </div>
 
+                {{-- WIDGET GANTI PASSWORD --}}
                 <div class="widget">
                     <h3>Ganti Password</h3>
-                    <form class="settings-form">
+                    @if(session('success_password'))<div class="alert-success">{{ session('success_password') }}</div>@endif
+                    
+                    <form action="{{ route('admin.settings.updatePassword') }}" method="POST" class="settings-form">
+                        @csrf
                         <div class="form-group">
-                            <label for="old-password">Password Lama</label>
-                            <input type="password" id="old-password" placeholder="Masukkan password lama">
+                            <label for="current_password">Password Lama</label>
+                            <input type="password" id="current_password" name="current_password" placeholder="Masukkan password lama" required>
+                            @error('current_password')<span class="error-text">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group">
-                            <label for="new-password">Password Baru</label>
-                            <input type="password" id="new-password" placeholder="Masukkan password baru">
+                            <label for="new_password">Password Baru</label>
+                            <input type="password" id="new_password" name="new_password" placeholder="Masukkan password baru" required>
+                            @error('new_password')<span class="error-text">{{ $message }}</span>@enderror
                         </div>
-                         <div class="form-group">
-                            <label for="confirm-password">Konfirmasi Password Baru</label>
-                            <input type="password" id="confirm-password" placeholder="Ulangi password baru">
+                        <div class="form-group">
+                            <label for="new_password_confirmation">Konfirmasi Password Baru</label>
+                            <input type="password" id="new_password_confirmation" name="new_password_confirmation" placeholder="Ulangi password baru" required>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn-submit">Ubah Password</button>

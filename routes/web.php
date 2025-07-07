@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminCampaignController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminKitaTolongController;
+use App\Http\Controllers\AdminSettingsController;
 
 Route::get('/', [CampaignController::class, 'home'])->name('home');
 
@@ -106,7 +107,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/kitatolong/{helpRequest}/approve', [AdminKitaTolongController::class, 'approve'])->name('kitatolong.approve');
     Route::post('/kitatolong/{helpRequest}/reject', [AdminKitaTolongController::class, 'reject'])->name('kitatolong.reject');
     Route::post('/kitatolong/{helpRequest}/assign', [AdminKitaTolongController::class, 'assignVolunteer'])->name('kitatolong.assign');
-    
+    Route::get('/settings', [AdminSettingsController::class, 'show'])->name('settings.show');
+    Route::post('/settings/profile', [AdminSettingsController::class, 'updateProfile'])->name('settings.updateProfile');
+    Route::post('/settings/password', [AdminSettingsController::class, 'updatePassword'])->name('settings.updatePassword');
     
     Route::get('/donasi', function () {
         return view('admindonasi'); // Mengacu ke admindonasi.blade.php
@@ -120,9 +123,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         return view('adminstatistik'); // Mengacu ke adminstatistik.blade.php
     });
 
-    Route::get('/settings', function () {
-        return view('adminsettings'); // Mengacu ke adminsettings.blade.php
-    });
     // Rute Penarikan Dana (dipindahkan ke dalam grup admin)
     Route::get('/tarikdana', function () {
         return view('adminpenarikandana'); // Mengacu ke adminpenarikandana.blade.php
