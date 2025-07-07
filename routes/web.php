@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminCampaignController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminKitaTolongController;
 
 Route::get('/', [CampaignController::class, 'home'])->name('home');
 
@@ -100,6 +101,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/campaign/{campaign}/reject', [AdminCampaignController::class, 'reject'])->name('campaigns.reject');
     Route::delete('/campaign/{campaign}', [AdminCampaignController::class, 'destroy'])->name('campaigns.destroy');
     Route::get('/user', [AdminUserController::class, 'index'])->name('users.index');
+    Route::post('/user/{user}/update-role', [AdminUserController::class, 'updateRole'])->name('users.updateRole');
+    Route::get('/kitatolong', [AdminKitaTolongController::class, 'index'])->name('kitatolong.index');
+    Route::post('/kitatolong/{helpRequest}/approve', [AdminKitaTolongController::class, 'approve'])->name('kitatolong.approve');
+    Route::post('/kitatolong/{helpRequest}/reject', [AdminKitaTolongController::class, 'reject'])->name('kitatolong.reject');
+    Route::post('/kitatolong/{helpRequest}/assign', [AdminKitaTolongController::class, 'assignVolunteer'])->name('kitatolong.assign');
+    
+    
     Route::get('/donasi', function () {
         return view('admindonasi'); // Mengacu ke admindonasi.blade.php
     });
@@ -115,11 +123,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/settings', function () {
         return view('adminsettings'); // Mengacu ke adminsettings.blade.php
     });
-
-    Route::get('/kitatolong', function () {
-        return view('adminkitatolong'); // Mengacu ke adminkitatolong.blade.php
-    });
-
     // Rute Penarikan Dana (dipindahkan ke dalam grup admin)
     Route::get('/tarikdana', function () {
         return view('adminpenarikandana'); // Mengacu ke adminpenarikandana.blade.php

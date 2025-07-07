@@ -21,6 +21,7 @@ class HelpRequest extends Model
         'nama_pemohon',
         'kontak_pemohon',
         'status',
+        'volunteer_id',
     ];
 
     /**
@@ -29,5 +30,10 @@ class HelpRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+        public function volunteer()
+    {
+        return $this->belongsTo(User::class, 'volunteer_id');
     }
 }

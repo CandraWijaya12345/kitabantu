@@ -72,207 +72,143 @@
             <section class="widget list-widget">
                 <div class="widget-tabs">
                     <button class="tab-btn active" data-target="list-view">List Permintaan</button>
-                    <button class="tab-btn" data-target="verification-view">Verifikasi Permintaan</button>
+                    <button class="tab-btn" data-target="verification-view">Verifikasi Permintaan ({{ $pendingRequests->total() }})</button>
                 </div>
 
+                {{-- TAB 1: LIST PERMINTAAN DISETUJUI --}}
                 <div class="tab-content active" id="list-view">
-                    <div class="widget-header">
-                        <h3>Manajemen Permintaan KitaTolong</h3>
-                    </div>
                     <div class="table-container">
                         <table class="data-table">
-                           <thead>
-                            <tr>
-                                <th>Pemohon</th>
-                                <th>Kategori</th>
-                                <th>Tanggal Pelaksanaan</th>
-                                <th>Volunteer Ditugaskan</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Citra Lestari</td>
-                                <td>Pendamping Lansia</td>
-                                <td>30 Jul 2025</td>
-                                <td><button class="btn-action assign">Tugaskan</button></td>
-                                <td><span class="status-tag success">Akan Datang</span></td>
-                                <td><a href="#" class="btn-action detail">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td>Budi Santoso</td>
-                                <td>Evakuasi Barang</td>
-                                <td>28 Jul 2025</td>
-                                <td>Rina Melati</td>
-                                <td><span class="status-tag success">Akan Datang</span></td>
-                                <td><a href="#" class="btn-action detail">Detail</a></td>
-                            </tr>
-                             <tr>
-                                <td>Eko Prasetyo</td>
-                                <td>Menjaga Posko</td>
-                                <td>15 Jun 2025</td>
-                                <td>Andi Wijaya</td>
-                                <td><span class="status-tag completed">Selesai</span></td>
-                                <td><a href="#" class="btn-action detail">Detail</a></td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                    <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">&raquo;</a>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="verification-view">
-                    <div class="widget-header">
-                        <h3>Verifikasi Permintaan KitaTolong</h3>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                             <thead>
-                                <tr>
-                                    <th>Pemohon</th>
-                                    <th>Kategori</th>
-                                    <th>Tgl Diajukan</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>Pemohon</th><th>Kategori</th><th>Tanggal</th><th>Volunteer</th><th>Status</th><th>Aksi</th></tr></thead>
                             <tbody>
+                                @forelse($approvedRequests as $request)
                                 <tr>
-                                    <td>Fajar Nugroho</td>
-                                    <td>Pembersihan Area Bencana</td>
-                                    <td>29 Jun 2025</td>
-                                    <td><span class="status-tag pending">Pending</span></td>
+                                    <td>{{ $request->user->name }}</td>
+                                    <td>{{ $request->kategori }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($request->tanggal_pertolongan)->format('d M Y') }}</td>
                                     <td>
-                                        <div class="action-buttons">
-                                            <a href="#" class="btn-action detail">Detail</a>
-                                            <button class="btn-action approve">Setujui</button>
-                                            <button class="btn-action reject">Tolak</button>
-                                        </div>
+                                        @if($request->volunteer)
+                                            {{-- Jika sudah ada, tampilkan nama sebagai tombol untuk MENGGANTI --}}
+                                            <button class="btn-action assign re-assign" 
+                                                    data-action="{{ route('admin.kitatolong.assign', $request->id) }}"
+                                                    data-current-volunteer="{{ $request->volunteer->id }}">
+                                                {{ $request->volunteer->name }} (Ganti)
+                                            </button>
+                                        @else
+                                            {{-- Jika belum ada, tampilkan tombol untuk MENUGASKAN --}}
+                                            <button class="btn-action assign" data-action="{{ route('admin.kitatolong.assign', $request->id) }}">Tugaskan</button>
+                                        @endif
                                     </td>
+                                    <td><span class="status-tag {{ strtolower($request->status) }}">{{ $request->status }}</span></td>
+                                    <td><a href="#" class="btn-action detail">Detail</a></td>
                                 </tr>
-                                <tr>
-                                    <td>Siti Aminah</td>
-                                    <td>Pengantaran Lansia</td>
-                                    <td>29 Jun 2025</td>
-                                    <td><span class="status-tag pending">Pending</span></td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="#" class="btn-action detail">Detail</a>
-                                            <button class="btn-action approve">Setujui</button>
-                                            <button class="btn-action reject">Tolak</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @empty
+                                <tr><td colspan="6">Belum ada permintaan yang disetujui.</td></tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
-                    <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">&raquo;</a>
+                    <div class="pagination">{{ $approvedRequests->appends(['search' => request('search')])->links() }}</div>
+                </div>
+
+                {{-- TAB 2: VERIFIKASI PERMINTAAN --}}
+                <div class="tab-content" id="verification-view">
+                     <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>Pemohon</th><th>Kategori</th><th>Diajukan</th><th>Status</th><th>Aksi</th></tr></thead>
+                            <tbody>
+                                @forelse($pendingRequests as $request)
+                                <tr>
+                                    <td>{{ $request->user->name }}</td>
+                                    <td>{{ $request->kategori }}</td>
+                                    <td>{{ $request->created_at->format('d M Y') }}</td>
+                                    <td><span class="status-tag pending">Pending</span></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a href="#" class="btn-action detail">Detail</a>
+                                            <button class="btn-action approve" data-action="{{ route('admin.kitatolong.approve', $request->id) }}">Setujui</button>
+                                            <button class="btn-action reject" data-action="{{ route('admin.kitatolong.reject', $request->id) }}">Tolak</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr><td colspan="5">Tidak ada permintaan untuk diverifikasi.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
+                    <div class="pagination">{{ $pendingRequests->appends(['search' => request('search')])->links() }}</div>
                 </div>
             </section>
         </main>
     </div>
 
     <div class="modal-overlay" id="modalOverlay"></div>
-
-    <div class="modal" id="approveModal">
-        <div class="modal-header"><h3>Konfirmasi Persetujuan</h3><button class="close-modal">&times;</button></div>
-        <div class="modal-body"><p>Anda yakin ingin menyetujui permintaan ini?</p></div>
-        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-approve">Ya, Setujui</button></div>
-    </div>
-
-    <div class="modal" id="rejectModal">
-        <div class="modal-header"><h3>Alasan Penolakan</h3><button class="close-modal">&times;</button></div>
-        <div class="modal-body">
-            <label for="rejectionReason">Mohon berikan alasan mengapa permintaan ini ditolak:</label>
-            <textarea id="rejectionReason" rows="5" placeholder="Contoh: Permintaan di luar jangkauan..."></textarea>
-        </div>
-        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-reject">Kirim Penolakan</button></div>
-    </div>
-    
+    <div class="modal" id="approveModal"><form id="approveForm" action="" method="POST">@csrf <div class="modal-header"><h3>Konfirmasi Persetujuan</h3><button type="button" class="close-modal">&times;</button></div><div class="modal-body"><p>Anda yakin ingin menyetujui permintaan ini?</p></div><div class="modal-footer"><button type="button" class="btn-modal cancel">Batal</button><button type="submit" class="btn-modal confirm-approve">Ya, Setujui</button></div></form></div>
+    <div class="modal" id="rejectModal"><form id="rejectForm" action="" method="POST">@csrf <div class="modal-header"><h3>Konfirmasi Penolakan</h3><button type="button" class="close-modal">&times;</button></div><div class="modal-body"><p>Anda yakin ingin menolak permintaan ini?</p></div><div class="modal-footer"><button type="button" class="btn-modal cancel">Batal</button><button type="submit" class="btn-modal confirm-reject">Ya, Tolak</button></div></form></div>
     <div class="modal" id="assignVolunteerModal">
-        <div class="modal-header"><h3>Tugaskan Volunteer</h3><button class="close-modal">&times;</button></div>
-        <div class="modal-body">
-            <label for="volunteerSelect">Pilih volunteer untuk permintaan ini:</label>
-            <select id="volunteerSelect" class="form-control">
-                <option disabled selected>-- Pilih Volunteer --</option>
-                <option value="andi_wijaya">Andi Wijaya</option>
-                <option value="rina_melati">Rina Melati</option>
-            </select>
-        </div>
-        <div class="modal-footer"><button class="btn-modal cancel">Batal</button><button class="btn-modal confirm-assign">Simpan</button></div>
+        <form id="assignForm" action="" method="POST">
+            @csrf
+            <div class="modal-header"><h3>Tugaskan Volunteer</h3><button type="button" class="close-modal">&times;</button></div>
+            <div class="modal-body">
+                <label for="volunteerSelect">Pilih volunteer untuk permintaan ini:</label>
+                <select id="volunteerSelect" name="volunteer_id" class="form-control" required>
+                    <option disabled selected value="">-- Pilih Volunteer --</option>
+                    @foreach($volunteers as $volunteer)
+                        <option value="{{ $volunteer->id }}">{{ $volunteer->name }} ({{$volunteer->role}})</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn-modal cancel">Batal</button><button type="submit" class="btn-modal confirm-assign">Simpan</button></div>
+        </form>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- LOGIKA UNTUK TAB SUB-MENU ---
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-
-                    const target = button.dataset.target;
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === target) {
-                            content.classList.add('active');
-                        }
-                    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const target = button.dataset.target;
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === target) content.classList.add('active');
                 });
             });
+        });
 
-            // --- LOGIKA UNTUK SEMUA MODAL/POPUP ---
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modals = {
-                approve: document.getElementById('approveModal'),
-                reject: document.getElementById('rejectModal'),
-                assign: document.getElementById('assignVolunteerModal')
-            };
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modals = { approve: document.getElementById('approveModal'), reject: document.getElementById('rejectModal'), assign: document.getElementById('assignVolunteerModal') };
+        const forms = { approve: document.getElementById('approveForm'), reject: document.getElementById('rejectForm'), assign: document.getElementById('assignForm') };
 
-            const openModalButtons = {
-                approve: document.querySelectorAll('.btn-action.approve'),
-                reject: document.querySelectorAll('.btn-action.reject'),
-                assign: document.querySelectorAll('.btn-action.assign')
-            };
+        function closeModal() {
+            modalOverlay.classList.remove('show');
+            Object.values(modals).forEach(modal => modal && modal.classList.remove('show'));
+        }
 
-            const closeButtons = document.querySelectorAll('.close-modal');
-            const cancelButtons = document.querySelectorAll('.btn-modal.cancel');
-
-            function openModal(modal) {
-                if(modal) {
+        document.body.addEventListener('click', function(event) {
+            const button = event.target;
+            let modalKey = null;
+            if (button.matches('.btn-action.approve')) modalKey = 'approve';
+            else if (button.matches('.btn-action.reject')) modalKey = 'reject';
+            else if (button.matches('.btn-action.assign')) modalKey = 'assign';
+            
+            if (modalKey) {
+                const actionUrl = button.dataset.action;
+                if (forms[modalKey]) forms[modalKey].action = actionUrl;
+                if (modals[modalKey]) {
                     modalOverlay.classList.add('show');
-                    modal.classList.add('show');
+                    modals[modalKey].classList.add('show');
                 }
             }
-
-            function closeModal() {
-                modalOverlay.classList.remove('show');
-                document.querySelectorAll('.modal.show').forEach(modal => {
-                    modal.classList.remove('show');
-                });
+            if (button.matches('.close-modal') || button.matches('.btn-modal.cancel')) {
+                closeModal();
             }
-
-            for (const key in openModalButtons) {
-                openModalButtons[key].forEach(button => {
-                    button.addEventListener('click', () => openModal(modals[key]));
-                });
-            }
-
-            closeButtons.forEach(button => button.addEventListener('click', closeModal));
-            cancelButtons.forEach(button => button.addEventListener('click', closeModal));
-            modalOverlay.addEventListener('click', closeModal);
         });
+        modalOverlay.addEventListener('click', closeModal);
+    });
     </script>
 
 </body>

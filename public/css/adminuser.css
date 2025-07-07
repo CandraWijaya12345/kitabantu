@@ -249,6 +249,49 @@ img { max-width: 100%; height: auto; display: block; }
     background-color: #d4e7ff;
 }
 
+/* Tambahkan ini di akhir file css/adminuser.css */
+.btn-action {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.make-volunteer {
+    background-color: #28a745;
+    color: white;
+}
+
+.make-user {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.role-tag {
+    padding: 4px 10px;
+    border-radius: 12px;
+    color: black;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+.role-tag.admin {
+    background-color: #dc3545; /* Merah */
+}
+
+.role-tag.volunteer {
+    background-color: #ffc107; /* Kuning */
+    color: #212529;
+}
+
+.role-tag.user {
+    background-color: #6c757d; /* Abu-abu */
+}
+
 .pagination {
     display: flex;
     justify-content: center;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends Controller
 {
@@ -27,5 +28,25 @@ class AdminUserController extends Controller
 
         // PASTIKAN 'onlineUsersCount' ADA DI DALAM compact() ATAU ARRAY
         return view('adminuser', compact('users', 'onlineUsersCount'));
+    }
+
+        public function updateRole(Request $request, User $user)
+    {
+        // Validasi input role
+        $request->validate([
+            'role' => 'required|in:user,volunteer,admin', // Pastikan role yang dikirim valid
+        ]);
+
+        // Mencegah admin mengubah role diri sendiri untuk keamanan
+        if ($user->id === Auth::id()) {
+            return back()->with('error', 'Anda tidak dapat mengubah role akun Anda sendiri.');
+        }
+
+        // Update role user
+        $user->update([
+            'role' => $request->role,
+        ]);
+
+        return back()->with('success', 'Role pengguna berhasil diperbarui.');
     }
 }

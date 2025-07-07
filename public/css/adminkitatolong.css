@@ -115,15 +115,11 @@ img { max-width: 100%; height: auto; display: block; }
 .data-table tbody tr:last-child td { border-bottom: none; }
 .data-table tbody tr:hover { background-color: #f8f9fa; }
 
-/* Status Tags */
-.status-tag {
-    padding: 0.25rem 0.75rem; border-radius: 12px;
-    font-size: 0.8rem; font-weight: 700;
-}
-.status-tag.success { background-color: var(--success-bg); color: var(--success-text); }
-.status-tag.pending { background-color: var(--pending-bg); color: var(--pending-text); }
-.status-tag.rejected { background-color: var(--danger-bg); color: var(--danger-text); }
-.status-tag.completed { background-color: var(--completed-bg); color: var(--completed-text); }
+.status-tag{padding:4px 10px;border-radius:12px;color:white;font-weight:600;font-size:.8rem;text-transform:capitalize;display:inline-block;}
+.status-tag.diterima{background-color:#28a745}
+.status-tag.selesai{background-color:#17a2b8}
+.status-tag.ditolak{background-color:#dc3545}
+.status-tag.pending{background-color:#f0ad4e}
 
 /* Action Buttons */
 .action-buttons { display: flex; gap: 0.5rem; }
@@ -150,6 +146,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .pagination a:hover { background-color: #eaf4ff; }
 .pagination a.active { background-color: var(--primary-blue); color: #ffffff; }
+
 
 /* --- MODAL / POPUP STYLES --- */
 .modal-overlay {

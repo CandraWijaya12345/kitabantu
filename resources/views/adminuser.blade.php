@@ -90,6 +90,7 @@
                                 <th>Email</th>
                                 <th>Terakhir Aktif</th>
                                 <th>Status</th>
+                                <th>Role</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -107,12 +108,38 @@
                                         <span class="status-tag offline">Offline</span>
                                     @endif
                                 </td>
-                                <td>
-                                    <div class="action-buttons">
-                                        {{-- Nanti link ini bisa ke halaman detail user di admin --}}
-                                        <a href="#" class="btn-detail">Lihat Detail</a>
-                                    </div>
-                                </td>
+                            <td>
+                                <span class="role-tag role-{{ strtolower($user->role) }}">
+                                    {{ ucfirst($user->role) }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    {{-- Mencegah admin mengubah role-nya sendiri --}}
+                                    @if($user->id !== Auth::id())
+                                        
+                                        {{-- Jika user adalah 'user', tampilkan tombol untuk menjadikannya 'volunteer' --}}
+                                        @if($user->role === 'user')
+                                            <form action="{{ route('admin.users.updateRole', $user->id) }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="role" value="volunteer">
+                                                <button type="submit" class="btn-action make-volunteer">Jadikan Volunteer</button>
+                                            </form>
+
+                                        {{-- Jika user adalah 'volunteer', tampilkan tombol untuk menjadikannya 'user' biasa --}}
+                                        @elseif($user->role === 'volunteer')
+                                            <form action="{{ route('admin.users.updateRole', $user->id) }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="role" value="user">
+                                                <button type="submit" class="btn-action make-user">Jadikan User</button>
+                                            </form>
+                                        @endif
+
+                                    @else
+                                        <span class="text-muted">(Akun Anda)</span>
+                                    @endif
+                                </div>
+                            </td>
                             </tr>
                             @empty
                             <tr><td colspan="5">Tidak ada data pengguna ditemukan.</td></tr>
