@@ -136,6 +136,7 @@
                             {{-- Format tanggal donasi --}}
                             <p class="comment-date">{{ $donation->created_at->format('d-m-Y • H:i') }}</p>
                             {{-- Pesan dukungan dari donatur --}}
+                            <p class="comment-amount"><strong>Memberikan </strong> Rp{{ number_format($donation->jumlah, 0, ',', '.') }},</p>
                             <p class="comment-text">{{ $donation->pesan_dukungan }}</p>
                         </div>
                     </div>

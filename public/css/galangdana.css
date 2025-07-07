@@ -489,6 +489,17 @@ img { max-width: 100%; height: auto; display: block; }
     text-decoration: none;
 }
 
+.preview-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 /* Style untuk Pesan Error Validasi */
 .error-text {
     color: #d9534f; /* Warna merah */

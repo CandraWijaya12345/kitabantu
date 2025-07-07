@@ -235,6 +235,36 @@
             }
         });
     });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageInput = document.getElementById('gambar');
+            const uploadLabel = document.querySelector('.upload-area');
+
+            imageInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        // Hapus konten lama
+                        uploadLabel.innerHTML = '';
+
+                        // Buat elemen img baru
+                        const imgPreview = document.createElement('img');
+                        imgPreview.src = e.target.result;
+                        imgPreview.alt = 'Preview Gambar';
+
+                        // Tambahkan class CSS di sini
+                        imgPreview.classList.add('preview-image');
+
+                        uploadLabel.appendChild(imgPreview);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
     </script>
 </body>
 </html>
