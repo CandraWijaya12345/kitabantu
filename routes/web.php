@@ -24,6 +24,7 @@ Route::get('/', [CampaignController::class, 'home'])->name('home');
 Route::get('/donate', [CampaignController::class, 'index'])->name('donate.index');
 Route::get('/donatemenu/{campaign:slug}', [CampaignController::class, 'show'])->name('donate.menu');
 Route::get('/search_campaign', [CampaignController::class, 'search'])->name('campaigns.search');
+Route::get('/detail', [CampaignController::class, 'detail']);
 
 // == RUTE AUTENTIKASI ==
 Route::get('/login', fn() => view('auth.login'))->name('login');

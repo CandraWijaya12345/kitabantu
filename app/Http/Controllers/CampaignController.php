@@ -32,6 +32,18 @@ class CampaignController extends Controller
         ));
     }
 
+    public function detail()
+    {
+        $campaigns = Campaign::where('dana_terkumpul', '>=', 'target_dana')->get(); // campaign yang berhasil
+        $totalDana = Campaign::sum('dana_terkumpul');
+        $totalCampaign = Campaign::count();
+        $totalDonasi = Donation::count(); // jika tidak ada tabel donasi, kamu bisa ubah/skip ini
+        $totalUser = User::count(); // dianggap sebagai jumlah orang terbantu
+
+        return view('detail', compact('campaigns', 'totalDana', 'totalCampaign', 'totalDonasi', 'totalUser'));
+    }
+
+
     /**
      * Menampilkan semua campaign di halaman donasi.
      */
