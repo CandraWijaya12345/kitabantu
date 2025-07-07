@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminKitaTolongController;
 use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminDonationController;
+use App\Http\Controllers\WithdrawalController;
 
 // == RUTE PUBLIK ==
 Route::get('/', [CampaignController::class, 'home'])->name('home');
@@ -47,7 +48,9 @@ Route::middleware(['auth'])->group(function () {
     // Galang Dana
     Route::get('/galang-dana/create', [CampaignController::class, 'create'])->name('campaigns.create');
     Route::post('/galang-dana', [CampaignController::class, 'store'])->name('campaigns.store');
-    
+    Route::get('/campaign/{id}/tarik-dana', [CampaignController::class, 'showTarikDanaForm'])->name('tarik.dana.form');
+    Route::post('/campaign/{id}/tarik-dana', [WithdrawalController::class, 'store'])->name('withdrawals.store');
+
     // KitaTolong
     Route::get('/formkitatolong', [HelpRequestController::class, 'create'])->name('kitatolong.create');
     Route::post('/formkitatolong', [HelpRequestController::class, 'store'])->name('kitatolong.store');
@@ -77,5 +80,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/settings/profile', [AdminSettingsController::class, 'updateProfile'])->name('settings.updateProfile');
     Route::post('/settings/password', [AdminSettingsController::class, 'updatePassword'])->name('settings.updatePassword');
     Route::get('/donasi', [AdminDonationController::class, 'index'])->name('admin.donasi.index');
+    Route::patch('/withdrawals/{id}/approve', [AdminWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
+    Route::patch('/withdrawals/{id}/reject', [AdminWithdrawalController::class, 'reject'])->name('admin.withdrawals.reject');
 
 });

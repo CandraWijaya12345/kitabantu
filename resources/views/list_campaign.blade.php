@@ -92,9 +92,9 @@
                             </div>
                         </div>
                          {{-- Link untuk melihat atau mengedit campaign --}}
-                        <div class="info-box-full" style="background-color: #eaf4ff; text-align:center;">
-                            <a href="{{ route('donate.menu', $campaign->slug) }}" class="status-link" style="text-decoration: none; color: #304e7b;">Lihat Campaign Publik</a>
-                            {{-- Anda bisa menambahkan link edit di sini nanti: <a href="#">Edit Campaign</a> --}}
+                        <div class="info-box-full button-group" style="text-align:center; display: flex; gap: 10px; justify-content: center; background-color: #eaf4ff; padding: 10px; border-radius: 8px;">
+                            <a href="{{ route('donate.menu', $campaign->slug) }}" class="btn-action blue">Lihat Campaign Publik</a>
+                            <a href="{{ route('tarik.dana.form', $campaign->id) }}" class="btn-action red">Tarik Dana</a>
                         </div>
                     </div>
                 </div>

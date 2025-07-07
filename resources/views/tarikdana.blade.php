@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penarikan Dana - KitaBantu</title>
-    <link rel="stylesheet" href="css/tarikdana.css">
+    <link rel="stylesheet" href="{{ secure_asset('css/tarikdana.css') }}">
 </head>
 <body>
 
@@ -21,7 +21,8 @@
             <div class="nav-section nav-right">
                 <a href="/detail" class="nav-link">Tentang Kami</a>
                 <a href="/search_campaign" class="search-link">
-                    <img src="./img/search.png" alt="Search Icon" class="search-icon">
+                    <img src="{{ asset('img/search.png') }}" alt="Search Icon">
+
                     Search
                 </a>
                 
@@ -57,19 +58,36 @@
                     <h1>Penarikan Dana</h1>
                     <p>Galang dana lebih mudah, mulai dari sini, jadilah alasan mereka tersenyum hari ini!</p>
                 </div>
-
-                <div class="info-card">
-                    <div class="saldo-info">
-                        <p>Saldo Tersedia</p>
-                        <strong>Rp250.000</strong>
-                    </div>
-                    <div class="campaign-info">
-                        <img src="./img/donasi_image.png" alt="Campaign Image">
-                        <p>Bantu Pak Ahmad dalam Mencapai Cita-Citanya akan Kesembuhan Adiknya dari Kanker</p>
-                    </div>
+                <div class="saldo-info">
+                    <p>Saldo Tersedia</p>
+                    <strong>Rp{{ number_format($saldo_tersedia, 0, ',', '.') }}</strong>
+                </div>
+                <div class="campaign-info">
+                    <img src="{{ asset('storage/' . $campaign->gambar_url) }}" alt="Campaign Image">
+                    <p>{{ $campaign->judul }}</p>
                 </div>
 
-                <form class="withdrawal-form">
+                @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+
+                @if(session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form class="withdrawal-form" method="POST" action="{{ route('withdrawals.store', $campaign->id) }}">
+                    @csrf
+
                     <div class="form-group">
                         <label for="amount">Tentukan Jumlah Penarikan Dana</label>
                         <div class="nominal-grid">
@@ -78,33 +96,34 @@
                             <button type="button" class="nominal-button" data-value="1000000">Rp 1.000.000</button>
                             <button type="button" class="nominal-button" data-value="10000000">Rp 10.000.000</button>
                         </div>
-                         <div class="custom-amount-input">
+                        <div class="custom-amount-input">
                             <span>Rp</span>
-                            <input type="number" id="amount" placeholder="Masukkan Jumlah Lain">
+                            <input type="number" name="jumlah" id="amount" placeholder="Masukkan Jumlah Lain">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="title">Judul Penarikan Dana</label>
-                        <input type="text" id="title" placeholder="Contoh: Pembelian obat kemoterapi tahap 2">
+                        <input type="text" name="judul" id="title" placeholder="Contoh: Pembelian obat kemoterapi tahap 2">
                     </div>
 
                     <div class="form-group">
                         <label for="description">Deskripsikan Alasan Anda Melakukan Penarikan Dana</label>
-                        <textarea id="description" rows="5" placeholder="Jelaskan secara rinci penggunaan dana yang akan ditarik"></textarea>
+                        <textarea name="deskripsi" id="description" rows="5" placeholder="Jelaskan secara rinci penggunaan dana yang akan ditarik"></textarea>
                     </div>
-                    
+
                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="terms-1">
+                        <input type="checkbox" id="terms-1" required>
                         <label for="terms-1">Pemilik rekening bertanggung jawab atas penggunaan dana yang diterima dari galang dana ini.</label>
                     </div>
-                     <div class="form-group checkbox-group">
-                        <input type="checkbox" id="terms-2">
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="terms-2" required>
                         <label for="terms-2">Sebagai Penerima dana bertanggung jawab atas mengirimkan Laporan pencairan dan pelaporan penggunaan dana.</label>
                     </div>
 
                     <button type="submit" class="submit-button">Tarik Dana Sekarang</button>
                 </form>
+
 
             </div>
         </main>
@@ -154,21 +173,16 @@
 
             amountButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Set nilai input custom dari tombol yang diklik
                     customAmountInput.value = this.dataset.value;
-
-                    // Beri style 'active' pada tombol yang diklik
                     amountButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                 });
             });
 
-            // Hapus style 'active' jika pengguna mengetik manual
             customAmountInput.addEventListener('input', function() {
                 amountButtons.forEach(btn => btn.classList.remove('active'));
             });
         });
-
             document.addEventListener('DOMContentLoaded', function() {
         const userDropdownButton = document.getElementById('userDropdownButton');
         const userDropdownMenu = document.getElementById('userDropdownMenu');
@@ -197,6 +211,11 @@
             }
         });
     });
+
+        document.querySelector('.withdrawal-form').addEventListener('submit', function() {
+        document.getElementById('amount-hidden').value = document.getElementById('amount').value;
+    });
+
     </script>
 
 </body>

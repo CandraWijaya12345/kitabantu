@@ -155,4 +155,20 @@ class CampaignController extends Controller
             'searchQuery' => $searchQuery // Kirim juga kata kunci untuk ditampilkan kembali
         ]);
     }
+
+    public function showTarikDanaForm($id)
+    {
+        $campaign = Campaign::findOrFail($id);
+
+        // Optional: validasi apakah user adalah pemilik campaign
+        if ($campaign->user_id !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        }
+
+        return view('tarikdana', [
+            'campaign' => $campaign,
+            'saldo_tersedia' => $campaign->dana_terkumpul, // nanti bisa dikurangi jika sudah pernah ditarik sebagian
+        ]);
+    }
+
 }

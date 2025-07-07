@@ -108,6 +108,7 @@ img {
     overflow: hidden;
 }
 
+
 /* Style untuk menampilkan dropdown dengan JavaScript */
 .dropdown-menu.show {
     display: block; 
@@ -176,6 +177,34 @@ img {
     font-size: 1.5rem;
     font-weight: 700;
     color: #304e7b;
+}
+
+.btn-action {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-action.blue {
+    background-color: #3478f6;
+    color: white;
+}
+
+.btn-action.blue:hover {
+    background-color: #245dc3;
+}
+
+.btn-action.red {
+    background-color: #d9534f;
+    color: white;
+}
+
+.btn-action.red:hover {
+    background-color: #c9302c;
 }
 
 .status-link {
