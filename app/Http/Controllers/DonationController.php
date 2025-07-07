@@ -1,42 +1,72 @@
 <?php
+// File: app/Http/Controllers/DonationController.php
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Campaign;
 use App\Models\Donation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class DonationController extends Controller
 {
-    // Fungsi untuk MENAMPILKAN form donasi
-    public function create(Campaign $campaign) {
+    /**
+     * Menampilkan formulir donasi untuk campaign tertentu.
+     */
+    public function create(Request $request)
+    {
+        // Ambil ID campaign dari URL (?campaign_id=...)
+        $campaignId = $request->input('campaign_id');
+        
+        // Cari campaign atau tampilkan error jika tidak ditemukan
+        $campaign = Campaign::findOrFail($campaignId);
+
         return view('formdonasi', ['campaign' => $campaign]);
     }
-    // Fungsi untuk MEMPROSES donasi yang disubmit
-    public function store(Request $request)
+
+    /**
+     * Menyimpan data donasi baru ke database.
+     */
+    public function store(Request $request, Campaign $campaign)
     {
-        // 1. Validasi input dari form
+        // 1. Validasi data dari form
         $validated = $request->validate([
             'campaign_id' => 'required|exists:campaigns,id',
-            'jumlah' => 'required|numeric|min:10000',
-            'nama_donatur' => 'required|string|max:255',
-            'pesan_dukungan' => 'nullable|string',
+            'jumlah' => 'required|numeric|min:5000',
+            'nama_donatur' => 'required_unless:is_anonymous,on|string|max:255',
+            'kontak_donatur' => 'nullable|string|max:255',
+            'pesan_dukungan' => 'nullable|string|max:500',
+            'metode_pembayaran' => 'required|string',
         ]);
 
-        // 2. Buat catatan donasi baru di tabel 'donations'
+        // 2. Siapkan data untuk disimpan
+        $donorName = $request->has('is_anonymous') ? 'Donatur Anonim' : $validated['nama_donatur'];
+
+        // 3. Simpan donasi ke database
         Donation::create([
+            'user_id' => Auth::id(), // Akan null jika donatur tidak login
             'campaign_id' => $validated['campaign_id'],
-            'user_id' => Auth::id(), // Ambil ID user yang sedang login, bisa null jika tidak ada
-            'nama_donatur' => $validated['nama_donatur'],
             'jumlah' => $validated['jumlah'],
+            'nama_donatur' => $donorName,
             'pesan_dukungan' => $validated['pesan_dukungan'],
-            'status' => 'success', // Kita anggap langsung sukses untuk saat ini
+            'status' => 'pending', // Status awal, nanti bisa diupdate oleh payment gateway
+            // 'metode_pembayaran' => $validated['metode_pembayaran'], // Anda bisa menambahkan kolom ini jika perlu
         ]);
 
-        // 3. Update dana terkumpul di tabel 'campaigns'
-        $campaign = Campaign::find($request->campaign_id);
-        $campaign->increment('dana_terkumpul', $request->jumlah);
-        return redirect()->route('donate.menu', $campaign->slug)->with('success', 'Terima kasih!');
+        // Di dunia nyata, di sini Anda akan mengarahkan ke payment gateway.
+        // Untuk sekarang, kita langsung update dana terkumpul dan arahkan ke halaman terima kasih.
+        $campaign = Campaign::findOrFail($validated['campaign_id']);
+        $campaign->increment('dana_terkumpul', $validated['jumlah']);
+
+        return redirect()->route('donations.thankyou');
+    }
+
+    /**
+     * Menampilkan halaman terima kasih.
+     */
+    public function thankYou()
+    {
+        return view('donation_thankyou');
     }
 }

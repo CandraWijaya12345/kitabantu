@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash; // <-- JANGAN LUPA TAMBAHKAN INI
-use Illuminate\Validation\Rules\Password; // <-- JANGAN LUPA TAMBAHKAN INI
+use Illuminate\Validation\Rules\Password;
+use App\Models\Campaign;
 
 class ProfileController extends Controller
 {
@@ -76,6 +77,18 @@ class ProfileController extends Controller
 
         # 3. Redirect dengan pesan sukses
         return back()->with('success', 'Password berhasil diperbarui!');
+    }
+
+        public function myCampaigns()
+    {
+        // Ambil semua campaign yang user_id-nya sama dengan ID user yang login
+        // Urutkan dari yang paling baru dibuat
+        $myCampaigns = Campaign::where('user_id', Auth::id())
+                               ->latest()
+                               ->get();
+
+        // Kirim data ke view 'list_campaign'
+        return view('list_campaign', ['campaigns' => $myCampaigns]);
     }
 
 }

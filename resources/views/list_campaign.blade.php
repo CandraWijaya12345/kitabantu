@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ganti Password - KitaBantu</title>
-    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/ganti_password.css') }}"> 
+    <title>Campaign Saya - KitaBantu</title>
+    {{-- Menggunakan CSS yang sama dengan list_kitatolong untuk referensi --}}
+    <link rel="stylesheet" href="{{ asset('css/list_kitatolong.css') }}">
+    <style>
+        /* CSS tambahan untuk status campaign */
+        .status-badge { text-transform: capitalize; padding: 5px 12px; border-radius: 20px; color: white; font-weight: 600; font-size: 0.8rem; }
+        .status-aktif { background-color: #5cb85c; }
+        .status-pending { background-color: #f0ad4e; }
+        .status-selesai { background-color: #5bc0de; }
+        .status-ditolak { background-color: #d9534f; }
+    </style>
 </head>
 <body>
 
@@ -52,63 +60,56 @@
         </nav>
     </header>
     
-        <main class="profile-main">
-            <div class="profile-container">
-                <aside class="profile-sidebar">
-                    <nav class="profile-nav">
-                        <a href="{{ route('profile.show') }}" class="profile-nav-link">Informasi Pengguna</a>
-                        <a href="{{ route('password.edit') }}" class="profile-nav-link active">Ganti Password</a>
-                        <a href="/list_campaign" class="profile-nav-link">Campaign Saya</a>
-                        <a href="/list_kitatolong" class="profile-nav-link">Permintaan KitaTolong</a>
-                    </nav>
-                </aside>
+    <main class="list-main">
+        <div class="list-container">
+            <h1 class="list-title">Daftar Campaign Galang Dana Anda</h1>
 
-                <section class="profile-content">
-                    <div class="form-card">
-                        <h1 class="form-title">Ganti Password</h1>
-
-                        {{-- Menampilkan pesan sukses --}}
-                        @if (session('success'))
-                            <div class="alert-success">{{ session('success') }}</div>
-                        @endif
-
-                        {{-- Menampilkan pesan error validasi --}}
-                        @if ($errors->any())
-                            <div class="alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        {{-- Sesuaikan Form --}}
-                        <form action="{{ route('password.update') }}" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                <label for="current_password">Masukkan Password Lama</label>
-                                {{-- 'name' harus sesuai dengan aturan validasi --}}
-                                <input type="password" id="current_password" name="current_password" placeholder="Password Lama" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="new_password">Masukkan Password Baru</label>
-                                <input type="password" id="new_password" name="new_password" placeholder="Password Baru" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="new_password_confirmation">Konfirmasi Password Baru</label>
-                                {{-- 'name' harus 'nama_field_sebelumnya_confirmation' --}}
-                                <input type="password" id="new_password_confirmation" name="new_password_confirmation" placeholder="Ulangi Password Baru" required>
-                            </div>
-                            
-                            <button type="submit" class="submit-button">Simpan Perubahan</button>
-                        </form>
+            {{-- Loop melalui setiap campaign milik pengguna --}}
+            @forelse ($campaigns as $campaign)
+                <div class="request-card">
+                    <div class="card-header">
+                        {{-- Tampilkan Judul Campaign --}}
+                        <h2>{{ $campaign->judul }}</h2>
+                        
+                        {{-- Tampilkan Status Campaign --}}
+                        <span class="status-badge status-{{ strtolower($campaign->status) }}">
+                            Status: {{ $campaign->status }}
+                        </span>
                     </div>
-                </section>
-            </div>
-        </main>
+                    <div class="card-body">
+                        {{-- Info Dana Terkumpul vs Target --}}
+                        <div class="info-box-full">
+                            <strong>Rp{{ number_format($campaign->dana_terkumpul, 0, ',', '.') }}</strong> terkumpul dari target Rp{{ number_format($campaign->target_dana, 0, ',', '.') }}
+                        </div>
+                        <div class="info-box-grid">
+                            {{-- Info Tanggal Dibuat --}}
+                            <div class="info-box-half">
+                                Dibuat: {{ $campaign->created_at->format('d/m/Y') }}
+                            </div>
+                            {{-- Info Batas Waktu --}}
+                            <div class="info-box-half">
+                                Batas Waktu: {{ \Carbon\Carbon::parse($campaign->batas_waktu)->format('d/m/Y') }}
+                            </div>
+                        </div>
+                         {{-- Link untuk melihat atau mengedit campaign --}}
+                        <div class="info-box-full" style="background-color: #eaf4ff; text-align:center;">
+                            <a href="{{ route('donate.menu', $campaign->slug) }}" class="status-link" style="text-decoration: none; color: #304e7b;">Lihat Campaign Publik</a>
+                            {{-- Anda bisa menambahkan link edit di sini nanti: <a href="#">Edit Campaign</a> --}}
+                        </div>
+                    </div>
+                </div>
+            @empty
+                {{-- Pesan ini akan muncul jika user belum membuat campaign --}}
+                <div class="request-card">
+                    <p style="text-align: center; padding: 2rem;">
+                        Anda belum pernah membuat campaign galang dana. <br>
+                        <a href="{{ route('campaigns.create') }}" style="color: #5893ea; font-weight: 600;">Buat campaign baru sekarang!</a>
+                    </p>
+                </div>
+            @endforelse
+            
+        </div>
+    </main>
     
         <footer class="footer">
             <div class="footer-content">

@@ -57,7 +57,7 @@
                     <nav class="profile-nav">
                         <a href="/user" class="profile-nav-link active">Informasi Pengguna</a>
                         <a href="/user/ganti_password" class="profile-nav-link">Ganti Password</a>
-                        <a href="#" class="profile-nav-link">Campaign Saya</a>
+                        <a href="{{ route('profile.campaigns') }}" class="profile-nav-link">Campaign Saya</a>
                         <a href="/list_kitatolong" class="profile-nav-link">Permintaan KitaTolong</a>
                     </nav>
                 </aside>

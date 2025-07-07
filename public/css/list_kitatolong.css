@@ -186,6 +186,21 @@ img {
     text-underline-offset: 4px;
 }
 
+.status-link {
+    text-transform: capitalize;
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+    
+.status-pending { background-color: #f0ad4e; } /* Kuning */
+.status-diterima { background-color: #5cb85c; } /* Hijau */
+.status-ditolak { background-color: #d9534f; } /* Merah */
+
+.status-selesai { background-color: #5bc0de; } /* Biru */
+
 .card-body {
     display: flex;
     flex-direction: column;

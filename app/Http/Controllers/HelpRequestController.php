@@ -52,4 +52,15 @@ class HelpRequestController extends Controller
         // 3. Arahkan kembali dengan pesan sukses
         return redirect()->route('home')->with('success', 'Permintaan pertolongan Anda telah berhasil dikirim!');
     }
+        public function index()
+    {
+        // Ambil semua permintaan yang user_id-nya sama dengan ID user yang login
+        // Urutkan dari yang paling baru dibuat
+        $helpRequests = HelpRequest::where('user_id', Auth::id())
+                                   ->latest()
+                                   ->get();
+
+        // Kirim data ke view
+        return view('list_kitatolong', ['helpRequests' => $helpRequests]);
+    }
 }

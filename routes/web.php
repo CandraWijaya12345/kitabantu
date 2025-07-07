@@ -76,12 +76,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/ganti_password', [ProfileController::class, 'showChangePasswordForm'])->name('password.edit');
     Route::post('/user/ganti_password', [ProfileController::class, 'updatePassword'])->name('password.update');
     Route::get('/formdonasi/{campaign:slug}', [DonationController::class, 'create'])->name('donate.form');
-    Route::post('/formdonasi', [DonationController::class, 'store'])->name('donate.store');
+    Route::get('/formdonasi', [DonationController::class, 'create'])->name('donations.create');
+    Route::post('/formdonasi', [DonationController::class, 'store'])->name('donations.store');
+    Route::get('/donation/thank-you', [DonationController::class, 'thankYou'])->name('donations.thankyou');
     Route::get('/formkitatolong', function () { return view('formkitatolong'); });
     Route::get('/galang-dana/create', [CampaignController::class, 'create'])->name('campaigns.create');
     Route::post('/galang-dana', [CampaignController::class, 'store'])->name('campaigns.store');
     Route::get('/formkitatolong', [HelpRequestController::class, 'create'])->name('kitatolong.create');
     Route::post('/formkitatolong', [HelpRequestController::class, 'store'])->name('kitatolong.store');
+    Route::get('/list_kitatolong', [HelpRequestController::class, 'index'])->name('kitatolong.index');
+    Route::get('/user/campaigns', [ProfileController::class, 'myCampaigns'])->name('profile.campaigns');
 });
 
 

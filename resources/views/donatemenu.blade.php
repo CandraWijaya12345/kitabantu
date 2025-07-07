@@ -65,7 +65,7 @@
                     </div>
                     <div class="donate-buttons">
                         {{-- Tombol Donasi (arahkah ke halaman pembayaran nanti) --}}
-                        <a href="#" class="donate-button primary">Donasi Sekarang</a>
+                        <a href="{{ route('donations.create', ['campaign_id' => $campaign->id]) }}" class="donate-button primary">Donasi Sekarang</a>
                         <a href="#" class="donate-button secondary">Bagikan ke yang lain</a>
                     </div>
                 </div>

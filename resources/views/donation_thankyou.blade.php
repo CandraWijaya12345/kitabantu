@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Permintaan KitaTolong - KitaBantu</title>
-    <link rel="stylesheet" href="css/list_kitatolong.css">
+    <title>Terima Kasih - KitaBantu</title>
+    <link rel="stylesheet" href="{{ asset('css/globals.css') }}">
+    <style>
+        .thank-you-container { text-align: center; padding: 5rem 2rem; max-width: 700px; margin: 80px auto; background: #fff; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .thank-you-container h1 { font-size: 2.5rem; color: #304e7b; margin-bottom: 1rem; }
+        .thank-you-container p { font-size: 1.2rem; margin-bottom: 2rem; }
+        .thank-you-container a { padding: 0.8rem 2rem; background-color: #5893ea; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; }
+    </style>
 </head>
 <body>
-
-    <header class="header">
+        <header class="header">
         <nav class="nav">
             <div class="nav-section nav-left">
                 <a href="{{ route('campaigns.create') }}" class="nav-link">Galang Dana</a>
@@ -50,56 +55,13 @@
             </div>
         </nav>
     </header>
-    
-    <main class="list-main">
-        <div class="list-container">
-            <h1 class="list-title">Berikut merupakan daftar permintaan KitaTolong Anda</h1>
 
-            {{-- Loop melalui setiap permintaan pertolongan --}}
-            @forelse ($helpRequests as $request)
-                <div class="request-card">
-                    <div class="card-header">
-                        {{-- Tampilkan Kategori --}}
-                        <h2>Permintaan {{ $request->kategori }}</h2>
-                        {{-- Tampilkan Status dengan class dinamis --}}
-                        <span class="status-link status-{{ strtolower($request->status) }}">
-                            Status : {{ $request->status }}
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        {{-- Tampilkan Detail Pertolongan --}}
-                        <div class="info-box-full">
-                            {{ $request->detail_pertolongan }}
-                        </div>
-                        <div class="info-box-grid">
-                            {{-- Tampilkan Tanggal (diformat) --}}
-                            <div class="info-box-half">
-                                {{ \Carbon\Carbon::parse($request->tanggal_pertolongan)->format('d/m/Y') }}
-                            </div>
-                            {{-- Tampilkan Rentang Waktu (diformat) --}}
-                            <div class="info-box-half">
-                                {{ \Carbon\Carbon::parse($request->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($request->waktu_selesai)->format('H:i') }}
-                            </div>
-                        </div>
-                        {{-- Tampilkan Lokasi --}}
-                        <div class="info-box-full">
-                            {{ $request->lokasi }}
-                        </div>
-                    </div>
-                </div>
-            @empty
-                {{-- Pesan ini akan muncul jika tidak ada permintaan sama sekali --}}
-                <div class="request-card">
-                    <p style="text-align: center; padding: 2rem;">
-                        Anda belum pernah membuat permintaan KitaTolong. <br>
-                        <a href="{{ route('kitatolong.create') }}" style="color: #5893ea; font-weight: 600;">Buat permintaan baru sekarang!</a>
-                    </p>
-                </div>
-            @endforelse
-            
-        </div>
-    </main>
-    
+    <div class="thank-you-container">
+        <h1>Terima Kasih, Donatur!</h1>
+        <p>Donasi Anda telah kami catat. Kebaikan Anda sangat berarti bagi mereka yang membutuhkan.</p>
+        <a href="{{ route('home') }}">Kembali ke Beranda</a>
+    </div>
+
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-section">
@@ -137,37 +99,6 @@
                 <button class="chat-button"><img src="./img/message.png" alt="chat icon"><span>1 Message Arrived</span></button>
             </div>
         </footer>
-    </div>
 
-        <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const userDropdownButton = document.getElementById('userDropdownButton');
-        const userDropdownMenu = document.getElementById('userDropdownMenu');
-
-        if (userDropdownButton) {
-            userDropdownButton.addEventListener('click', function(event) {
-                // Mencegah event lain yang mungkin terjadi
-                event.stopPropagation();
-                
-                // Toggle (tampilkan/sembunyikan) menu dropdown
-                userDropdownMenu.classList.toggle('show');
-                
-                // Toggle rotasi panah
-                this.classList.toggle('active');
-            });
-        }
-
-        // Menutup dropdown jika user mengklik di luar area dropdown
-        window.addEventListener('click', function(event) {
-            if (userDropdownMenu && userDropdownMenu.classList.contains('show')) {
-                // Cek apakah klik terjadi di luar area dropdown
-                if (!userDropdownButton.contains(event.target)) {
-                    userDropdownMenu.classList.remove('show');
-                    userDropdownButton.classList.remove('active');
-                }
-            }
-        });
-    });
-    </script>
 </body>
 </html>
