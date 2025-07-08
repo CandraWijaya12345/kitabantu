@@ -18,6 +18,7 @@ use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AdminDonationController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\AdminWithdrawalController;
+use App\Http\Controllers\AdminStatistikController;
 
 // == RUTE PUBLIK ==
 Route::get('/', [CampaignController::class, 'home'])->name('home');
@@ -85,4 +86,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/tarikdana', [AdminWithdrawalController::class, 'index'])->name('withdrawals.index');
     Route::post('/tarikdana/{id}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
     Route::post('/tarikdana/{id}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
+    Route::get('/statistik', [AdminStatistikController::class, 'index']);
 });

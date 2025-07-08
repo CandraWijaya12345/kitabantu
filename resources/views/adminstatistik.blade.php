@@ -84,44 +84,77 @@
                     <div class="card-icon blue"><img src="/img/totalsemuaicon.png" alt=""></div>
                     <div class="card-info">
                         <p class="card-title">Total Pendapatan</p>
-                        <p class="card-value">Rp350 Jt</p>
+                        <p class="card-value">Rp{{ number_format($totalPendapatan, 0, ',', '.') }}</p>
                     </div>
                 </div>
+
                 <div class="summary-card">
                     <div class="card-icon green"><img src="/img/campaignberhasil.png" alt=""></div>
                     <div class="card-info">
                         <p class="card-title">Campaign Berhasil</p>
-                        <p class="card-value">128</p>
+                        <p class="card-value">{{ $campaignBerhasil }}</p>
                     </div>
                 </div>
+
                 <div class="summary-card">
                     <div class="card-icon orange"><img src="/img/userbaruicon.png" alt=""></div>
                     <div class="card-info">
-                        <p class="card-title">Pendaftar Baru</p>
-                        <p class="card-value">1,422</p>
+                        <p class="card-title">Total User</p>
+                        <p class="card-value">{{ number_format($totalUser, 0, ',', '.') }}</p>
                     </div>
                 </div>
+
                 <div class="summary-card">
                     <div class="card-icon purple"><img src="/img/totaltransaksi.png" alt=""></div>
                     <div class="card-info">
                         <p class="card-title">Total Transaksi</p>
-                        <p class="card-value">5,689</p>
+                        <p class="card-value">{{ number_format($totalTransaksi, 0, ',', '.') }}</p>
                     </div>
                 </div>
             </section>
-
             <section class="charts-grid">
                 <div class="widget chart-widget large">
                     <h3>Pertumbuhan Donasi (6 Bulan Terakhir)</h3>
-                    <img src="/img/statistikiconn.png" alt="Grafik Pertumbuhan Donasi" class="chart-placeholder">
+                    <canvas id="donasiChart"></canvas>
                 </div>
                 <div class="widget chart-widget small">
                     <h3>Distribusi Kategori</h3>
-                     <img src="/img/kategoriicon.png" alt="Grafik Distribusi Kategori" class="chart-placeholder">
+                     <canvas id="kategoriChart"></canvas>
                 </div>
             </section>
 
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctxDonasi = document.getElementById('donasiChart').getContext('2d');
+            const donasiChart = new Chart(ctxDonasi, {
+                type: 'line',
+                data: {
+                    labels: {!! json_encode($donasiBulanan->pluck('bulan')) !!},
+                    datasets: [{
+                        label: 'Total Donasi',
+                        data: {!! json_encode($donasiBulanan->pluck('jumlah_transaksi')) !!},
+                        borderColor: '#4e73df',
+                        backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                        borderWidth: 2
+                    }]
+                }
+            });
+
+            const ctxKategori = document.getElementById('kategoriChart').getContext('2d');
+            const kategoriChart = new Chart(ctxKategori, {
+                type: 'doughnut',
+                data: {
+                    labels: {!! json_encode($kategoriDistribusi->pluck('kategori')) !!},
+                    datasets: [{
+                        data: {!! json_encode($kategoriDistribusi->pluck('total')) !!},
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796']
+                    }]
+                }
+            });
+        </script>
+
 </body>
 </html>

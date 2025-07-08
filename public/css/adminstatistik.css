@@ -132,22 +132,50 @@ img { max-width: 100%; height: auto; display: block; }
 .card-icon.green { background-color: var(--green-icon); }
 .card-icon.orange { background-color: var(--orange-icon); }
 .card-icon.purple { background-color: var(--purple-icon); }
-.card-title { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.25rem; }
+.card-title {
+    font-size: 0.9rem;  /* Atau lebih kecil: 0.8rem */
+    color: #555;
+    margin: 0;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+
 .card-value { font-size: 1.5rem; font-weight: 700; color: var(--dark-blue); }
+
 
 /* --- CHARTS SECTION --- */
 .charts-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1.5fr 1fr;
     gap: 1.5rem;
     margin-top: 2rem;
 }
+
 .widget.chart-widget {
     background-color: #fff;
     padding: 1.5rem;
     border-radius: 15px;
     border: 1px solid var(--border-color);
 }
+
+.widget.chart-widget canvas {
+    max-height: 300px;
+    height: 100%;
+}
+
+.chart-widget {
+    max-height: 400px;
+    overflow: hidden;
+}
+
+
 .chart-widget h3 {
     font-size: 1.25rem;
     margin-bottom: 1.5rem;
